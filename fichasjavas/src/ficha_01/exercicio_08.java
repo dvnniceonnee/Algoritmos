@@ -39,8 +39,8 @@ public class exercicio_08 {
         segundosTotais_musica = segMusica1 + segMusica2 + segMusica3 + segMusica4 + segMusica5;
         minutosTotais_musica = minMusica1 + minMusica2 + minMusica3 + minMusica4 + minMusica5 + (segundosTotais_musica / 60);
         segundosTotais_musica = (segundosTotais_musica % 60);
-        horasTotais_musica = minutosTotais_musica/60;
-        minutosTotais_musica = (minutosTotais_musica%60);
+        horasTotais_musica = minutosTotais_musica / 60;
+        minutosTotais_musica = (minutosTotais_musica % 60);
 
         System.out.println("O tempo de duração da musica é " + horasTotais_musica + "h " + minutosTotais_musica + "m " + segundosTotais_musica + "s");
 
