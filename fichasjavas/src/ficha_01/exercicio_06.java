@@ -16,9 +16,9 @@ public class exercicio_06 {
         valor2 = input.nextInt();
 
         System.out.println("Os valores apresentados são: " + valor1 + " " + valor2);
-        valor3 = valor1;
-        valor1 = valor2;
-        valor2 = valor3;
+        valor1 = valor1 + valor2;
+        valor2 = valor1 - valor2;
+        valor1 = valor1 - valor2;
 
         System.out.println("Os valores trocados 1 pelo outro são: " +  valor1 + " " + valor2);
 
