@@ -6,7 +6,7 @@ public class exercicio_06 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int valor1, valor2, valor3;
+        int valor1, valor2;
 
         System.out.println("Bom dia, vamos comer o cerebro !!");
 
