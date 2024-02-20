@@ -10,10 +10,10 @@ public class exercicio_09 {
         int codigoFuncionario, diasTrabalhados;
 
         //variaveis de valores de salario e impostos
-        double vencimentoBaseDia = 40, subsAlimentaçãoDia = 5, irs = 0.1, segurançaSocialFunc = 0.11, segurançaSocialEmp = 0.2375;
+        double vencimentoBaseDia = 40, subsAlimentacaoDia = 5, irs = 0.1, segurancaSocialFunc = 0.11, segurancaSocialEmp = 0.2375;
 
-        // variaveis para calculo de salario e impostos
-        double salarioTotalIliquido, subsAlimentaçãoTotal, irsImposto, segurançaSocialImpostoFunc, segurancaSocialImpostoEmp, salarioLiquido;
+        // variavel para calculo de salario e impostos
+        double calculoValoresSalario;
 
         System.out.println("Olá, vamos ver quanto ganhou este mes :)");
 
@@ -23,19 +23,29 @@ public class exercicio_09 {
         System.out.println("Quantos dias trabalhou o funcionário numero " + codigoFuncionario);
         diasTrabalhados = input.nextInt();
 
-        salarioTotalIliquido = (diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentaçãoDia);
-        subsAlimentaçãoTotal = diasTrabalhados * subsAlimentaçãoDia;
-        irsImposto = salarioTotalIliquido * irs;
-        segurancaSocialImpostoEmp = salarioTotalIliquido * segurançaSocialEmp;
-        segurançaSocialImpostoFunc = salarioTotalIliquido * segurançaSocialFunc;
-        salarioLiquido = salarioTotalIliquido - (segurancaSocialImpostoEmp + segurançaSocialImpostoFunc + irsImposto);
+        // Calculo do Salario Iliquido
+        calculoValoresSalario = (diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia);
+        System.out.println("O valor total iliquido sem impostos é " + calculoValoresSalario);
 
-        System.out.println("O valor total iliquido sem impostos é " + salarioTotalIliquido);
-        System.out.println("Ao fim de " + diasTrabalhados + " dias trabalhados tem a receber " + subsAlimentaçãoTotal + " euros " +  " de subsidio de alimentação");
-        System.out.println("Vai ser entregue ao estado um total de IRS de " + irsImposto + " euros");
-        System.out.println("A empresa vai pagar de impostos de segurança social a quantia de " + segurancaSocialImpostoEmp + "euros");
-        System.out.println("O funcionário tem de pagar " + segurançaSocialImpostoFunc + " euros");
-        System.out.println("Após os impostos vai receber um total de : " + salarioLiquido + " euros :)");
+        // Calculo e apresentação do subsidio de alimentação
+        calculoValoresSalario = diasTrabalhados * subsAlimentacaoDia;
+        System.out.println("Ao fim de " + diasTrabalhados + " dias trabalhados tem a receber " + calculoValoresSalario + " euros " +  " de subsidio de alimentação");
+
+        // Calculo e apresentação do Imposto de IRS
+        calculoValoresSalario = (( (diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia) ) * (1 - segurancaSocialFunc) )* irs;
+        System.out.println("Vai ser entregue ao estado um total de IRS de " + calculoValoresSalario + " euros");
+
+        // calculo e apresentação do imposto de segurança social para a empresa
+        calculoValoresSalario = ((diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia)) * segurancaSocialEmp;
+        System.out.println("A empresa vai pagar de impostos de segurança social a quantia de " + calculoValoresSalario + "euros");
+
+        // calculo e apresentação do imposto de segurança social para o funcionario
+        calculoValoresSalario = ((diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia)) * segurancaSocialFunc;
+        System.out.println("O funcionario " + codigoFuncionario + " vai pagar de impostos de segurança social a quantia de " + calculoValoresSalario + "euros");
+
+        // Calculo e apresentação do salario liquido
+        calculoValoresSalario = ((diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia)) - ((( (diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia) ) * (1 - segurancaSocialFunc) )* irs) - (((diasTrabalhados * vencimentoBaseDia) + (diasTrabalhados * subsAlimentacaoDia)) * segurancaSocialFunc);
+        System.out.println("Após os impostos vai receber um total de : " + calculoValoresSalario + " euros :)");
 
 
 
