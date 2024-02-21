@@ -39,8 +39,6 @@ public class exercicio_04 {
                 break;
             default:
                 System.out.println("Não ganhou pontos :(");
-                break;
-
         }
     }
 }

@@ -18,13 +18,20 @@ public class exercicio_08 {
         notaAluno2 = input.nextDouble();
         notaAluno3 = input.nextDouble();
 
-        // calcular a media ponderada
-        mediaPond = (notaAluno1 * 0.25) + (notaAluno2 * 0.35) + (notaAluno3 * 0.4);
-
-        if (mediaPond > 9.5)
-            System.out.println("O aluno teve uma media de " + mediaPond + " e esta aprovado !");
+        // Verificar se a nota é valida
+        if (notaAluno1 < 0 || notaAluno1 > 20 || notaAluno2 < 0 || notaAluno2 > 20 || notaAluno3 < 0 || notaAluno3 > 20)
+        {
+            System.out.println("As notas nao sao validas");
+        }
         else
-            System.out.println("O aluno teve uma media de " + mediaPond + " e esta reprovado!");
+        {
+            // calcular a media ponderada
+            mediaPond = (notaAluno1 * 0.25) + (notaAluno2 * 0.35) + (notaAluno3 * 0.4);
 
+            if (mediaPond > 9.5)
+                System.out.println("O aluno teve uma media de " + mediaPond + " e esta aprovado !");
+            else
+                System.out.println("O aluno teve uma media de " + mediaPond + " e esta reprovado!");
+        }
     }
 }

@@ -12,12 +12,8 @@ public class exercicio_07 {
         numeroParouImpar = input.nextInt();
 
         if (numeroParouImpar%2 == 0)
-        {
             System.out.println("O numero é par");
-        }
         else
-        {
             System.out.println("O numero é impar");
-        }
     }
 }

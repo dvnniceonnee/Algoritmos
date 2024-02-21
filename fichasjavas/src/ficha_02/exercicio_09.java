@@ -26,7 +26,5 @@ public class exercicio_09 {
             else
                 System.out.println("O menor numero é o " + numero3);
         }
-
-
     }
 }
