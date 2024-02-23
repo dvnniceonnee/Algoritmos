@@ -28,9 +28,9 @@ public class exercicio_08 {
             // calcular a media ponderada
             mediaPond = (notaAluno1 * 0.25) + (notaAluno2 * 0.35) + (notaAluno3 * 0.4);
 
-            if (mediaPond > 9.5)
+            if (mediaPond > 9.5) // Media maior do que 9.5 = Aprovado
                 System.out.println("O aluno teve uma media de " + mediaPond + " e esta aprovado !");
-            else
+            else // Media menor do que 9.5 = Reprovado
                 System.out.println("O aluno teve uma media de " + mediaPond + " e esta reprovado!");
         }
     }
