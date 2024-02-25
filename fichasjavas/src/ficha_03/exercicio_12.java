@@ -12,7 +12,7 @@ public class exercicio_12 {
 
         // Ler variaveis
         System.out.println("<<<<< Programa de numeros e intervalos >>>>>\n");
-        System.out.print("Introduza um numero (negativo termina o programa): ");
+        System.out.print("Introduza um numero : ");
         numero_utilizador = input.nextInt();
 
 
@@ -20,32 +20,21 @@ public class exercicio_12 {
         while (numero_utilizador >= 0) {
             if (numero_utilizador <= 25) { // caso seja menor do que 25 incrementar 1 ao intervalo definido
                 intervalo_00_25 = ++intervalo_00_25;
-                System.out.print("Introduza um numero : ");
-                numero_utilizador = input.nextInt();
             } else {
-                if (numero_utilizador <= 50) { // caso seja menor do que 25 incrementar 1 ao intervalo definido
+                if (numero_utilizador <= 50) { // caso seja menor do que 50 incrementar 1 ao intervalo definido
                     intervalo_26_50 = ++intervalo_26_50;
-                    System.out.print("Introduza um numero : ");
-                    numero_utilizador = input.nextInt();
                 } else {
-                    if (numero_utilizador <= 75) { // caso seja menor do que 25 incrementar 1 ao intervalo definido
+                    if (numero_utilizador <= 75) { // caso seja menor do que 75 incrementar 1 ao intervalo definido
                         intervalo_51_75 = ++intervalo_51_75;
-                        System.out.print("Introduza um numero : ");
-                        numero_utilizador = input.nextInt();
                     } else {
-                        if (numero_utilizador <= 100) { // caso seja menor do que 25 incrementar 1 ao intervalo definido
+                        if (numero_utilizador <= 100) { // caso seja menor do que 100 incrementar 1 ao intervalo definido
                             intervalo_76_100 = ++intervalo_76_100;
-                            System.out.print("Introduza um numero : ");
-                            numero_utilizador = input.nextInt();
-                        }
-                        else // Nao pertence a nenhum intervalo portanto apenas pede um novo numero e volta para cima
-                        {
-                            System.out.print("Introduza um numero : ");
-                            numero_utilizador = input.nextInt();
                         }
                     }
                 }
             }
+            System.out.print("Introduza um numero : ");
+            numero_utilizador = input.nextInt();
         }
         // Apresentar os intervalos e quantos numeros entraram dentro deles
         System.out.println("[ 00 - 25 ] : " + intervalo_00_25);

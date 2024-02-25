@@ -16,28 +16,18 @@ public class exercicio_14 {
         System.out.print("Quantos numeros deseja inserir : ");
         quantNumeros = input.nextInt();
 
-        while (quantNumeros > 0)
-        {
+        while (quantNumeros > 0) {
             System.out.print("Introduza um numero : ");
             number_utilizador = input.nextInt();
-            if (number_utilizador > saved_number)
-            {
-                saved_number = number_utilizador;
-                quantNumeros= --quantNumeros;
-            }
-            else
-            {
-                saved_number = number_utilizador;
-                quantNumeros = --quantNumeros;
+            if (number_utilizador < saved_number) {
                 cresceBooleano = false;
             }
+            saved_number = number_utilizador;
+            quantNumeros = --quantNumeros;
         }
-        if (cresceBooleano == false)
-        {
+        if (cresceBooleano == false) {
             System.out.println("Nao é crescente!");
-        }
-        else
-        {
+        } else {
             System.out.println("A ordem é crescente!");
         }
         System.out.println("\n <<<<< Fim de Progama >>>>>");
