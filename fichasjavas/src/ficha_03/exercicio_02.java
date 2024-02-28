@@ -10,12 +10,8 @@ public class exercicio_02 {
             if((number % 2) == 0) // Verificar se é par
             {
                 System.out.println("- " + number); // Apresenta o numero porque é par
-                number = ++number; // E incrementa 1
             }
-            else // Nao é par portanto incrementa 1 apenas
-            {
-                number = ++number;
-            }
+            number = ++number;
         }
     }
 }
