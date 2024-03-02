@@ -26,9 +26,10 @@ public class exercicio_0403 {
                     System.out.print(" ");
                     --contagemAjuda;
                 }
-                for(baseAsteriscos = baseAsteriscos; baseAsteriscos > 0; --baseAsteriscos)
+                while(baseAsteriscos > 0)
                 {
                     System.out.print(asterisco);
+                    --baseAsteriscos;
                 }
                 System.out.println();
             }
