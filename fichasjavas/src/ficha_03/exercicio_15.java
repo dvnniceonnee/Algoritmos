@@ -24,7 +24,7 @@ public class exercicio_15 {
                 numero_fatorial = 0;
             } else {
                 numero_fatorial = numero_fatorial * numero_utilizador;
-                numero_utilizador = --numero_utilizador;
+                --numero_utilizador;
             }
         }
         if (numero_fatorial == 0) {

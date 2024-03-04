@@ -20,7 +20,7 @@ public class exercicio_11 {
         while (number_apresentado < number_limite) // Enquanto o numero que queremos apresentar nao chegar ao numero limite
         {
             System.out.println("- "+ number_apresentado); // Apresentar o numero
-            number_apresentado =  number_apresentado + number_salto; // Incrementar o numero salto
+            number_apresentado += number_salto; // Incrementar o numero salto
         }
 
         System.out.println("\n<<<< Fim de Programa >>>>");

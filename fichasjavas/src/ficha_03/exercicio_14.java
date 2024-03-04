@@ -27,7 +27,7 @@ public class exercicio_14 {
             }
             quantNumeros = --quantNumeros;
         }
-        if (cresceBooleano == false) {
+        if (!cresceBooleano) {
             System.out.println("Nao é crescente!");
         } else {
             System.out.println("A ordem é crescente!");

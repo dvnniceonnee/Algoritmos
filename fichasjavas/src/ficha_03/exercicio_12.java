@@ -19,16 +19,16 @@ public class exercicio_12 {
         // Enquanto o numero for maior ou igual a "0" correr as condiçoes
         while (numero_utilizador >= 0) {
             if (numero_utilizador <= 25) { // caso seja menor do que 25 incrementar 1 ao intervalo definido
-                intervalo_00_25 = ++intervalo_00_25;
+                ++intervalo_00_25;
             } else {
                 if (numero_utilizador <= 50) { // caso seja menor do que 50 incrementar 1 ao intervalo definido
-                    intervalo_26_50 = ++intervalo_26_50;
+                    ++intervalo_26_50;
                 } else {
                     if (numero_utilizador <= 75) { // caso seja menor do que 75 incrementar 1 ao intervalo definido
-                        intervalo_51_75 = ++intervalo_51_75;
+                        ++intervalo_51_75;
                     } else {
                         if (numero_utilizador <= 100) { // caso seja menor do que 100 incrementar 1 ao intervalo definido
-                            intervalo_76_100 = ++intervalo_76_100;
+                            ++intervalo_76_100;
                         }
                     }
                 }

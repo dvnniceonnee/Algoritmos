@@ -24,7 +24,7 @@ public class exercicio_13 {
             {
                 System.out.println(" " + numero_inicio);
             }
-            numero_inicio = ++numero_inicio; // incremento para o proximo loop
+            ++numero_inicio; // incremento para o proximo loop
         }
         System.out.println("\n<<<<< Fim de Programa >>>>>");
     }

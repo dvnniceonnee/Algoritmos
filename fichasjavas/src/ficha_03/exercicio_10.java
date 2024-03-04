@@ -21,7 +21,7 @@ public class exercicio_10 {
             if (numberApresentado % 2 == 0) { // Verificar se o numero a apresentar é par
                 System.out.println("- " + numberApresentado);
             }
-            numberApresentado = ++numberApresentado;
+            ++numberApresentado;
         }
         System.out.println("\n<<<<< Fim de Programa >>>>>");
     }
