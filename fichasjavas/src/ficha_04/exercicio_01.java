@@ -46,5 +46,6 @@ public class exercicio_01 {
             System.out.print("Deseja continuar (s/n) : ");
             continuar = input.next();
         } while (continuar.equals("s"));
+        System.out.println("\n<<<<< Fim de Programa >>>>>");
     }
 }

@@ -4,12 +4,18 @@ public class exercicio_0401 {
     public static void main(String[] args) {
 
         // Declarar variaveis
-        int numero = 1;
+        int numero, numeroAsteriscos;
         System.out.println("<<<<<<< Desenhos >>>>>>\n");
-        while (numero <= 4)
+
+        for (numero = 1; numero <= 4; numero++)
         {
-            System.out.println("**********");
-            ++numero;
+            numeroAsteriscos = 10;
+            while (numeroAsteriscos > 0)
+            {
+                System.out.print("*");
+                --numeroAsteriscos;
+            }
+            System.out.println();
         }
     }
 }

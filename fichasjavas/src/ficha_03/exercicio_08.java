@@ -16,22 +16,16 @@ public class exercicio_08 {
         number = input.nextInt();
         numberApresentado = number - 5; // Atribuir o menor valor para depois incrementar
 
-        while (numberApresentado >= (number - 5) && numberApresentado <= (number + 5)) // verificar se o valor menos 5 e mais 5 ainda esta dentro dos intervalos
+        while (numberApresentado <= (number + 5)) // verificar se o valor menos 5 e mais 5 ainda esta dentro dos intervalos
         {
             if (numberApresentado == number) // caso seja o proprio numero indicado nao apresentar
             {
-                System.out.println(" "); // Imprimir um espaço
-                numberApresentado = ++numberApresentado;
-            }
-            else
-            {
+                System.out.println(); // Imprimir uma linha
+            } else{
                 System.out.println("- " + numberApresentado); // Apresentar o numero
-                numberApresentado = ++numberApresentado; // incremento de 1 para o proximo loop
             }
+            numberApresentado = ++numberApresentado; // Incrementa um para continuar para o próximo
         }
-
         System.out.println("\n<<<<< Fim de Programa >>>>>");
-
-
     }
 }

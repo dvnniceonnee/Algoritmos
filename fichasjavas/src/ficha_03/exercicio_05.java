@@ -16,10 +16,10 @@ public class exercicio_05 {
         System.out.print("Introduza quantas vezes quer ver a frase abaixo : ");
         num_utilizador = input.nextInt();
         System.out.print("\nIntroduza uma mensagem : ");
-        NewString = input.nextLine(); // Ler a proxima palavra e "nextLine" para ler os seguintes caracteres apos os espaços
+        NewString = input.next() + input.nextLine(); // Ler a proxima palavra e "nextLine" para ler os seguintes caracteres apos os espaços
 
         while (num_utilizador > 0) { // Enquanto o numero do utilizador nao for 0 continuar a escrever a frase
-            System.out.print("- " + NewString + "\n");
+            System.out.println("- " + NewString);
             num_utilizador = --num_utilizador; // decremento ao numero de vezes que ja foi mostrado
         }
 

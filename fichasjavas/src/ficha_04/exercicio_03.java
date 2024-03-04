@@ -29,7 +29,7 @@ public class exercicio_03 {
                 System.out.println("Jogador 2 adivinhe o numero  (0-100):"); // Pedir o numero ao jogador 2
                 num_jogador2 = input.nextInt();
             }
-            if (num_jogador2 > num_jogador1) {
+            if (num_jogador2 > num_jogador1) { // se for maior do que o valor do jogador 1 informa que está muito alto e incrementa uma tentativa
                 ++tentativas_jogador2;
                 System.out.println("Muito alto!\n");
             } else {

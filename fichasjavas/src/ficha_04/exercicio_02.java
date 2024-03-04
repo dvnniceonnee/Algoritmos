@@ -24,13 +24,13 @@ public class exercicio_02 {
             switch (opcaoEscolhida)
             {
                 case 1 :
-                    System.out.println("A opção escolhida é Criar");
+                    System.out.println("A opção escolhida é Criar\n");
                     break;
                 case 2 :
-                    System.out.println("A opção escolhida é Atualizar");
+                    System.out.println("A opção escolhida é Atualizar\n");
                     break;
                 case 3:
-                    System.out.println("A opção escolhida é Eliminar");
+                    System.out.println("A opção escolhida é Eliminar\n");
                     break;
                 case 4:
                     break;
