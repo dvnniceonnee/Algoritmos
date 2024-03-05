@@ -12,14 +12,11 @@ public class exercicio_0502 {
 
         // Ler variaveis
         System.out.println("<<<<< Programa de Piramides >>>>>\n");
-        System.out.print("Introduza o numero de linhas que quer para a piramide: ");
-        basePiramide = input.nextInt();
-
-        while (basePiramide > 9)
-        {
-            System.out.print("Introduza um numero de novo (1 até 9) : ");
+        do{
+            System.out.print("Introduza o numero de linhas que quer para a piramide (0-9): ");
             basePiramide = input.nextInt();
-        }
+        }while(basePiramide > 9);
+
         basePiramide = (basePiramide * 2) - 1;
 
         for(numeroExibido = numeroExibido; numeroExibido <= (basePiramide + 1) /2 ; ++numeroExibido)

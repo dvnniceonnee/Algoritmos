@@ -18,7 +18,6 @@ public class exercicio_01 {
         System.out.print("Introduza um segundo numero : ");
         num2 = input.nextDouble();
 
-
         do {
             System.out.println("Introduza a operação desejada ( + , - , / , *) : ");
             opAritmetica = input.next();
