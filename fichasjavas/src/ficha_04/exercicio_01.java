@@ -9,7 +9,7 @@ public class exercicio_01 {
 
         // Declarar variaveis
         double num1, num2, resultado;
-        String opAritmetica, continuar = "s";
+        String opAritmetica, continuar;
 
         // Ler Variaveis
         System.out.println("<<<<< Programa de Operaçõe Aritméticas >>>>\n");
@@ -42,8 +42,11 @@ public class exercicio_01 {
                 default:
                     System.out.println("A operação desejada nao é valida!");
             }
-            System.out.print("Deseja continuar (s/n) : ");
-            continuar = input.next();
+            do{
+                System.out.print("Deseja continuar (s/n) : ");
+                continuar = input.next();
+            }while (!continuar.equals("s") && !continuar.equals("n"));
+
         } while (continuar.equals("s"));
         System.out.println("\n<<<<< Fim de Programa >>>>>");
     }

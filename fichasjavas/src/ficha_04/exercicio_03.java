@@ -30,17 +30,13 @@ public class exercicio_03 {
                 num_jogador2 = input.nextInt();
             }
             if (num_jogador2 > num_jogador1) { // se for maior do que o valor do jogador 1 informa que está muito alto e incrementa uma tentativa
-                ++tentativas_jogador2;
                 System.out.println("Muito alto!\n");
-            } else {
-                if (num_jogador2 < num_jogador1) {
-                    ++tentativas_jogador2;
+            } else if (num_jogador2 < num_jogador1) {
                     System.out.println("Muito Baixo!");
-                } else {
-                    ++tentativas_jogador2;
-                }
             }
+            ++tentativas_jogador2;
         } while (num_jogador1 != num_jogador2);
+
         System.out.println("Acertou !!!!!!!");
         System.out.println("Tentou " + tentativas_jogador2 + " vezes!");
         System.out.println("\n <<<<< Fim de Progama >>>>>");
