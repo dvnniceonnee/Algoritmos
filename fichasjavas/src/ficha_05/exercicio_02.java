@@ -8,15 +8,16 @@ public class exercicio_02 {
         Scanner input =  new Scanner(System.in);
 
         // Declarar as variaveis
-        int totalComissoes = 0, mes = 1;
-        int[] arrayComissoes = new int[12];
+        int mes = 1;
+        double totalComissoes = 0;
+        double[] arrayComissoes = new double[12];
 
         // ler as variaveis
         System.out.println("<<<<< Programa de arrays >>>>\n");
 
         do{
-            System.out.println("Introduza a comissão para o mes (" + mes + ") : " );
-            arrayComissoes[mes -1] =  input.nextInt();
+            System.out.print("Introduza a comissão para o mes (" + mes + ") : " );
+            arrayComissoes[mes - 1] =  input.nextInt();
             mes++;
         }while (mes <= 12);
 

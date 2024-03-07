@@ -10,7 +10,7 @@ public class exercicio_01 {
         Scanner input = new Scanner(System.in);
 
         // Declarar as variaveis
-        int num, max_num = 0;
+        int max_num = 0;
         int[] arraynum = new int[10];
 
         // Ler as variaveis

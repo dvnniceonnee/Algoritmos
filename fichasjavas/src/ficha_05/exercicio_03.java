@@ -12,16 +12,14 @@ public class exercicio_03 {
         int[] arrayNumeros = new int[10];
 
         // Ler as variaveis
-        for (int quantNumeros = 0; quantNumeros <= arrayNumeros.length - 1; ++quantNumeros) {
-            System.out.print("Introduza um numero na array[" + quantNumeros + "] : ");
-            arrayNumeros[quantNumeros] = input.nextInt();
+        for (int i = 0; i <= arrayNumeros.length - 1; ++i) {
+            System.out.print("Introduza um numero na array[" + i + "] : ");
+            arrayNumeros[i] = input.nextInt();
         }
         maiornum = arrayNumeros[0];
-        for (int quantNumeros = 1; quantNumeros <= arrayNumeros.length - 1; ++quantNumeros)
-        {
-            if (arrayNumeros[quantNumeros] > maiornum)
-            {
-                maiornum = arrayNumeros[quantNumeros];
+        for (int i = 1; i <= arrayNumeros.length - 1; ++i) {
+            if (arrayNumeros[i] > maiornum) {
+                maiornum = arrayNumeros[i];
             }
         }
         System.out.println("O maior numero é :" + maiornum);
