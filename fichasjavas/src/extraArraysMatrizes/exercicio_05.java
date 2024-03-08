@@ -5,24 +5,23 @@ import java.util.Scanner;
 public class exercicio_05 {
     public static int[] valoresDuplicados(int[] array) {
 
-        int[] vetorNumerosRepetidos = new int[12];
-        int contadorNumerosRepetidos = 1;
-        int numeroRepetido = 0;
+        int[] vetorNumerosRepetidos = new int[array.length];
+        int contadorNumerosRepetidos = 0;
 
         for (int i = 0; i < array.length; i++) {
-            numeroRepetido = 0;
-            for (int u = 1; u < vetorNumerosRepetidos.length; u++)
-            {
-                if (array[i] != vetorNumerosRepetidos[u])
-                {
-                    for (int k = 0; k < array.length; k++) {
-                        if (k != i) {
-                            if (array[i] == array[k] && array[k] != numeroRepetido && array[k] != 0) {
-                                numeroRepetido = array[k];
-                                vetorNumerosRepetidos[contadorNumerosRepetidos] = array[k];
-                                contadorNumerosRepetidos++;
-                            }
-                        }
+            boolean repete = false;
+            for (int k = 1; k <= contadorNumerosRepetidos; k++) {
+                if (array[i] == vetorNumerosRepetidos[k]) {
+                    repete = true;
+                    k = vetorNumerosRepetidos.length;
+                }
+            }
+            if (!repete) {
+                for (int u = 0; u < array.length; u++) {
+                    if (i != u && array[i] == array[u] && array[u] != 0) {
+                        vetorNumerosRepetidos[contadorNumerosRepetidos + 1] = array[i];
+                        ++contadorNumerosRepetidos;
+                        u = array.length;
                     }
                 }
             }
@@ -42,19 +41,21 @@ public class exercicio_05 {
             System.out.print("Introduza um numero na Array[" + i + "]: ");
             vetorNumeros[i] = input.nextInt();
             if (vetorNumeros[i] == 0)
-                contadorZeros++;
+                ++contadorZeros;
         }
-        if (valoresDuplicados(vetorNumeros)[0] > 0 || contadorZeros > 0) {
-            System.out.println("Numeros repetidos: ");
-            if (contadorZeros > 0)
-                System.out.println("0");
-            else if (valoresDuplicados(vetorNumeros)[0] > 0) {
+        vetorNumerosRepetidos = valoresDuplicados(vetorNumeros);
+        if (vetorNumerosRepetidos[0] > 0 || contadorZeros > 1) {
+            System.out.println("\nNumeros repetidos : ");
+            if (vetorNumerosRepetidos[0] > 0) {
                 vetorNumerosRepetidos = valoresDuplicados(vetorNumeros);
                 for (int i = 1; i < vetorNumerosRepetidos.length; i++) {
                     if (vetorNumerosRepetidos[i] != 0) {
                         System.out.println(vetorNumerosRepetidos[i]);
                     }
                 }
+            }
+            if (contadorZeros > 1) {
+                System.out.println("0 ");
             }
         } else {
             System.out.println("Nao existe numeros repetidos!");
