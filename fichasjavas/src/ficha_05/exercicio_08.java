@@ -20,7 +20,7 @@ public class exercicio_08 {
 
         for (int i = 0; i < matrizNumeros.length; i++) {
             for (int e = 0; e < matrizNumeros[0].length; e++) {
-                System.out.print(matrizNumeros[i][e] + " ");
+                System.out.print(matrizNumeros[i][e] + "\t");
             }
             System.out.println(" ");
         }

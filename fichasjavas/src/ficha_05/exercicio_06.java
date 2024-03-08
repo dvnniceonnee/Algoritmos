@@ -8,7 +8,6 @@ public class exercicio_06 {
         Scanner input = new Scanner(System.in);
 
         // declarar as variaveis
-        int ordem;
         boolean crescent = true;
         int[] arrayNumeros = new int[10];
 
@@ -17,21 +16,16 @@ public class exercicio_06 {
             System.out.print("Introduza um numero na array[" + i + "] : ");
             arrayNumeros[i] = input.nextInt();
         }
-        ordem = arrayNumeros[0];
-        for (int i = 1; i < arrayNumeros.length ; i++) // variavel local
+        for (int i = 1; i < arrayNumeros.length; i++) // variavel local
         {
-            if (ordem > arrayNumeros[i])
-            {
+            if (arrayNumeros[i - 1] > arrayNumeros[i]) {
                 crescent = false;
-                break; // como ja é falsa nao interessa verificar o resto :)
+                i = arrayNumeros.length;
             }
         }
-        if (crescent)
-        {
+        if (crescent) {
             System.out.println("A ordem é crescente");
-        }
-        else
-        {
+        } else {
             System.out.println("A ordem nao é crescente");
         }
     }

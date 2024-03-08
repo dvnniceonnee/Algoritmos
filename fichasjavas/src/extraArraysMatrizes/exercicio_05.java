@@ -44,7 +44,7 @@ public class exercicio_05 {
                 ++contadorZeros;
         }
         vetorNumerosRepetidos = valoresDuplicados(vetorNumeros);
-        if (vetorNumerosRepetidos[0] > 0 || contadorZeros > 1) {
+        if (vetorNumerosRepetidos[0] > 0 || contadorZeros > 1) { // Verificar se existe numeros repetidos
             System.out.println("\nNumeros repetidos : ");
             if (vetorNumerosRepetidos[0] > 0) {
                 vetorNumerosRepetidos = valoresDuplicados(vetorNumeros);
