@@ -20,18 +20,18 @@ public class exercicio_07 {
         int numeroRemover = input.nextInt();
         int contador = 0;
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == numeroRemover) {
-                contador++;
+            if (array[i] == numeroRemover) { // se o numero a remover for igual a um dos numeros da array
+                contador++; // saber quantas vezes temos de remover o numero
             }
         }
 
-        if (contador > 0) {
-            int[] newArray = new int[array.length - contador];
-            contador = 0;
+        if (contador > 0) {                                    // se o contador for maior do que 0 significa que há um numero de vezes a remover um numero
+            int[] newArray = new int[array.length - contador]; // o tamanho da array vai ser o tamanho da array original menos as vezes do numero de vezes do numero a remover
+            contador = 0; //
             for (int i = 0; i < array.length; i++) {
-                if (array[i] != numeroRemover) {
+                if (array[i] != numeroRemover) {               // se o numero da array for diferente do numero a remover adiciona o numero
                     newArray[contador] = array[i];
-                    contador++;
+                    contador++;                                // adiciona a proxima posicao a adicionar o proximo numero que nao seja o numero a remover para dar skip
                 }
             }
             for (int i = 0; i < newArray.length; i++)
