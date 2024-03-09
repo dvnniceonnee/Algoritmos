@@ -6,28 +6,49 @@ public class exercicio_10 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int[] array = new int[12];
-        int[] arraysemNumerosDup = new int[12];
+        int[] numerosRepetidos = new int[12];
+        boolean existeRepetidos = false;
 
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < numerosRepetidos.length; i++) {
             System.out.print("Introduza um numero na array[" + i + "]:");
-            array[i] = input.nextInt();
+            numerosRepetidos[i] = input.nextInt();
         }
-        int contador = 0;
-        int[] arrayajuda = new int[12];
-        for (int i = 0; i < array.length; i++) {
-            int numero_Dup = array[i];
-            for (int k = i + 1; k < array.length; k++) {
-                if (numero_Dup == array[k]) {
-                    arrayajuda[contador] = numero_Dup;
-                    contador++;
-                    k = array.length;
+
+        for (int i = 0; i < numerosRepetidos.length; i++) {
+            int numero_Dup = numerosRepetidos[i];
+            boolean remove = false;
+            int contador = 0;
+            for (int k = 0; k < numerosRepetidos.length && k != i; k++) {
+                if (numerosRepetidos[k] == numero_Dup) {
+                    remove = true;
+                    ++contador;
                 }
             }
+            if (remove) {
+                ++contador;
+                int[] arrayTemp = new int[numerosRepetidos.length - contador];
+                contador = 0;
+                for (int k = 0; k < numerosRepetidos.length; k++) {
+                    if (numerosRepetidos[k] != numero_Dup) {
+                        arrayTemp[contador] = numerosRepetidos[k];
+                        ++contador;
+                    }
+                }
+                existeRepetidos = true;
+                i = 0;
+                numerosRepetidos = arrayTemp;
+            }
         }
-        for (int i= 0; i < arrayajuda.length; i++)
+        if (existeRepetidos) {
+            System.out.println("Existem " + (12 - numerosRepetidos.length) + " numeros repetidos!\n");
+            for (int i = 0; i < numerosRepetidos.length; i++) {
+                System.out.println(numerosRepetidos[i] + "\t");
+            }
+        }
+        else
         {
-            System.out.println(i + " : " +  arrayajuda[i] + " ");
+            System.out.println("Nao existem numeros repetidos!");
         }
+
     }
 }
