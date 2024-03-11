@@ -11,26 +11,23 @@ public class exercicio_10 {
         int numeroPesquisa, contador = 0;
 
 
-        for (int l = 0; l < matrizNumeros.length; l++)
-        {
-            for (int c = 0; c < matrizNumeros[0].length; c++)
-            {
+        for (int l = 0; l < matrizNumeros.length; l++) {
+            for (int c = 0; c < matrizNumeros[0].length; c++) {
                 System.out.print("Introduza um numero na matriz [" + l + "]" + "[" + c + "] :");
-                matrizNumeros[l][c] =  input.nextInt();
+                matrizNumeros[l][c] = input.nextInt();
             }
         }
         System.out.print("Introduza um numero para pesquisar : ");
-        numeroPesquisa =  input.nextInt();
+        numeroPesquisa = input.nextInt();
 
-        for (int c = 0; c < matrizNumeros.length; c++)
-        {
-            for (int l = 0; l < matrizNumeros[0].length; l++)
-            {
-                if (numeroPesquisa == matrizNumeros[c][l])
-                {
+        for (int c = 0; c < matrizNumeros.length; c++) {
+            for (int l = 0; l < matrizNumeros[0].length; l++) {
+                System.out.print(matrizNumeros[c][l] + "\t");
+                if (numeroPesquisa == matrizNumeros[c][l]) {
                     ++contador;
                 }
             }
+            System.out.println();
         }
 
         System.out.println("\nExiste " + contador + " posições na matriz com o numero " + numeroPesquisa);

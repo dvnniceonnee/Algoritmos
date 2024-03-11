@@ -3,6 +3,11 @@ package ficha_06;
 import java.util.Scanner;
 
 public class exercicio_02 {
+    /**
+     * Função que lê um numero e imprime o numero de vezes a string "*"
+     * @param a = numero
+     * @return String com numeros de "*"
+     */
     public static String numeroAsteriscos (int a)
     {
         String asteriscos = "";
