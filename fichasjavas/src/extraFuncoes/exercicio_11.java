@@ -25,16 +25,22 @@ public class exercicio_11 {
      */
     public static int pedirJogada(Scanner teclado, String jogador, String[][] matriz) {
         int posicao = 0;
-        System.out.print(jogador + "faça a sua próxima jogada (1-9) : ");
+        System.out.print(jogador + " faça a sua próxima jogada (1-9) : ");
         posicao = teclado.nextInt();
         boolean validaounao = false;
         do{
             while (posicao < 1 || posicao > 9) {
                 System.out.println(jogador + " Jogada inválida!");
-                System.out.print(jogador + " faça novamente a sua próxima jogada (1-9) : ");
+                System.out.print(jogador +" faça novamente a sua próxima jogada (1-9) : ");
                 posicao = teclado.nextInt();
             }
-            validaounao = validacaoJogada(matriz, posicao);
+            if (validacaoJogada(matriz, posicao)) {
+                validaounao = true;
+            }
+            else {
+                posicao = 0;
+            }
+
         }while (!validaounao);
         return posicao;
     }
@@ -95,9 +101,9 @@ public class exercicio_11 {
         String letraAdversario = "";
         if (jogador == 1) {
             letraJogador = "X";
-            letraAdversario = "Y";
+            letraAdversario = "O";
         } else {
-            letraJogador = "Y";
+            letraJogador = "O";
             letraAdversario = "X";
         }
         int contadorPerderColunas = 0;
@@ -295,10 +301,10 @@ public class exercicio_11 {
 
         System.out.println("***** JOGO DA VELHA *****");
         System.out.println("\n");
-        System.out.print("Jogador 1 introduza um nick : ");
+        System.out.print("Jogador 1 (X) introduza um nick : ");
         String nickJogador1 = input.next() + input.nextLine();
         int jogador1id = 1;
-        System.out.print("Jogador 2 introduza um nick : ");
+        System.out.print("Jogador 2 (O) introduza um nick : ");
         String nickJogador2 = input.next() + input.nextLine();
         int jogador2id = 2;
         System.out.println("\n");
