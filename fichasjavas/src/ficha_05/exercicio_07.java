@@ -16,21 +16,21 @@ public class exercicio_07 {
             System.out.print("Introduza um numero na array[" + i + "] : ");
             arrayNumeros[i] = input.nextInt();
             if (arrayNumeros[i] % 2 == 0) {
-                parMaior = arrayNumeros[i];
+                parMaior = arrayNumeros[i];  // introduz o ultimo par da lista na variavel parMaior
                 quantidadeNumerosPares++; // variavel para determinar se existem numeros pares
             }
         }
-        if (quantidadeNumerosPares > 0) {
-            for (int i = 0; i < arrayNumeros.length; i++) {
-                if (arrayNumeros[i] % 2 == 0) {
-                    if (arrayNumeros[i] > parMaior) {
-                        parMaior = arrayNumeros[i];
+        if (quantidadeNumerosPares > 0) {  // se a quantidade de numeros pares for maior do que 0 vamos verficar qual é o par maior
+            for (int i = 0; i < arrayNumeros.length; i++) {  // leitura da array
+                if (arrayNumeros[i] % 2 == 0) {              // verifica se o numero é par
+                    if (arrayNumeros[i] > parMaior) {        // verifica se é maior do que o parMaior anterior
+                        parMaior = arrayNumeros[i];          // Caso seja introduz o numero na variavel parMaior
                     }
                 }
             }
             System.out.println("O numero par maior é : " + parMaior);
         } else {
-            System.out.println("Nao existe nenhum numero par!");
+            System.out.println("Nao existe nenhum numero par!"); // como a quantidade de pares é 0 nao vamos verificar nada e vamos imprimir que não existem numeros pares
         }
     }
 }

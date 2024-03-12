@@ -28,20 +28,19 @@ public class exercicio_11 {
         System.out.print(jogador + " faça a sua próxima jogada (1-9) : ");
         posicao = teclado.nextInt();
         boolean validaounao = false;
-        do{
+        do {
             while (posicao < 1 || posicao > 9) {
                 System.out.println(jogador + " Jogada inválida!");
-                System.out.print(jogador +" faça novamente a sua próxima jogada (1-9) : ");
+                System.out.print(jogador + " faça novamente a sua próxima jogada (1-9) : ");
                 posicao = teclado.nextInt();
             }
             if (validacaoJogada(matriz, posicao)) {
                 validaounao = true;
-            }
-            else {
+            } else {
                 posicao = 0;
             }
 
-        }while (!validaounao);
+        } while (!validaounao);
         return posicao;
     }
 
@@ -209,13 +208,18 @@ public class exercicio_11 {
         return ganhou;
     }
 
+    /**
+     * Função para verificar se já nao existe posiçoes por preencher
+     * @param matrizJogoAtual
+     * @return Booleano (caso falso signifca que pode continuar o jogo, caso verdadeiro o jogo está empatado )
+     */
     public static boolean verificacaoEmpate(String[][] matrizJogoAtual) {
         boolean jogoEmpatado = true;
         for (int i = 0; i < matrizJogoAtual.length; i++) {
             for (int k = 0; k < matrizJogoAtual[0].length; k++) {
-                if (!matrizJogoAtual[i][k].equals("X") || !matrizJogoAtual[i][k].equals("O")) {
+                if (!matrizJogoAtual[i][k].equals("X") || !matrizJogoAtual[i][k].equals("O")) { // caso exista alguma posição que tenha um numero ainda existe uma posição para preencher
                     jogoEmpatado = false;
-                    k = matrizJogoAtual[0].length;
+                    k = matrizJogoAtual[0].length;  // termina o loop pois ja sabemos que existe uma posiçao por preencher
                     i = matrizJogoAtual.length;
                 }
             }
@@ -223,15 +227,17 @@ public class exercicio_11 {
         return jogoEmpatado;
     }
 
-    /*
-    jogoterminou() - metodo retorna um numero inteiro consoante o estado do jogo abaixo descrito
-    0 = jogo nao terminou
-    1 = jogador1 ganhou
-    2 = jogador2 ganhou
-    3 = empate
-    4 = jogador 1 nao ganha (jogo continua mas jogador 1 já nao consegue ganhar)
-    5 = jogador 2 nao ganha (jogo continua mas jogador 2 já nao consegue ganhar)
-    necessita de 2 parametros : matriz do jogo com as jogadas todas ja feitas e o jogador que joga (id numero inteiro a identificar o jogador)
+    /**
+     * Função para verificar se o jogo terminou
+     * @param matrizJogoAtual matriz atual depois do jogador efetuar a jogada
+     * @param jogador id (numero inteiro) do jogador (jogador 1 = 1, jogador 2 = 2)
+     * @return um inteiro 0 a 5
+     * 0 - jogo não terminou
+     * 1 - jogador1 ganhou
+     * 2 - jogador2 ganhou
+     * 3 - Jogo ficou empatado
+     * 4 - Jogo continua mas jogador 1 já nao consegue ganhar
+     * 5 - Jogo continua mas jogador 2 já não consegue ganhar
      */
     public static int jogoterminou(String[][] matrizJogoAtual, int jogador) {
         int checkGame = 0;
@@ -247,10 +253,9 @@ public class exercicio_11 {
                 return checkGame = 1;
             // verifaçao das diagonais
             int ganhouDiagonais = verificacaoDiagonais(matrizJogoAtual, jogador);
-            if (ganhouDiagonais ==  1) {
+            if (ganhouDiagonais == 1) {
                 return checkGame = 1;
-            }
-            else if (ganhouLinhas == 2 && ganhouColunas == 2 && ganhouDiagonais == 2)
+            } else if (ganhouLinhas == 2 && ganhouColunas == 2 && ganhouDiagonais == 2)
                 return checkGame = 4;
         } else {
             // verficação das colunas
@@ -263,10 +268,9 @@ public class exercicio_11 {
                 return checkGame = 2;
             // verifaçao das diagonais
             int ganhouDiagonais = verificacaoDiagonais(matrizJogoAtual, jogador);
-            if (ganhouDiagonais ==  1) {
+            if (ganhouDiagonais == 1) {
                 return checkGame = 2;
-            }
-            else if (ganhouLinhas == 2 && ganhouColunas == 2 && ganhouDiagonais == 2)
+            } else if (ganhouLinhas == 2 && ganhouColunas == 2 && ganhouDiagonais == 2)
                 return checkGame = 5;
         }
         if (verificacaoEmpate(matrizJogoAtual))
@@ -275,18 +279,58 @@ public class exercicio_11 {
         return checkGame;
     }
 
+    /**
+     * Apresentação gráfica do jogo
+     * @param matriz  matriz atual do jogo com um tamanho de 3x3
+     */
     public static void jogoApresentado(String[][] matriz) {
-        for (int i = 0; i < matriz.length; i++) {
-            for (int k = 0; k < matriz[0].length; k++) {
-                if (k == 2) {
-                    System.out.print(" " + matriz[i][k]);
+
+        int contadorLinhas = 0;                                             // contador para ajudar na contagem das linhas para imprimir o elemento da matriz[contadorLinhas][contadorPosicoes]
+        int contadorColunas = 0;                                            // contador para ajudar na contagem de colunas pois se chegar à segunda coluna vai incrementar 1 no contadorLinhas e retornar o contadorPosicoes
+        int contadorPosicoes = 0;                                           // posicao de 0 a 2 para posteriormente imprimir o elemento da matriz[contadorLinhas][contadorPosicoes]
+        for (int linha = 1; linha < 10; linha++) {                          // graficamente vai ter 9 linhas
+            for (int coluna = 1; coluna < 18; coluna++) {                   // graficamente vai ter 19 colunas
+                if (linha == 2 || linha == 5 || linha == 8) {               // se a linha for a 2 ou a 5 ou a 8 graficamente vai ser a linha onde vão estar inseridos os elementos da matriz (1-9 ou "X" ou "O")
+                    if (coluna == 3 || coluna == 9 || coluna == 15) {       // se for a coluna 3 ou 9 ou 15, graficamente vai ser onde estão os elementos da matriz
+                        System.out.print(matriz[contadorLinhas][contadorPosicoes]);
+                        contadorColunas++;                                  // imcrementa uma coluna para posteriormente saber se ja foram imprimidos todos os numeros da linha (contadorLinhas) da matriz
+                        contadorPosicoes++;
+                    } else if (coluna == 6 || coluna == 12)
+                        System.out.print("|");
+                    else {
+                        System.out.print(" ");
+                    }
+                } else if (linha == 3 || linha == 6) {
+                    if (coluna == 6 || coluna == 12)
+                        System.out.print("|");
+                    else
+                        System.out.print("_");
                 } else {
-                    System.out.print(" " + matriz[i][k] + " |");
+                    if (coluna == 6 || coluna == 12)
+                        System.out.print("|");
+                    else
+                        System.out.print(" ");
                 }
             }
-            if (i != 2)
-                System.out.println("\n------------");
+            System.out.println();
+            if (contadorColunas == 3) {                     // assim que as colunas ja forem 3 dá reset ao contadorColunas e contadorPosicoes
+                contadorLinhas++;
+                contadorColunas = 0;
+                contadorPosicoes = 0;
+            }
         }
+
+        //for (int i = 0; i < matriz.length; i++) {
+        //    for (int k = 0; k < matriz[0].length; k++) {
+        //        if (k == 2) {
+        //            System.out.print(" " + matriz[i][k]);
+        //        } else {
+        //            System.out.print(" " + matriz[i][k] + " |");
+        //        }
+        //    }
+        //    if (i != 2)
+        //        System.out.println("\n------------");
+        //}
         System.out.println("\n");
     }
 
@@ -297,7 +341,6 @@ public class exercicio_11 {
         String[][] matrizJogo = new String[3][3];
         matrizJogo = matrizOriginal();
         boolean jogoterminou = false, vezJogador = true;
-
 
         System.out.println("***** JOGO DA VELHA *****");
         System.out.println("\n");
@@ -312,44 +355,41 @@ public class exercicio_11 {
 
         while (!jogoterminou) {
             int estadoJogo = 0;
-            if (vezJogador)
-            {
-                int jogada = pedirJogada(input,nickJogador1,matrizJogo);
+            if (vezJogador) {
+                int jogada = pedirJogada(input, nickJogador1, matrizJogo);
                 matrizJogo = atualizacaoJogo(matrizJogo, jogada, jogador1id);
                 estadoJogo = jogoterminou(matrizJogo, jogador1id);
                 vezJogador = false;
-            }
-            else
-            {
-                int jogada = pedirJogada(input,nickJogador2,matrizJogo);
+            } else {
+                int jogada = pedirJogada(input, nickJogador2, matrizJogo);
                 matrizJogo = atualizacaoJogo(matrizJogo, jogada, jogador2id);
                 estadoJogo = jogoterminou(matrizJogo, jogador2id);
                 vezJogador = true;
             }
-            switch (estadoJogo){
-                case 0 : {
+            switch (estadoJogo) {
+                case 0: {
                     break;
                 }
-                case 1 : {
+                case 1: {
                     System.out.println("****** Jogador " + nickJogador1 + " Ganhou!!! ******");
                     jogoterminou = true;
                     break;
                 }
-                case 2 : {
+                case 2: {
                     System.out.println("****** Jogador " + nickJogador2 + " Ganhou!!! ******");
                     jogoterminou = true;
                     break;
                 }
-                case 3 :{
+                case 3: {
                     System.out.println("****** EMPATE ******");
                     jogoterminou = true;
                     break;
                 }
-                case 4 : {
+                case 4: {
                     System.out.println("****** Jogador " + nickJogador1 + " já nao consegue ganhar !!! ******");
                     break;
                 }
-                case 5 : {
+                case 5: {
                     System.out.println("****** Jogador " + nickJogador2 + " já nao consegue ganhar !!! ******");
                     break;
                 }
