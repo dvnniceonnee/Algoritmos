@@ -38,6 +38,9 @@ class MinhaExcepcao extends Exception{
         try{
             String novaString = letra;
         }
-        catch (Str)
+        catch (StringIndexOutOfBoundsException ex2)
+        {
+            System.out.println("String invalida!");
+        }
     }
 }
