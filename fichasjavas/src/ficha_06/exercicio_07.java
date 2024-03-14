@@ -3,19 +3,9 @@ package ficha_06;
 import java.util.Scanner;
 
 public class exercicio_07 {
-    public static void main(String[] args) {
-        // Scanner
-        Scanner input = new Scanner(System.in);
 
-        System.out.println("<<<<< Design de Quadrados >>>>>\n");
-        System.out.print("Introduza um caracter : "); // caractere a ser apresentado em forma de quadrado
-        String caracter = input.next();
-        System.out.print("Introduza numeros de linhas:");
-        int numeroLinhas = input.nextInt();
-        System.out.print("Introduza numero de colunas : ");
-        int numeroColunas = input.nextInt();
-
-        String[][] matriz = new String[numeroLinhas][numeroColunas];
+    public static void desenharQuad (String caracter, int linhas, int colunas){
+        String[][] matriz = new String[linhas][colunas];
 
         for (int i = 0; i < matriz.length; i++) { // iterar o numero de linhas do array
             for (int j = 0; j < matriz[0].length; j++) { // iterar o numero de colunas de cada linha do array
@@ -40,6 +30,20 @@ public class exercicio_07 {
             }
             System.out.println();
         }
+    }
+    public static void main(String[] args) {
+        // Scanner
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("<<<<< Design de Quadrados >>>>>\n");
+        System.out.print("Introduza um caracter : "); // caractere a ser apresentado em forma de quadrado
+        String caracter = input.next();
+        System.out.print("Introduza numeros de linhas:");
+        int numeroLinhas = input.nextInt();
+        System.out.print("Introduza numero de colunas : ");
+        int numeroColunas = input.nextInt();
+
+        desenharQuad (caracter, numeroLinhas, numeroColunas);
         System.out.println("\n<<<<< Fim de Programa >>>>>");
     }
 }
