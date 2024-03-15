@@ -2,6 +2,7 @@ package ficha_06;
 import java.util.Scanner;
 import static ficha_06.exercicio_03.*;
 
+
 public class exercicio_04 {
     public static void main(String[] args) {
         // Scanner

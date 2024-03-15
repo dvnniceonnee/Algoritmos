@@ -2,6 +2,7 @@ package ficha_05;
 
 import java.util.Scanner;
 
+
 public class exercicio_06 {
     public static void main(String[] args) {
         // Importar o scanner
