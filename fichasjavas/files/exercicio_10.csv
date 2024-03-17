@@ -49,7 +49,7 @@ Emma Watson,1600016,Cinema,emma.watson@exemplo.com,32
 Pablo Picasso,1900019,Arte,pablo.picasso@exemplo.com,91
 Virginia Woolf,2000020,Literatura,virginia.woolf@exemplo.com,59
 Albert Einstein,2200022,Fisica,albert.einstein@exemplo.com,76
-Nelson Mandela,2400024,Politica,nelson.mandela@exemplo.com,95
+Nelson Mandela Negro,2400024,Politica,nelson.mandela@exemplo.com,95
 Walt Disney,2800028,Cinema,walt.disney@exemplo.com,65
 Muhammad Ali,2600026,Desporto,muhammad.ali@exemplo.com,74
 Frida Kahlo,2900029,Arte,frida.kahlo@exemplo.com,47
@@ -68,8 +68,3 @@ Jose Mourinho,5200052,Desporto,jose.mourinho@exemplo.com,59
 Amalia Rodrigues,5300053,Musica,amalia.rodrigues@exemplo.com,79
 Eusebio da Silva Ferreira,5400054,Desporto,eusebio.silva-ferreira@exemplo.com,71
 Sophia de Mello Breyner Andresen,5800058,Literatura,sophia.andresen@exemplo.com,84
-Vasco da Gama,5900059,Navegacao,vasco.gama@exemplo.com,55
-Antonio Variacoes,6000060,Musica,antonio.variacoes@exemplo.com,39
-Jose Saramago,6100061,Literatura,jose.saramago@exemplo.com,87
-Mariza,6400064,Musica,mariza@exemplo.com,47
-Antonio Guterres,6500065,Política,antonio.guterres@exemplo.com,72
