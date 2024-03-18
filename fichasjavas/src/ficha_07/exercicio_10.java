@@ -30,60 +30,6 @@ public class exercicio_10 {
     }
 
     /**
-     * Função que imprime as informações de um especifo formando
-     *
-     * @param matriz    Recebe uma matriz com os dados todos do ficheiro
-     * @param matricula Recebe uma matricula para pesquisar o formandd
-     * @return booelano a referir se existe a matricula ou nao (true = existe; false = nao existe)
-     */
-    public static boolean informacoesFormando(String[][] matriz, String matricula) {
-        String[][] formando = new String[0][0];
-        int contadorLinhas = 0;
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[i][1].equals(matricula)) {
-                if (contadorLinhas == 0) {
-                    String[][] temp = new String[contadorLinhas + 1][matriz[0].length];
-                    for (int k = 0; k < matriz[0].length; k++) {
-                        temp[contadorLinhas][k] = matriz[i][k];
-                    }
-                    contadorLinhas++;
-                    formando = temp;
-                } else {
-                    String[][] temp = new String[contadorLinhas + 1][matriz[0].length];
-                    for (int k = 0; k < formando.length; k++) {
-                        for (int j = 0; j < formando[0].length; j++) {
-                            temp[k][j] = formando[k][j];
-                        }
-                        temp[formando.length][formando[0].length] = matriz[i][2];
-                    }
-                    contadorLinhas++;
-                    formando = temp;
-                }
-            }
-        }
-        if (contadorLinhas > 0) {
-            String nome = formando[0][0];
-            String idMatricula = formando[0][1];
-            String cursos = formando[0][2];
-            String email = formando[0][3];
-            String idade = formando[0][4];
-            if (contadorLinhas > 1) {
-                for (int i = 1; i < formando.length; i++)
-                    cursos += "\t|\t" + formando[i][2];
-            }
-            System.out.println("Nome : " + nome);
-            System.out.println("Matricula : " + idMatricula);
-            System.out.println("Curso(s) : " + cursos);
-            System.out.println("Email : " + email);
-            System.out.println("Idade : " + idade);
-            return true;
-        } else {
-            System.out.println("\n !! Matricula Invalida! Nenhum formando encontrado !!");
-            return false;
-        }
-    }
-
-    /**
      * Recebe uma matriz e imprime os dados filtrados por um curso
      *
      * @param matriz        Recebe uma matriz com os dados gerais de todos os formandos
@@ -205,7 +151,7 @@ public class exercicio_10 {
             case "b":
                 System.out.print("Insira o numero da matricula : ");
                 String matricula = input.next() + input.nextLine();
-                informacoesFormando(matrizDados, matricula);
+                informacoesFormando(matrizDados, matricula, 1);
                 break;
             case "c":
                 String[] cursos = listaDadosColuna(matrizDados, 2);
@@ -299,7 +245,7 @@ public class exercicio_10 {
         Scanner input1 = teclado;
         System.out.print("Introduza a matricula do formando para editar : ");
         String matricula = input1.next() + input1.nextLine();
-        boolean matriculaExiste = informacoesFormando(matrizDados, matricula);
+        boolean matriculaExiste = informacoesFormando(matrizDados, matricula, 1);
         if (matriculaExiste) {
             int opcao = 0;
             do {
@@ -395,19 +341,6 @@ public class exercicio_10 {
         return deleted;
     }
 
-    /**
-     * Função que edita o ficheiro com os dados todos atuais da matriz dada
-     * @param ficheiro onde vai ser guardados os dados
-     * @throws FileNotFoundException
-     */
-    public static void saveDataFile(File ficheiro) throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter(ficheiro);
-        for (int i = 0; i < matrizDados.length; i++) {
-            writer.println(matrizDados[i][0] + "," + matrizDados[i][1] + "," + matrizDados[i][2] + "," + matrizDados[i][3] + "," + matrizDados[i][4]);
-        }
-        writer.close();
-    }
-
     public static String[][] matrizDados;
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -467,14 +400,14 @@ public class exercicio_10 {
                         }
                         break;
                     case 5 :
-                        saveDataFile(ficheiro);
+                        saveDataFile(ficheiro.getPath(), matrizDados, ",");
                         System.out.println("## Ficheiro atualizado ##");
                         break;
                     case 6:
                         System.out.println("Deseja guardar os dados no ficheiro (s/n) ? ");
                         String saveFile = input.next();
                         if (saveFile.equalsIgnoreCase("s")) {
-                            saveDataFile(ficheiro);
+                            saveDataFile(ficheiro.getPath(), matrizDados, ",");
                         }
                         break;
                     default:

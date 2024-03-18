@@ -2,6 +2,8 @@ package ficha_07;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BibliotecaFiles {
@@ -131,6 +133,115 @@ public class BibliotecaFiles {
         }
         return conjuntoDados;
 
+    }
+
+
+    /**
+     * Função que permite atualizar um especifico ficheiro consoante uma matriz dada
+     * @param filePath caminho do ficheiro a atualizar
+     * @param matrizDados conjunto de dados que foram atualizados para inserir no ficheiro
+     * @throws FileNotFoundException
+     */
+    public static void saveDataFile(String filePath, String[][] matrizDados, String delimitador) throws FileNotFoundException {
+        PrintWriter writer = new PrintWriter(new File(filePath));
+        for (int i = 0; i < matrizDados.length; i++) {
+            for(int k = 0; k < matrizDados[0].length; k++){
+                if(k == matrizDados[0].length - 1){
+                    writer.print(matrizDados[i][k]);
+                }
+                else {
+                    writer.print(matrizDados[i][k] + delimitador);
+                }
+            }
+            if (i < matrizDados.length - 1){
+                writer.print("\n");
+            }
+        }
+        writer.close();
+    }
+
+    /**
+     * Função que imprime as informações de um especifo formando
+     *
+     * @param matriz    Recebe uma matriz com os dados todos do ficheiro
+     * @param matricula Recebe uma matricula para pesquisar o formandd
+     * @return booelano a referir se existe a matricula ou nao (true = existe; false = nao existe)
+     */
+    public static boolean informacoesFormando(String[][] matriz, String matricula, int colunaDadoPesquisar) {
+        String[][] formando = new String[0][0];
+        int contadorLinhas = 0;
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][colunaDadoPesquisar].equals(matricula)) {
+                if (contadorLinhas == 0) {
+                    String[][] temp = new String[contadorLinhas + 1][matriz[0].length];
+                    for (int k = 0; k < matriz[0].length; k++) {
+                        temp[contadorLinhas][k] = matriz[i][k];
+                    }
+                    contadorLinhas++;
+                    formando = temp;
+                } else {
+                    String[][] temp = new String[contadorLinhas + 1][matriz[0].length];
+                    for (int k = 0; k < formando.length; k++) {
+                        for (int j = 0; j < formando[0].length; j++) {
+                            temp[k][j] = formando[k][j];
+                        }
+                        temp[formando.length][formando[0].length] = matriz[i][2];
+                    }
+                    contadorLinhas++;
+                    formando = temp;
+                }
+            }
+        }
+        if (contadorLinhas > 0) {
+            String nome = formando[0][0];
+            String idMatricula = formando[0][1];
+            String cursos = formando[0][2];
+            String email = formando[0][3];
+            String idade = formando[0][4];
+            if (contadorLinhas > 1) {
+                for (int i = 1; i < formando.length; i++)
+                    cursos += "\t|\t" + formando[i][2];
+            }
+            System.out.println("Nome : " + nome);
+            System.out.println("Matricula : " + idMatricula);
+            System.out.println("Curso(s) : " + cursos);
+            System.out.println("Email : " + email);
+            System.out.println("Idade : " + idade);
+            return true;
+        } else {
+            System.out.println("\n !! Matricula Invalida! Nenhum formando encontrado !!");
+            return false;
+        }
+    }
+
+    /**
+     * Função que imprime as informações de um especifo formando
+     *
+     * @param matriz  Recebe uma matriz com os dados todos do ficheiro
+     * @param idCliente Recebe um id de cliente para pesquisar o cliente
+     * @return booelano a referir se existe a matricula ou nao (true = existe; false = nao existe)
+     */
+    public static boolean infoClient(String[][] matriz, String idCliente, int colunaDadoPesquisar) {
+        int linhaInfo = 0;
+        boolean clienteExiste = false;
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][colunaDadoPesquisar].equals(idCliente)) {
+                linhaInfo = i;
+                clienteExiste = true;
+                i = matriz.length;
+            }
+        }
+        if (clienteExiste) {
+            System.out.println("ID [ " + matriz[linhaInfo][0] + " ] ");
+            System.out.println("Nome : " + matriz[linhaInfo][1]);
+            System.out.println("Data de Nascimento : " + matriz[linhaInfo][2]);
+            System.out.println("Nº Telemovel : " + matriz[linhaInfo][3]);
+            System.out.println("eMail : " + matriz[linhaInfo][4]);
+            return true;
+        } else {
+            System.out.println("\n !! Matricula Invalida! Nenhum formando encontrado !!");
+            return false;
+        }
     }
 }
 
