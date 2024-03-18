@@ -49,13 +49,13 @@ public class exercicio_11 {
         File ficheiroEventos = new File("fichasjavas/files/ficha_07/exercicio_11.csv");
         int[] quantidadeLinhas = new int[0];
         try{
-            quantidadeLinhas = numeroLinhasColunas(ficheiroEventos);
+            quantidadeLinhas = numeroLinhasColunas(ficheiroEventos, ",");
         }catch (FileNotFoundException ex1){
             System.out.println("Ficheiro inválido!");
         }
         if(quantidadeLinhas.length > 0){
             int opcao = 0;
-            matrizEventos = matrizDados(ficheiroEventos, quantidadeLinhas[0],quantidadeLinhas[1],true );
+            matrizEventos = matrizDados(ficheiroEventos, quantidadeLinhas[0],quantidadeLinhas[1],true, ",");
             do{
                 String[] meses = menuMeses();
                 System.out.print("\nIntroduza o mês que deseja pesquisar : ");

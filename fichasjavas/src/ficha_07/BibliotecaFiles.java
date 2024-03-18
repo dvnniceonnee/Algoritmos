@@ -12,11 +12,11 @@ public class BibliotecaFiles {
      * @param ficheiro
      * @return um array com 2 posições [0] - quantidade de linhas [1] quantidade de colunas
      */
-    public static int[] numeroLinhasColunas(File ficheiro) throws FileNotFoundException {
+    public static int[] numeroLinhasColunas(File ficheiro, String delimitador) throws FileNotFoundException {
         int[] lineColumns = new int[2];
         Scanner scanFile = new Scanner(ficheiro);
         lineColumns[0] = 1;
-        lineColumns[1] = scanFile.nextLine().split(",").length;
+        lineColumns[1] = scanFile.nextLine().split(delimitador).length;
         while (scanFile.hasNextLine()) {
             scanFile.nextLine();
             lineColumns[0] = lineColumns[0] + 1;
@@ -33,7 +33,7 @@ public class BibliotecaFiles {
      * @param cabecalho booleanda para perguntar se quer retirar o cabecalho (true = retira , false = nao retira)
      * @return uma matriz com a informação toda do ficheiro
      */
-    public static String[][] matrizDados(File ficheiro, int linhas, int colunas, boolean cabecalho) {
+    public static String[][] matrizDados(File ficheiro, int linhas, int colunas, boolean cabecalho, String delimitador) {
         String[][] matrizFile = new String[0][0];
         try {
             Scanner scanFile = new Scanner(ficheiro);
@@ -43,7 +43,7 @@ public class BibliotecaFiles {
             }
             matrizFile = new String[linhas][colunas];
             for (int i = 0; i < linhas; i++) {
-                String[] linhasFile = scanFile.nextLine().split(",");
+                String[] linhasFile = scanFile.nextLine().split(delimitador);
                 for (int k = 0; k < colunas; k++) {
                     matrizFile[i][k] = linhasFile[k];
                 }

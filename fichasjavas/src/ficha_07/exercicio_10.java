@@ -416,14 +416,14 @@ public class exercicio_10 {
         boolean fileValido = true;
         int[] quantidadeLinesCol = new int[0];
         try {
-            quantidadeLinesCol = numeroLinhasColunas(ficheiro);
+            quantidadeLinesCol = numeroLinhasColunas(ficheiro, ",");
         } catch (FileNotFoundException ex1) {
             System.out.println("Ficheiro Inválido!");
             fileValido = false;
         }
         if (fileValido) {
             int opcao = 0;
-            matrizDados = matrizDados(ficheiro, quantidadeLinesCol[0], quantidadeLinesCol[1], false);
+            matrizDados = matrizDados(ficheiro, quantidadeLinesCol[0], quantidadeLinesCol[1], false,",");
             do {
                 System.out.println(menuPrincipal());
                 System.out.print("Introduza a opção desejada : ");

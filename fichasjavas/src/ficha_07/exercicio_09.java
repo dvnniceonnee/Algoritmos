@@ -81,7 +81,7 @@ public class exercicio_09 {
         boolean valido = false;
         int[] quantLinhasCol = new int[0];
         try{
-            quantLinhasCol = numeroLinhasColunas(musicas);
+            quantLinhasCol = numeroLinhasColunas(musicas, ",");
             valido = true;
         }catch (FileNotFoundException ex1){
             System.out.println("Ficheiro Inválido!");
@@ -89,7 +89,7 @@ public class exercicio_09 {
         if (valido) {
             int linhas = quantLinhasCol[0];
             int colunas = quantLinhasCol[1];
-            String[][] matrizMusics = matrizDados(musicas, linhas, colunas, true);
+            String[][] matrizMusics = matrizDados(musicas, linhas, colunas, true,",");
             int opcao = 0;
             do {
                 System.out.print(menu());
