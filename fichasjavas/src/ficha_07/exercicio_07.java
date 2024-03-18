@@ -9,7 +9,7 @@ public class exercicio_07 {
         boolean ficheiroValido = true;
         try
         {
-            File ficheiro = new File("fichasjavas/files/exercicio_07.txt");
+            File ficheiro = new File("fichasjavas/files/ficha_07/exercicio_07.txt");
             scannerFiles = new Scanner(ficheiro) ;
         }
         catch (Exception ex1)

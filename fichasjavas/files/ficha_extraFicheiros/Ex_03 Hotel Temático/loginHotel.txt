@@ -1,0 +1,6 @@
+admin;123
+funcionario;01_password!
+pastelDeNata;bacalhau5
+programador;JavaLife
+rececao;abrirAoMeioDiaFecharDeTarde
+estagiarios;palavra_passe_forte!2024*

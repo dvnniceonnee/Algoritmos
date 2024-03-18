@@ -20,34 +20,7 @@ public class exercicio_09 {
                 "6. Sair\n";
         return menuOpcoes;
     }
-    /**
-     * Função para retornar uma lista de dados consoante a pesquisa indica pelo utilizar
-     * @param matriz     recebe uma matriz com os dados que queremos pesquisar das musicas
-     * @param dado       a informação do genero ou do artista que pretendemos procurar
-     * @param colunaDado a coluna onde vai estar a informação do dado
-     * @return um array com os dados todos filtrados pelos parametros
-     */
-    public static String[] listaDadosEspecifico(String[][] matriz, String dado, int colunaDado) {
-        String[] conjuntoDados = new String[0];
 
-        for (int i = 0; i < matriz.length; i++) {
-            if (matriz[i][colunaDado].equals(dado)) {
-                if (conjuntoDados.length == 0) {
-                    conjuntoDados = new String[1];
-                    conjuntoDados[0] = matriz[i][0];
-                } else {
-                    String[] temp = new String[conjuntoDados.length + 1];
-                    for (int k = 0; k < conjuntoDados.length; k++) {
-                        temp[k] = conjuntoDados[k];
-                    }
-                    temp[conjuntoDados.length] = matriz[i][0];
-                    conjuntoDados = temp;
-                }
-            }
-        }
-        return conjuntoDados;
-
-    }
     /**
      * Função para vericiar a musica com o maior tempo de duração da lista
      *
@@ -104,7 +77,7 @@ public class exercicio_09 {
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
-        File musicas = musicas = new File("fichasjavas/files/exercicio_09.csv");
+        File musicas = musicas = new File("fichasjavas/files/ficha_07/exercicio_09.csv");
         boolean valido = false;
         int[] quantLinhasCol = new int[0];
         try{
@@ -144,7 +117,7 @@ public class exercicio_09 {
                             input.next();
                         }
                         System.out.println();
-                        String[] listaMusicas = listaDadosEspecifico(matrizMusics, listaGeneros[opcaoGenero - 1], 2);
+                        String[] listaMusicas = pesquisaDadosEspecificos(matrizMusics, listaGeneros[opcaoGenero - 1], 2);
                         for (int i = 0; i < listaMusicas.length; i++) {
                             System.out.println("- " + listaMusicas[i]);
                         }
@@ -165,7 +138,7 @@ public class exercicio_09 {
                             input.next();
                         }
                         System.out.println();
-                        String[] listaMusicas2 = listaDadosEspecifico(matrizMusics, listaArtistas[opcaoArtista - 1], 1);
+                        String[] listaMusicas2 = pesquisaDadosEspecificos(matrizMusics, listaArtistas[opcaoArtista - 1], 1);
                         for (int i = 0; i < listaMusicas2.length; i++) {
                             System.out.println("- " + listaMusicas2[i]);
                         }

@@ -9,7 +9,7 @@ public class exercicio_04 {
 
         try
         {
-            Scanner scannerFicheiro = new Scanner(new File("fichasjavas/files/exercicio_04.csv"));
+            Scanner scannerFicheiro = new Scanner(new File("fichasjavas/files/ficha_07/exercicio_04.csv"));
             while (scannerFicheiro.hasNextLine())
             {
                 String linha = scannerFicheiro.nextLine();

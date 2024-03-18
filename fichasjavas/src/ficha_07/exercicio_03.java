@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class exercicio_03 {
     public static void main(String[] args) throws FileNotFoundException {
 
-        Scanner scannerFicheiro = new Scanner(new File("fichasjavas/files/exercicio_03_Alternativa01.txt"));
+        Scanner scannerFicheiro = new Scanner(new File("fichasjavas/files/ficha_07/exercicio_03_Alternativa01.txt"));
 
         File ficheiroNew = new File("fichasjavas/files/exercicio_03_copiado.txt");
         PrintWriter writerFicheiro = new PrintWriter(ficheiroNew);

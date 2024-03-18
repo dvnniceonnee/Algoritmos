@@ -7,7 +7,7 @@ public class exercicio_05 {
     public static void main(String[] args) {
         try
         {
-            Scanner ficheiro = new Scanner(new File("fichasjavas/files/exercicio_05_31.txt"));
+            Scanner ficheiro = new Scanner(new File("fichasjavas/files/ficha_07/exercicio_05_31.txt"));
             int numero =0 ;
             while (ficheiro.hasNextInt())
             {

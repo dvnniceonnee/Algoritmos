@@ -7,7 +7,7 @@ public class exercicio_06 {
     public static void main(String[] args) {
         try
         {
-            Scanner ficheiroLer = new Scanner(new File("fichasjavas/files/exercicio_06.txt"));
+            Scanner ficheiroLer = new Scanner(new File("fichasjavas/files/ficha_07/exercicio_06.txt"));
             String maisVelha = "";
             int maiorIdade  = 0; // pode começar a zero pois nao existe idades menores do que 0
             while (ficheiroLer.hasNextLine())

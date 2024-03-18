@@ -9,7 +9,7 @@ public class exercicio_08 {
         boolean ficheiroValido = true;
         Scanner scannerFile = new Scanner("");
         try{
-            scannerFile = new Scanner(new File("fichasjavas/files/exercicio_08.csv"));
+            scannerFile = new Scanner(new File("fichasjavas/files/ficha_07/exercicio_08.csv"));
 
         }
         catch (Exception ex1)

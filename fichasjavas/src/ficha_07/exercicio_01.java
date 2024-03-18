@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class exercicio_01 {
     public static void main(String[] args) throws FileNotFoundException {
 
-        File ficheiro =  new File("fichasjavas/files/exercicio_01_Alternativa01.txt");
+        File ficheiro =  new File("fichasjavas/files/ficha_07/exercicio_01_Alternativa01.txt");
         Scanner scannerFile = new Scanner(ficheiro);
 
         while (scannerFile.hasNextLine())

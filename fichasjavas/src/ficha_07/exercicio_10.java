@@ -278,6 +278,7 @@ public class exercicio_10 {
         matrizTemp[dados.length][2] = curso;
         matrizTemp[dados.length][3] = email;
         matrizTemp[dados.length][4] = idade;
+        System.out.println(nome + "\n" + curso + "\n" + email + "\n" + idade);
         matrizDados = matrizTemp;
         /*
         PrintWriter writer = new PrintWriter(ficheiro);
@@ -356,6 +357,45 @@ public class exercicio_10 {
     }
 
     /**
+     * Função que permite remover um formando dando uma especifica matricula
+     * @param dados matriz de dados
+     * @param matricula String com a matricula do formando a ser apagada
+     * @return booleano verdadeiro caso o formando exista e tenha sido apagado
+     */
+    public static boolean deleteFormando(String[][] dados, String matricula){
+        String[][] newData = new String[0][0];
+        boolean deleted = false;
+        for (int i = 0; i < dados.length; i++){
+            if (!dados[i][1].equals(matricula)){
+                if (newData.length == 0){
+                    String[][] temp =  new String[newData.length + 1][5];
+                    for (int k = 0; k < dados[0].length; k++){
+                        temp[newData.length][k] = dados[i][k];
+                    }
+                    newData = temp;
+                }
+                else {
+                    String[][] temp =  new String[newData.length + 1][5];
+                    for (int j = 0; j < newData.length; j++){
+                        for (int y = 0; y < newData[0].length; y++){
+                            temp[j][y] = newData[j][y];
+                        }
+                    }
+                    for (int k = 0; k < dados[0].length; k++){
+                        temp[newData.length][k] = dados[i][k];
+                    }
+                    newData = temp;
+                }
+            }
+            else {
+                deleted = true;
+            }
+        }
+        matrizDados = newData;
+        return deleted;
+    }
+
+    /**
      * Função que edita o ficheiro com os dados todos atuais da matriz dada
      * @param ficheiro onde vai ser guardados os dados
      * @throws FileNotFoundException
@@ -367,11 +407,12 @@ public class exercicio_10 {
         }
         writer.close();
     }
+
     public static String[][] matrizDados;
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
-        File ficheiro = new File("fichasjavas/files/exercicio_10.csv");
+        File ficheiro = new File("fichasjavas/files/ficha_07/exercicio_10.csv");
         boolean fileValido = true;
         int[] quantidadeLinesCol = new int[0];
         try {
@@ -405,12 +446,25 @@ public class exercicio_10 {
                         break;
                     case 2:
                         criarFormando(matrizDados);
-                        matrizDados = matrizDados(ficheiro, ++quantidadeLinesCol[0], quantidadeLinesCol[1], false);
                         break;
                     case 3:
                         editarFormando(matrizDados, input);
                         break;
                     case 4:
+                        System.out.print("Introduza a matricula que deseja eliminar : ");
+                        String matriculaFormando = input.next() + input.nextLine();
+                        try{
+                            Integer.parseInt(matriculaFormando);
+                            boolean formandoDeleted = deleteFormando(matrizDados, matriculaFormando);
+                            if (formandoDeleted){
+                                System.out.println("\nFormando com a matricula " + matriculaFormando + " foi apagada!");
+                            }
+                            else
+                                System.out.println("\nMatricula não encontrada! Formando nao existente!");
+                        }
+                        catch (Exception ex1){
+                            System.out.println("Matricula invalida!");
+                        }
                         break;
                     case 5 :
                         saveDataFile(ficheiro);
