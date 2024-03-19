@@ -3,7 +3,6 @@ package ficha_07;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BibliotecaFiles {
@@ -135,7 +134,6 @@ public class BibliotecaFiles {
 
     }
 
-
     /**
      * Função que permite atualizar um especifico ficheiro consoante uma matriz dada
      * @param filePath caminho do ficheiro a atualizar
@@ -164,14 +162,14 @@ public class BibliotecaFiles {
      * Função que imprime as informações de um especifo formando
      *
      * @param matriz    Recebe uma matriz com os dados todos do ficheiro
-     * @param matricula Recebe uma matricula para pesquisar o formandd
-     * @return booelano a referir se existe a matricula ou nao (true = existe; false = nao existe)
+     * @param dado Recebe uma dado para pesquisar o dado
+     * @return booelano a referir se existe o dado ou nao (true = existe; false = nao existe)
      */
-    public static boolean informacoesFormando(String[][] matriz, String matricula, int colunaDadoPesquisar) {
+    public static boolean searchMatriz(String[][] matriz, String dado, int colunaDadoPesquisar) {
         String[][] formando = new String[0][0];
         int contadorLinhas = 0;
         for (int i = 0; i < matriz.length; i++) {
-            if (matriz[i][colunaDadoPesquisar].equals(matricula)) {
+            if (matriz[i][colunaDadoPesquisar].equals(dado)) {
                 if (contadorLinhas == 0) {
                     String[][] temp = new String[contadorLinhas + 1][matriz[0].length];
                     for (int k = 0; k < matriz[0].length; k++) {
@@ -239,9 +237,64 @@ public class BibliotecaFiles {
             System.out.println("eMail : " + matriz[linhaInfo][4]);
             return true;
         } else {
-            System.out.println("\n !! Matricula Invalida! Nenhum formando encontrado !!");
             return false;
         }
     }
+
+    /**
+     * Função que permite remover uma linha de uma matriz (necessita de verificar antes se a linha existe)
+     * @param matriz de dados de onde vai ser removida a linha
+     * @param dado informação que vai estar na linha que vai ser apagada
+     * @param colunaDado coluna onde vai estar o dado que foi dado por parametro
+     * @return uma matriz nova com a linha apagada
+     */
+    public static String[][] deleteLine(String[][] matriz, String dado, int colunaDado){
+        String[][] temp = new String[matriz.length - 1][matriz[0].length];
+        int countingLines = 0;
+        for (int i = 0; i < temp.length; i++){
+            if (matriz[i][colunaDado].equals(dado)){
+                countingLines++;
+            }
+            else {
+                for(int k = 0; k < temp[0].length; k++){
+                    temp[i][k] = matriz[i+countingLines][k];
+                }
+            }
+        }
+        return temp;
+    }
+
+    /**
+     * Função que verifica o ultimo id de uma tabela numa especifica coluna e incrementa um numero
+     * @param lastId String com o ultimo id da tabela
+     * @param delimitadorId char que vai delimitar a string de ID's
+     * @return String com o id incrementado com o mesmo formato
+     */
+    public static String incrementID(String lastId, String delimitadorId){
+        String[] lastIDArray = lastId.split(delimitadorId);
+        String charId = lastIDArray[0];
+        int idNumber = Integer.parseInt(lastIDArray[1]);
+        return charId + delimitadorId + (idNumber+1);
+    }
+
+    /**
+     * Função que retorna uma matriz com os dados novos inseridos
+     * @param arrayDados dados a adicionar á matriz em forma de array
+     * @param matrizToAdd matriz onde vao ser adicionados os dados
+     * @return uma matriz com os dados novos inseridos
+     */
+    public static String[][] addLine(String[] arrayDados, String[][] matrizToAdd){
+        String[][] temp = new String[matrizToAdd.length +1][matrizToAdd[0].length];
+        for (int i = 0; i < matrizToAdd.length; i++){
+            for (int k = 0; k < matrizToAdd[0].length; k++){
+                temp[i][k] = matrizToAdd[i][k];
+            }
+        }
+        for (int i = 0; i < arrayDados.length; i++){
+            temp[matrizToAdd.length][i] = arrayDados[i];
+        }
+        return temp;
+    }
+
 }
 

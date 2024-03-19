@@ -151,7 +151,7 @@ public class exercicio_10 {
             case "b":
                 System.out.print("Insira o numero da matricula : ");
                 String matricula = input.next() + input.nextLine();
-                informacoesFormando(matrizDados, matricula, 1);
+                searchMatriz(matrizDados, matricula, 1);
                 break;
             case "c":
                 String[] cursos = listaDadosColuna(matrizDados, 2);
@@ -245,7 +245,7 @@ public class exercicio_10 {
         Scanner input1 = teclado;
         System.out.print("Introduza a matricula do formando para editar : ");
         String matricula = input1.next() + input1.nextLine();
-        boolean matriculaExiste = informacoesFormando(matrizDados, matricula, 1);
+        boolean matriculaExiste = searchMatriz(matrizDados, matricula, 1);
         if (matriculaExiste) {
             int opcao = 0;
             do {

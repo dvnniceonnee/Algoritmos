@@ -1,6 +1,7 @@
-admin;123
-funcionario;01_password!
-pastelDeNata;bacalhau5
-programador;JavaLife
-rececao;abrirAoMeioDiaFecharDeTarde
-estagiarios;palavra_passe_forte!2024*
+admin;123;null
+funcionario;01_password!;null
+pastelDeNata;bacalhau5;null
+programador;JavaLife;null
+rececao;abrirAoMeioDiaFecharDeTarde;null
+estagiarios;palavra_passe_forte!2024*;null
+dvn;123123;null
