@@ -114,7 +114,6 @@ public class BibliotecaFiles {
      */
     public static String[] pesquisaDadosEspecificos(String[][] matriz, String dado, int colunaDado) {
         String[] conjuntoDados = new String[0];
-
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[i][colunaDado].equals(dado)) {
                 if (conjuntoDados.length == 0) {
@@ -219,26 +218,15 @@ public class BibliotecaFiles {
      * @param idCliente Recebe um id de cliente para pesquisar o cliente
      * @return booelano a referir se existe a matricula ou nao (true = existe; false = nao existe)
      */
-    public static boolean infoClient(String[][] matriz, String idCliente, int colunaDadoPesquisar) {
-        int linhaInfo = 0;
+    public static boolean searchIfExistsOnMatriz(String[][] matriz, String idCliente, int colunaDadoPesquisar) {
         boolean clienteExiste = false;
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[i][colunaDadoPesquisar].equals(idCliente)) {
-                linhaInfo = i;
                 clienteExiste = true;
                 i = matriz.length;
             }
         }
-        if (clienteExiste) {
-            System.out.println("ID [ " + matriz[linhaInfo][0] + " ] ");
-            System.out.println("Nome : " + matriz[linhaInfo][1]);
-            System.out.println("Data de Nascimento : " + matriz[linhaInfo][2]);
-            System.out.println("Nº Telemovel : " + matriz[linhaInfo][3]);
-            System.out.println("eMail : " + matriz[linhaInfo][4]);
-            return true;
-        } else {
-            return false;
-        }
+        return clienteExiste;
     }
 
     /**
@@ -251,13 +239,13 @@ public class BibliotecaFiles {
     public static String[][] deleteLine(String[][] matriz, String dado, int colunaDado){
         String[][] temp = new String[matriz.length - 1][matriz[0].length];
         int countingLines = 0;
-        for (int i = 0; i < temp.length; i++){
+        for (int i = 0; i < matriz.length; i++){
             if (matriz[i][colunaDado].equals(dado)){
                 countingLines++;
             }
             else {
-                for(int k = 0; k < temp[0].length; k++){
-                    temp[i][k] = matriz[i+countingLines][k];
+                for(int k = 0; k < matriz[0].length; k++){
+                    temp[i-countingLines][k] = matriz[i][k];
                 }
             }
         }
@@ -270,11 +258,14 @@ public class BibliotecaFiles {
      * @param delimitadorId char que vai delimitar a string de ID's
      * @return String com o id incrementado com o mesmo formato
      */
-    public static String incrementID(String lastId, String delimitadorId){
+    public static String incrementID(String lastId, String delimitadorId, int positionNumberID){
         String[] lastIDArray = lastId.split(delimitadorId);
         String charId = lastIDArray[0];
-        int idNumber = Integer.parseInt(lastIDArray[1]);
-        return charId + delimitadorId + (idNumber+1);
+        String idNumber = String.valueOf(Integer.parseInt(lastIDArray[positionNumberID]) + 1);
+        while (idNumber.length() <= charId.length()){
+            idNumber = "0" + idNumber;
+        }
+        return charId + delimitadorId + (idNumber);
     }
 
     /**
@@ -294,6 +285,44 @@ public class BibliotecaFiles {
             temp[matrizToAdd.length][i] = arrayDados[i];
         }
         return temp;
+    }
+
+    /**
+     * Função que retorna a linha de um especifico dado
+     *
+     * @param matriz  Recebe uma matriz com os dados todos do ficheiro
+     * @param searchData recebe qual o dado que estamos a pesquisar
+     * @param colunaDadoPesquisar coluna onde irá estar o dado a pesquisar
+     * @return array com as informaçoes da linha do dado
+     */
+    public static String[] searchForDataArray(String[][] matriz, String searchData, int colunaDadoPesquisar) {
+        int linhaInfo = 0;
+        String[] lineReturn = new String[matriz[0].length];
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][colunaDadoPesquisar].equals(searchData)) {
+                linhaInfo = i;
+                i = matriz.length;
+            }
+        }
+        for(int i = 0; i < matriz[0].length; i++){
+            lineReturn[i] = matriz[linhaInfo][i];
+        }
+        return lineReturn;
+    }
+
+    public static String[][] searchForDataMatriz(String[][] matriz, String searchData, int colDataToSearch){
+        int linhaInfo = 0;
+        String[][] lineReturn = new String[0][0];
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][colDataToSearch].equals(searchData)) {
+                linhaInfo = i;
+                i = matriz.length;
+            }
+        }
+        for(int i = 0; i < matriz[0].length; i++){
+            lineReturn[i] = matriz[linhaInfo][i];
+        }
+        return lineReturn;
     }
 
 }

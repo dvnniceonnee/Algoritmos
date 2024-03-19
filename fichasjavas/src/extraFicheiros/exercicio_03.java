@@ -3,6 +3,9 @@ package extraFicheiros;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -27,25 +30,24 @@ public class exercicio_03 {
      * 1 - ficheiro clients
      * 2 - ficheiro temas
      * 3 - ficheiro quartos
-     * 4 - ficheiro produtos
-     * 5 - ficheiro reservas
-     * 6 - ficheiro reservas
-     * 7 - ficheiro servicos
-     * 8 - galeria spa
-     * 9 - galeria quarto
-     * 10 - galeria fachada
+     * 4 - ficheiro reservas
+     * 5 - ficheiro produtos
+     * 6 - ficheiro serviços
+     * 7 - ficheiro galeria Spa
+     * 8 - galeria galeriaQuarto
+     * 9 - galeria galeriaFachada
      */
     public static String[] ficheirosHotel() {
-        String[] ficheirosDoHotel = {"fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/loginHotel.txt",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/temasHotel.csv",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/produtosHotel.csv",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/servicoQuartoHotel.csv",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/galeriaSpaHotel.txt",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/galeriaQuartoHotel.txt",
-                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/galeriaFachadaHotel.txt"};
+        String[] ficheirosDoHotel = {"fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/loginHotel.txt", // 0
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv", // 1
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/temasHotel.csv", // 2
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv", // 3
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv", // 4
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/produtosHotel.csv", // 5
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/servicoQuartoHotel.csv", // 6
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/galeriaSpaHotel.txt", // 7
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/galeriaQuartoHotel.txt", // 8
+                "fichasjavas/files/ficha_extraFicheiros/Ex_03 Hotel Temático/galeriaFachadaHotel.txt"}; // 9
         return ficheirosDoHotel;
     }
 
@@ -102,8 +104,14 @@ public class exercicio_03 {
         Scanner input1 = teclado;
         System.out.print("Introduza o id do cliente a editar : ");
         String idClient = input1.next() + input1.nextLine();
-        boolean matriculaExiste = infoClient(dados, idClient, 0);
-        if (matriculaExiste) {
+        boolean idExiste = searchIfExistsOnMatriz(dados, idClient, 0);
+        if (idExiste) {
+            String[] infoClient = searchForDataArray(matrizClientes, idClient, 0);
+            System.out.println("ID [ " + infoClient[0] + " ] ");
+            System.out.println("Nome : " + infoClient[1]);
+            System.out.println("Data de Nascimento : " + infoClient[2]);
+            System.out.println("Nº Telemovel : " + infoClient[3]);
+            System.out.println("eMail : " + infoClient[4]);
             int opcao = 0;
             do {
                 System.out.println("\n1. Telemovel\n2. Email \n4. Sair");
@@ -149,7 +157,7 @@ public class exercicio_03 {
      * @return Matriz atualizada com o cliente novo
      * @throws FileNotFoundException caso nao exista ficheiro a função lança uma exceção
      */
-    public static String[][] criarCliente(String[][] dados) throws FileNotFoundException {
+    public static void criarCliente(String[][] dados) {
         Scanner input = new Scanner(System.in);
         System.out.print("\nIndique o nome do cliente que deseja criar : ");
         String nome = input.next() + input.nextLine();
@@ -185,50 +193,8 @@ public class exercicio_03 {
             }
         } while ((!idadeValida));
 
-        String[][] matrizTemp = new String[dados.length + 1][dados[0].length];
-        for (int i = 0; i < dados.length; i++) {
-            for (int k = 0; k < dados[0].length; k++) {
-                matrizTemp[i][k] = dados[i][k];
-            }
-        }
-        matrizTemp[dados.length][0] = "C-00" + matrizTemp.length;
-        matrizTemp[dados.length][1] = nome;
-        matrizTemp[dados.length][2] = dataNascimento;
-        matrizTemp[dados.length][3] = telemovel;
-        matrizTemp[dados.length][4] = email;
-        return matrizTemp;
-    }
-
-    public static void menuGerirClientes(Scanner teclado) throws FileNotFoundException {
-        int opcao = 0;
-        do {
-            System.out.println("\n1. Adicionar um cliente\n" +
-                    "2. Atualizar um cliente\n" +
-                    "3. Sair\n");
-            System.out.print("\nEscolha o que deseja efetuar:");
-            try {
-                opcao = teclado.nextInt();
-            } catch (InputMismatchException ex1) {
-                opcao = 0;
-                teclado.next();
-            }
-            switch (opcao) {
-                case 1:
-                    try {
-                        matrizClientes = criarCliente(matrizClientes);
-                    } catch (FileNotFoundException ex1) {
-                        System.out.println("Ficheiro dos clientes Corrompido!");
-                    }
-                    askSaveData(teclado, ficheirosHotel()[1], matrizClientes, ";");
-                    break;
-                case 2:
-                    editarCliente(matrizClientes, teclado);
-                    askSaveData(teclado, ficheirosHotel()[1], matrizClientes, ";");
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
-            }
-        } while (opcao != 3);
+        String[] novaLinha = {incrementID(dados[dados.length - 1][0], "-", 1), nome, dataNascimento, telemovel, email};
+        matrizClientes = addLine(novaLinha, matrizClientes);
     }
 
     public static void askSaveData(Scanner teclado, String pathFile, String[][] matriz, String delimitador) throws FileNotFoundException {
@@ -266,17 +232,9 @@ public class exercicio_03 {
                 System.out.println("\n!!! Valor introduzido inválido !!!");
             }
         }
-        String[][] temp = new String[matrizTemas.length + 1][matrizTemas[0].length];
-        for (int i = 0; i < matrizTemas.length; i++) {
-            for (int k = 0; k < matrizTemas[0].length; k++) {
-                temp[i][k] = matrizTemas[i][k];
-            }
-        }
-        temp[matrizTemas.length][0] = "t-0" + matrizTemas.length + 1;
-        temp[matrizTemas.length][1] = nomeTema;
-        temp[matrizTemas.length][2] = preco;
-
-        matrizTemas = temp;
+        String id = incrementID(matrizTemas[matrizTemas.length - 1][0], "-", 1);
+        String[] novaLinha = {id, nomeTema, preco};
+        matrizTemas = addLine(novaLinha, matrizTemas);
     }
 
     /**
@@ -322,18 +280,38 @@ public class exercicio_03 {
 
             }
         } while (!tipoQuartoValido);
-        String[][] temp = new String[matrizQuartos.length + 1][matrizQuartos[0].length];
-        for (int i = 0; i < matrizQuartos.length; i++) {
-            for (int k = 0; k < matrizQuartos[0].length; k++) {
-                temp[i][k] = matrizQuartos[i][k];
+        String[] novaLinha = {incrementID(matrizQuartos[matrizQuartos.length - 1][0], " ", 0), temaQuarto, tipoQuarto};
+        matrizTemas = addLine(novaLinha, matrizQuartos);
+    }
+
+    /**
+     * Função que permite adicionar um novo produto à matriz dos produtos
+     *
+     * @param teclado scanner input
+     */
+    public static void newProduct(Scanner teclado) {
+        System.out.print("Introduza o nome do produto novo : ");
+        String nome = teclado.next() + teclado.nextLine();
+        while (searchMatriz(matrizProdutos, nome, 1)) {
+            System.out.println("Nome do produto já existente!");
+            System.out.print("Introduza o nome do produto novo : ");
+            nome = teclado.nextLine();
+        }
+        boolean precoValido = false;
+        String preco = "";
+        while (!precoValido) {
+            System.out.print("Introduza o preço do produto: ");
+            preco = teclado.nextLine();
+            try {
+                Double.parseDouble(preco);
+                precoValido = true;
+            } catch (Exception ex1) {
+                System.out.println("Preço introduzido inválido!");
             }
         }
-        temp[matrizQuartos.length][0] = Integer.toString(Integer.parseInt(temp[matrizQuartos.length - 1][0]) + 1);
-        temp[matrizQuartos.length][1] = temaQuarto;
-        temp[matrizQuartos.length][2] = tipoQuarto;
-
-        matrizTemas = temp;
-
+        String id = incrementID(matrizProdutos[matrizProdutos.length - 1][0], "-", 1);
+        String[] linhaNova = {id, nome, preco};
+        matrizProdutos = addLine(linhaNova, matrizProdutos);
     }
 
     /**
@@ -369,7 +347,7 @@ public class exercicio_03 {
             System.out.print("Introduza o user para apgar : ");
             String username = input.next() + input.nextLine();
             boolean userExiste = false;
-            while (!searchMatriz(matrizAuthentication, username, 0)) {
+            while (!searchIfExistsOnMatriz(matrizAuthentication, username, 0)) {
                 System.out.println("User name nao existe!");
                 System.out.print("Introduza o username para apagar : ");
                 username = input.next() + input.nextLine();
@@ -379,31 +357,35 @@ public class exercicio_03 {
         }
     }
 
-    public static void newProduct(Scanner teclado){
-        System.out.print("Introduza o nome do produto novo : ");
-        String nome = teclado.next() + teclado.nextLine();
-        while (searchMatriz(matrizProdutos, nome, 1)){
-            System.out.println("Nome do produto já existente!");
-            System.out.print("Introduza o nome do produto novo : ");
-            nome = teclado.nextLine();
-        }
-        boolean precoValido = false;
-        String preco = "";
-        while (!precoValido){
-            System.out.print("Introduza o preço do produto: ");
-            preco = teclado.nextLine();
-            try{
-                Double.parseDouble(preco);
-                precoValido = true;
-            }catch (Exception ex1){
-                System.out.println("Preço introduzido inválido!");
+    public static void menuGerirClientes(Scanner teclado) throws FileNotFoundException {
+        int opcao = 0;
+        do {
+            System.out.println("\n1. Adicionar um cliente\n" +
+                    "2. Atualizar um cliente\n" +
+                    "3. Sair\n");
+            System.out.print("\nEscolha o que deseja efetuar:");
+            try {
+                opcao = teclado.nextInt();
+            } catch (InputMismatchException ex1) {
+                opcao = 0;
+                teclado.next();
             }
-        }
-        String id = incrementID(matrizProdutos[matrizProdutos.length-1][0],"-");
-        String[][] temp = new String[matrizProdutos.length +1][matrizProdutos[0].length];
-
+            switch (opcao) {
+                case 1:
+                    criarCliente(matrizClientes);
+                    askSaveData(teclado, ficheirosHotel()[1], matrizClientes, ";");
+                    break;
+                case 2:
+                    editarCliente(matrizClientes, teclado);
+                    askSaveData(teclado, ficheirosHotel()[1], matrizClientes, ";");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 3);
     }
-    public static void gestaoAdmins(Scanner input) {
+
+    public static void gestaoAdmins(Scanner input) throws FileNotFoundException {
         int opcao = 0;
         do {
             System.out.println("\n1. Criar novas credencias \n2. Apagar credencias\n3. Sair");
@@ -420,16 +402,18 @@ public class exercicio_03 {
             switch (opcao) {
                 case 1:
                     userNeworDelete(1, input);
+                    askSaveData(input, ficheirosHotel()[0], matrizAuthentication, ";");
                     break;
                 case 2:
                     userNeworDelete(2, input);
+                    askSaveData(input, ficheirosHotel()[0], matrizAuthentication, ";");
                     break;
                 case 3:
                     break;
                 default:
                     System.out.println("Opção inválida!");
             }
-        }while (opcao!= 3);
+        } while (opcao != 3);
     }
 
     public static void menuGestaoBaseDados() throws FileNotFoundException {
@@ -463,9 +447,11 @@ public class exercicio_03 {
                     break;
                 case 4:
                     gestaoAdmins(input);
-                    askSaveData(input, ficheirosHotel()[0],matrizAuthentication, ";" );
+                    askSaveData(input, ficheirosHotel()[0], matrizAuthentication, ";");
                     break;
                 case 5:
+                    newProduct(input);
+                    askSaveData(input, ficheirosHotel()[4], matrizProdutos, ";");
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -473,11 +459,200 @@ public class exercicio_03 {
         } while (opcao != 6);
     }
 
+    public static void menuConsultClients(Scanner input) {
+        int opcao = 0;
+        do {
+            System.out.println("1. Consultar Clientes por ID\n2. Consultar clientes por telemovel\n3. Consultar clientes por email\n4. Sair");
+            try {
+                opcao = input.nextInt();
+            } catch (InputMismatchException ex1) {
+                opcao = 0;
+                input.next();
+            }
+            boolean clienteExiste = false;
+            String[] cliente = new String[0];
+            switch (opcao) {
+                case 1:
+                    System.out.print("Introduza qual o ID a procurar : ");
+                    String id = input.next() + input.nextLine();
+                    if(searchIfExistsOnMatriz(matrizClientes,id,0 )){
+                        cliente = searchForDataArray(matrizClientes, id,0);
+                        clienteExiste = true;
+                    }
+                    break;
+                case 2:
+                    System.out.print("Introduza qual o telemovel a procurar : ");
+                    String telemovel = input.next() + input.nextLine();
+                    if(searchIfExistsOnMatriz(matrizClientes,telemovel,3 )){
+                        cliente = searchForDataArray(matrizClientes, telemovel,3);
+                        clienteExiste = true;
+                    }
+                    break;
+                case 3:
+                    System.out.print("Introduza qual o email a procurar : ");
+                    String email = input.next() + input.nextLine();
+                    if (searchIfExistsOnMatriz(matrizClientes,email,4 )){
+                        cliente = searchForDataArray(matrizClientes, email,4);
+                        clienteExiste = true;
+                    }
+                    break;
+            }
+            if(clienteExiste){
+                System.out.println("Id : " + cliente[0] + "\nNome: " + cliente[1] + "\nData Nascimento : " + cliente[2] + "\nTelemovel : " + cliente[3] + "\nEmail : " + cliente[4] + "\n");
+            }
+
+        } while (opcao != 4);
+    }
+
+    /**
+     * Função que determina se uma data está dentro ou incluso de um intervalo de datas
+     * @param date1 data do inicio do intervalo
+     * @param date2 data do fim do intervalo
+     * @param dateToCheck data a verificar
+     * @return booleano (true - está dentro do intervalo ; false = não está dentro do intervalo)
+     */
+    public static boolean dateBetween(String date1, String date2, String dateToCheck){
+        String[] data = dateToCheck.split("/");
+        int diaAtual = Integer.parseInt(data[0]), mesAtual = Integer.parseInt(data[1]), anoAtual = Integer.parseInt(data[2]);
+
+        String[] dataInicioReserva = date1.split("/");
+        String[] dataFimReserva = date2.split("/");
+        int diaInicioReserva = Integer.parseInt(dataInicioReserva[0]), mesInicioReserva = Integer.parseInt(dataInicioReserva[1]), anoInicioReserva =  Integer.parseInt(dataInicioReserva[2]);
+        int diaFimReserva = Integer.parseInt(dataFimReserva[0]), mesFimReserva = Integer.parseInt(dataFimReserva[1]), anoFimReserva =  Integer.parseInt(dataFimReserva[2]);
+
+        boolean dataAtualDepoisInicio = false;
+        boolean dataAtualAntesFim = false;
+        if (anoAtual > anoInicioReserva ){
+            dataAtualDepoisInicio = true;
+        }
+        else if (anoAtual == anoInicioReserva){
+            if (mesAtual > mesInicioReserva){
+                dataAtualDepoisInicio = true;
+            }
+            else if (mesAtual == mesInicioReserva){
+                if (diaAtual >= diaInicioReserva){
+                    dataAtualDepoisInicio = true;
+                }
+            }
+        }
+        if (anoAtual < anoFimReserva){
+            dataAtualAntesFim = true;
+        }
+        else if (anoAtual == anoFimReserva){
+            if (mesAtual < mesFimReserva){
+                dataAtualAntesFim = true;
+            }
+            else  if(mesAtual == mesFimReserva){
+                if (diaAtual <= diaFimReserva)
+                    dataAtualAntesFim = true;
+            }
+        }
+        if (dataAtualAntesFim && dataAtualDepoisInicio){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Função que retorna um array com todos os quartos que estão reservados
+     * @param matriz matriz com as reservas todas
+     * @param nowDate data atual
+     * @return array com os numeros dos quartos que estão com uma reserva ativa
+     */
+    public static String[] reservedRooms(String[][] matriz, String nowDate){
+        String[] reservedRooms = new String[0];
+        for(int i = 0; i < matriz.length; i++){
+            if (dateBetween(matriz[i][1], matriz[i][2], nowDate)){
+                String[] temp = new String[reservedRooms.length +1];
+                if (reservedRooms.length == 0){
+                    temp[0] = matriz[i][4];
+                }
+                else {
+                    for (int k = 0; k < reservedRooms.length; k++){
+                        temp[k] = reservedRooms[k];
+                    }
+                    temp[reservedRooms.length] = matriz[i][4];
+                }
+                reservedRooms = temp;
+            }
+        }
+        return  reservedRooms;
+    }
+
+    /**
+     * Função que permite ver consoante as datas das reservas quais os quartos disponiveis
+     */
+    public static void availableRooms(){
+        String[] roomsReservedAtive = reservedRooms(matrizReservas, dataAtual);
+        matrizQuartosDispoveis = matrizQuartos;
+        System.out.println();
+        for(int i = 0; i < roomsReservedAtive.length; i++){
+            if (searchIfExistsOnMatriz(matrizQuartosDispoveis,roomsReservedAtive[i], 0 )){
+                matrizQuartosDispoveis = deleteLine(matrizQuartosDispoveis, roomsReservedAtive[i],0 );
+            }
+        }
+    }
+    public static void menuReservas(Scanner input){
+        int opcao = 0;
+        do{
+            System.out.println("1. Pesquisar todos os quartos disponiveis \n2. Pesquisar quartos disponiveis por tema \n3. Pesquisar quartos disponiveis por tipo \n4. Sair");
+            System.out.print("\nEscolha o que deseja efetuar :");
+            try{
+                opcao = input.nextInt();
+            }
+            catch (InputMismatchException ex1){
+                opcao = 0;
+                input.next();
+            }
+            switch (opcao){
+                case 1:
+                    for (int i = 0; i < matrizQuartosDispoveis.length; i++){
+                        String tema = searchForDataArray(matrizTemas, matrizQuartosDispoveis[i][1], 0)[1];
+                        System.out.print("\nNumero : " + matrizQuartosDispoveis[i][0] + "\t |\t Tema : " + tema + "\t |\t Tipo : " + matrizQuartosDispoveis[i][2]);
+                    }
+                    System.out.println("\n");
+                    break;
+                case 2:
+                    for(int i = 1; i < matrizTemas.length; i++){
+                        System.out.println(i + ":: " + matrizTemas[i-1][1] + "\t Preço :: " + matrizTemas[i-1][2]);
+                    }
+                    System.out.println("0. Sair");
+                    System.out.print("\nIntroduza o tema que deseja procurar : ");
+                    int opcaoTema = 0;
+                    do {
+                        try {
+                            opcao = input.nextInt();
+                            String tema = matrizTemas[opcaoTema-1][0];
+                            String[] rooms = new String[0];
+                            if (searchIfExistsOnMatriz(matrizQuartosDispoveis, tema, 1)){
+                                rooms = pesquisaDadosEspecificos(matrizQuartosDispoveis, tema, 1);
+                            }
+                        } catch (InputMismatchException ex1) {
+                            opcaoTema = 999;
+                            System.out.println("Tema inválido!");
+                            input.next();
+                        }
+                    }while (opcaoTema != 0);
+
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }while (opcao != 4);
+    }
+
+    public static String dataAtual = "19/03/2024";
     public static String[][] matrizAuthentication;
     public static String[][] matrizClientes;
     public static String[][] matrizTemas;
     public static String[][] matrizQuartos;
+    public static String[][] matrizQuartosDispoveis;
     public static String[][] matrizProdutos;
+    public static String[][] matrizReservas;
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("**** Gestão do Solverde ****");
@@ -504,6 +679,9 @@ public class exercicio_03 {
         matrizClientes = leituraFicheiroMatriz(new File(ficheirosHotel()[1]), false, ";");
         matrizTemas = leituraFicheiroMatriz(new File(ficheirosHotel()[2]), false, ";");
         matrizQuartos = leituraFicheiroMatriz(new File(ficheirosHotel()[3]), false, ";");
+        matrizProdutos = leituraFicheiroMatriz(new File(ficheirosHotel()[5]), false,";");
+        matrizReservas = leituraFicheiroMatriz(new File(ficheirosHotel()[4]), false, ";");
+        availableRooms();
         int opcao = 0;
         do {
             menuPrincipal();
@@ -518,8 +696,10 @@ public class exercicio_03 {
                     menuGestaoBaseDados();
                     break;
                 case 2:
+                    menuConsultClients(input);
                     break;
                 case 3:
+                    menuReservas(input);
                     break;
                 case 4:
                     break;
