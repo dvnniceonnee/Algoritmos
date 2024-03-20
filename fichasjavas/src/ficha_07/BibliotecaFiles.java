@@ -310,17 +310,38 @@ public class BibliotecaFiles {
         return lineReturn;
     }
 
+    /**
+     * Função para pesquisar uma matriz por um dado em cada linha e retorna uma matriz só com as linhas em que tenham esse dado
+     * @param matriz matriz que vamos pesquisar o dado
+     * @param searchData dado que vamos usar para pesquisar
+     * @param colDataToSearch coluna da matriz onde está esse dado
+     * @return matriz filtrada com a pesquisa de dados
+     */
     public static String[][] searchForDataMatriz(String[][] matriz, String searchData, int colDataToSearch){
         int linhaInfo = 0;
         String[][] lineReturn = new String[0][0];
+        System.out.println("test2");
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[i][colDataToSearch].equals(searchData)) {
-                linhaInfo = i;
-                i = matriz.length;
+                String[][] temp = new String[lineReturn.length+ 1][matriz[0].length];
+
+                if (lineReturn.length == 0){
+                    for(int k = 0; k < lineReturn[0].length; k++){
+                        temp[0][k] = matriz[0][k];
+                    }
+                }
+                else {
+                    for (int j = 0; j < lineReturn.length; j++){
+                        for(int k = 0; k < lineReturn[0].length; k++){
+                            temp[j][k] = lineReturn[i][k];
+                        }
+                    }
+                    for(int k = 0; k < lineReturn[0].length; k++){
+                        temp[lineReturn.length][k] = matriz[i][k];
+                    }
+                }
+                lineReturn = temp;
             }
-        }
-        for(int i = 0; i < matriz[0].length; i++){
-            lineReturn[i] = matriz[linhaInfo][i];
         }
         return lineReturn;
     }
