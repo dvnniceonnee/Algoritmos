@@ -614,7 +614,7 @@ public class exercicio_03 {
                     break;
                 case 2:
                     for(int i = 0; i < matrizTemas.length; i++){
-                        System.out.println(i + ":: " + matrizTemas[i+1][1] + "\t Preço :: " + matrizTemas[i-1][2]);
+                        System.out.println(i+1 + " : " + matrizTemas[i][1] + "\t Preço :: " + matrizTemas[i][2]);
                     }
                     System.out.println("0. Sair");
                     System.out.print("\nIntroduza o tema que deseja procurar : ");
@@ -630,7 +630,7 @@ public class exercicio_03 {
                         System.out.println(tema);
                         if (searchIfExistsOnMatriz(matrizQuartosDispoveis, tema, 1)){
                             System.out.println("teste");
-                            String[][] roomsByTheme = searchForDataMatriz(matrizQuartosDispoveis, tema, 2);
+                            String[][] roomsByTheme = searchForDataMatriz(matrizQuartosDispoveis, tema, 1);
                             for (int i = 0; i < roomsByTheme.length; i++){
                                 tema = searchForDataArray(matrizTemas, roomsByTheme[i][1], 0)[1];
                                 System.out.print("\nNumero : " + roomsByTheme[i][0] + "\t |\t Tema : " + tema + "\t |\t Tipo : " + roomsByTheme[i][2]);

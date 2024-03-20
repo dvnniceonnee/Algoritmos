@@ -324,9 +324,8 @@ public class BibliotecaFiles {
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[i][colDataToSearch].equals(searchData)) {
                 String[][] temp = new String[lineReturn.length+ 1][matriz[0].length];
-
                 if (lineReturn.length == 0){
-                    for(int k = 0; k < lineReturn[0].length; k++){
+                    for(int k = 0; k < temp[0].length; k++){
                         temp[0][k] = matriz[0][k];
                     }
                 }
