@@ -653,7 +653,10 @@ public class exercicio_03 {
         matrizReservasFuturas = temp;
     }
 
-    public static void oldReservations(){
+    /**
+     * metodo para atribuir uma matriz com as reservas antigas (reservas que terminaram antes do dia atual) á matriz das matrizReservasAntigas
+     */
+    public static void oldReservations() {
         String[][] temp = new String[0][0];
         for (int i = 0; i < matrizReservas.length; i++) {
             if (!dateBefore(matrizReservas[i][2], dataAtual)) {
@@ -662,6 +665,7 @@ public class exercicio_03 {
         }
         matrizReservasAntigas = temp;
     }
+
     public static void menuReservations(Scanner input) {
         int opcao = 0;
         do {
@@ -751,10 +755,10 @@ public class exercicio_03 {
         }
         String diaString = dia + "";
         String mesString = mes + "";
-        if (dia < 10 ){
+        if (dia < 10) {
             diaString = "0" + dia;
         }
-        if (mes < 10){
+        if (mes < 10) {
             mesString = "0" + mes;
         }
         return diaString + "/" + mesString + "/" + ano;
@@ -821,6 +825,7 @@ public class exercicio_03 {
 
     /**
      * Metodo para salvar os dados todos nos ficheiros correspondentes
+     *
      * @throws FileNotFoundException
      */
     public static void saveAllFiles() throws FileNotFoundException {
@@ -832,20 +837,86 @@ public class exercicio_03 {
         saveDataFile(ficheirosHotel()[5], matrizProdutos, ";");
     }
 
-    public static double valorReceitaAno(String ano){
+    /**
+     * metodo para calcular o total em euros de todos os serviços que a reserva gastou
+     *
+     * @param reservaId String com o id da reserva
+     * @return double com o total em euros
+     */
+    public static double reservaServicosGastosValor(String reservaId) {
+        double valorGasto = 0;
+        String[][] servicosReserva = searchForDataMatriz(matrizServicosQuartos, reservaId, 1);
+        for (int i = 0; i < servicosReserva.length; i++) {
+            int qtdproduto = Integer.parseInt(servicosReserva[i][3]);
+            double gorjeta = Integer.parseInt(servicosReserva[i][4]);
+            String[] produto = searchForDataArray(matrizProdutos, servicosReserva[i][2], 0);
+            double precoProduto = Double.parseDouble(produto[2]);
+            valorGasto += (qtdproduto * precoProduto) + gorjeta;
+        }
+        return valorGasto;
+    }
+
+    /**
+     * Metodo para retornar os anos das datas de inicio da lista da matrizReservasAntigas
+     * @return array com a lista de anos sem repetições (2022, 2023, 2024)
+     */
+    public static String[] checkSalesYears(){
+        String[] yearsArray = new String[0];
+        for (int i = 0; i < matrizReservasAntigas.length; i++){
+            String year = matrizReservasAntigas[i][1].split("/")[2];
+            boolean yearExiste = false;
+            for(int j = 0; j < yearsArray.length; j++){
+                if (year.equals(yearsArray[j])){
+                    yearExiste = true;
+                }
+            }
+            if (!yearExiste){
+                String[] temp = new String[yearsArray.length +1];
+                if (yearsArray.length == 0){
+                    temp[0] = year;
+                }
+                else {
+                    for (int k = 0; k < yearsArray.length; k++){
+                        temp[k] = yearsArray[k];
+                    }
+                    temp[yearsArray.length] = year;
+                }
+                yearsArray = temp;
+            }
+        }
+        return yearsArray;
+    }
+
+    /**
+     * Função que retorna um valor total da receita de um dado ano passado por string
+     *
+     * @param ano String com o ano que desejamos procurar
+     * @return double com o valor total em euros da receita do ano em questão
+     */
+    public static double valorReceitaPorAno(String ano) {
         double valorTotal = 0;
-        for(int i = 0; i < matrizReservasAntigas.length; i++){
-            if (dateBetween("01/01/"+ano,"30/12/"+ano,matrizReservasAntigas[i][1])){
-                
+        for (int i = 0; i < matrizReservasAntigas.length; i++) {
+            if (dateBetween("01/01/" + ano, "30/12/" + ano, matrizReservasAntigas[i][1])) {
+                String[] quarto = searchForDataArray(matrizQuartos, matrizReservasAntigas[i][4], 0);          // array com as informaçoes do quarto
+                double multiplicador = Double.parseDouble(searchForDataArray(matrizTemas, quarto[1], 0)[2]);    // multiplicador do tema
+                int precoQuarto = 0;
+                for (int k = 0; k < tipoQuartos.length; k++) {
+                    if (tipoQuartos[k].equalsIgnoreCase(quarto[2])) {
+                        precoQuarto = precosTipoQuarto[k];
+                    }
+                }
+                int dias = countDateDays(matrizReservasAntigas[i][1], matrizReservasAntigas[i][2]);
+                valorTotal += (precoQuarto * multiplicador) + reservaServicosGastosValor(matrizReservasAntigas[i][0]);
             }
         }
         return valorTotal;
     }
-    public static String menuOpcoesDashBoard(){
+
+    public static String menuOpcoesDashBoard() {
         return """
 
-                1. Receita total por anos
-                2. Despesa Total por anos
+                1. Receita total por ano
+                2. Despesa Total por ano
                 3. Lucro por anos
                 4. Melhor Cliente (Mais gastador em noites e serviços de quarto)
                 5. Cliente mais consumista (Mais gastador em serviços de quarto)
@@ -858,9 +929,14 @@ public class exercicio_03 {
                 12. Produto/Serviço mais lucrativo
                 """;
     }
-    public static void menuDashboard(Scanner input){
+
+    public static void menuDashboard(Scanner input) {
         int opcao = 0;
-        do{
+        String[] yearsSales = checkSalesYears();
+        for(int i = 0; i< yearsSales.length; i++){
+            System.out.println(yearsSales[i]);
+        }
+        do {
             System.out.print(menuOpcoesDashBoard());
             System.out.print("\nO que seja realizar : ");
             try {
@@ -870,7 +946,10 @@ public class exercicio_03 {
             }
             switch (opcao) {
                 case 1:
-
+                    for (int i = 0; i < yearsSales.length; i++){
+                        Double totalano = valorReceitaPorAno(yearsSales[i]);
+                        System.out.println("." + yearsSales[i] + " : " + totalano);
+                    }
                     break;
                 case 2:
                     break;
@@ -892,14 +971,14 @@ public class exercicio_03 {
                     break;
                 case 11:
                     break;
-                case 12 :
+                case 12:
                     break;
                 case 13:
                     break;
                 default:
                     System.out.println("Opção inválido!");
             }
-        }while (opcao != 13);
+        } while (opcao != 13);
 
     }
 
@@ -916,6 +995,7 @@ public class exercicio_03 {
     public static String[][] matrizReservasAtivas;
     public static String[][] matrizReservasFuturas;
     public static String[][] matrizReservasAntigas;
+    public static String[][] matrizServicosQuartos;
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("**** Gestão do Solverde ****");
@@ -944,10 +1024,12 @@ public class exercicio_03 {
         matrizQuartos = leituraFicheiroMatriz(new File(ficheirosHotel()[3]), false, ";");
         matrizProdutos = leituraFicheiroMatriz(new File(ficheirosHotel()[5]), false, ";");
         matrizReservas = leituraFicheiroMatriz(new File(ficheirosHotel()[4]), false, ";");
+        matrizServicosQuartos = leituraFicheiroMatriz(new File(ficheirosHotel()[6]), false, ";");
         availableRooms();
         ativeReservations();
         futureReservations();
         oldReservations();
+        checkSalesYears();
         int opcao = 0;
         do {
             menuPrincipal();
@@ -974,6 +1056,7 @@ public class exercicio_03 {
                     newReserve(input);
                     break;
                 case 6:
+                    menuDashboard(input);
                     break;
                 case 7:
                     break;
