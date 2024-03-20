@@ -27,7 +27,6 @@ public class exercicio_08 {
                 String[] linha = scannerFile.nextLine().split(",");
                 double quantidade = Double.parseDouble(linha[2]);
                 somaTotal = somaTotal + Double.parseDouble(linha[3]) * quantidade;
-                System.out.println(somaTotal);
             }
             System.out.println("A soma total dos produtos é : " + somaTotal);
         }
