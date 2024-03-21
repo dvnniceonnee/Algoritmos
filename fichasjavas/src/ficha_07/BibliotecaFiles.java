@@ -440,8 +440,8 @@ public class BibliotecaFiles {
         String[] dataEnd = end.split("/");
         int dayEnd = Integer.parseInt(dataEnd[0]), monthEnd = Integer.parseInt(dataEnd[1]), yearEnd = Integer.parseInt(dataEnd[2]);
 
-        int diastotaisStart = 30 - dayStart;
-        int diastotaisEnd = 0 + dayEnd;
+        int diasTotaisStart = 30 - dayStart;
+        int diasTotaisEnd = 0 + dayEnd;
         int mesTotais = 0;
         if (yearEnd != yearStart){
             mesTotais = (monthEnd - monthStart) + 11;
@@ -451,13 +451,13 @@ public class BibliotecaFiles {
         }
         int diasTotais = 0;
 
-        if (diastotaisEnd + diastotaisStart >= 30) {
-            int countingMonths = (diastotaisEnd + diastotaisStart) / 30;
+        if (diasTotaisEnd + diasTotaisStart >= 30) {
+            int countingMonths = (diasTotaisEnd + diasTotaisStart) / 30;
             mesTotais = mesTotais + 1;
-            diasTotais = ((diastotaisEnd + diastotaisStart) % 30) + mesTotais * 30 + 1;
+            diasTotais = ((diasTotaisEnd + diasTotaisStart) % 30) + mesTotais * 30 + 1;
         } else {
             mesTotais = mesTotais;
-            diasTotais = (diastotaisEnd + diastotaisStart) + mesTotais * 30 + 1;
+            diasTotais = (diasTotaisEnd + diasTotaisStart) + mesTotais * 30 + 1;
         }
         return diasTotais ;
     }
