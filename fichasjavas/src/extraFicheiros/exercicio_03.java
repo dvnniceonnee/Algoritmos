@@ -710,49 +710,46 @@ public class exercicio_03 {
      * @return String com a data num formato (dd/mm/yyyy)
      */
     public static String askForData(Scanner input) {
-        int dia = 0;
-        while (dia == 0) {
-            System.out.print("Introduza o dia : ");
-            try {
-                dia = input.nextInt();
-                if (dia <= 0 || dia > 31) {
-                    dia = 0;
+        int dia = 0, mes = 0, ano = 0;
+        boolean dataValida = true;
+        do {
+            dia = 0;
+            while (dia == 0) {
+                System.out.print("Introduza o dia : ");
+                try {
+                    dia = input.nextInt();
+                } catch (InputMismatchException ex1) {
                     System.out.println("Dia introduzido inválido!");
+                    input.next();
                 }
-            } catch (InputMismatchException ex1) {
-                System.out.println("Dia introduzido inválido!");
-                input.next();
             }
-        }
-        int mes = 0;
-        while (mes == 0) {
-            System.out.print("Introduza o mes : ");
-            try {
-                mes = input.nextInt();
-                if (mes <= 0 || mes > 12) {
+            mes = 0;
+            while (mes == 0) {
+                System.out.print("Introduza o mes : ");
+                try {
+                    mes = input.nextInt();
+                } catch (InputMismatchException ex1) {
                     System.out.println("Mes introduzido inválido!");
-                    mes = 0;
+                    input.next();
                 }
-            } catch (InputMismatchException ex1) {
-                System.out.println("Mes introduzido inválido!");
-                input.next();
             }
-        }
 
-        int ano = 0;
-        while (ano == 0) {
-            System.out.print("Introduza o ano : ");
-            try {
-                ano = input.nextInt();
-                if (ano <= 0 || ano > 9999) {
-                    ano = 0;
+            ano = 0;
+            while (ano == 0) {
+                System.out.print("Introduza o ano : ");
+                try {
+                    ano = input.nextInt();
+                } catch (InputMismatchException ex1) {
                     System.out.println("Ano introduzido inválido!");
+                    input.next();
                 }
-            } catch (InputMismatchException ex1) {
-                System.out.println("Ano introduzido inválido!");
-                input.next();
             }
-        }
+            dataValida = checkDateReal(dia, mes, ano);
+            if (!dataValida){
+                System.out.println("Data inserida inválida!");
+            }
+        }while (!dataValida);
+
         String diaString = dia + "";
         String mesString = mes + "";
         if (dia < 10) {
@@ -838,45 +835,58 @@ public class exercicio_03 {
     }
 
     /**
-     * metodo para calcular o total em euros de todos os serviços que a reserva gastou
+     * metodo que calcula as despesas e os gastos pelo cliente na reserva
      *
      * @param reservaId String com o id da reserva
-     * @return double com o total em euros
+     * @return array de doubles ([0] = valor gasto em serviços [1] = despesa em limpezas [2] = despesa em agua e luz [3] = despesa em custos administrativos [4]= valor total em noites
      */
-    public static double reservaServicosGastosValor(String reservaId) {
-        double valorGasto = 0;
+    public static double[] reservaGastosEdespesas(String reservaId) {
+        double valorGastoServicos = 0;
         String[][] servicosReserva = searchForDataMatriz(matrizServicosQuartos, reservaId, 1);
         for (int i = 0; i < servicosReserva.length; i++) {
             int qtdproduto = Integer.parseInt(servicosReserva[i][3]);
             double gorjeta = Integer.parseInt(servicosReserva[i][4]);
             String[] produto = searchForDataArray(matrizProdutos, servicosReserva[i][2], 0);
             double precoProduto = Double.parseDouble(produto[2]);
-            valorGasto += (qtdproduto * precoProduto) + gorjeta;
+            valorGastoServicos += (qtdproduto * precoProduto) + gorjeta;
         }
-        return valorGasto;
+        String[] reservaLinha = searchForDataArray(matrizReservasAntigas, reservaId, 0);
+        String[] quarto = searchForDataArray(matrizQuartos, reservaLinha[4], 0);          // array com as informaçoes do quarto
+        double multiplicador = Double.parseDouble(searchForDataArray(matrizTemas, quarto[1], 0)[2]);    // multiplicador do tema
+        int precoQuarto = 0;
+        int totalDiasReserva = countDateDays(reservaLinha[1],reservaLinha[2]);
+        for (int k = 0; k < tipoQuartos.length; k++) {
+            if (tipoQuartos[k].equalsIgnoreCase(quarto[2])) {
+                precoQuarto = precosTipoQuarto[k];
+            }
+        }
+        double valorLimpeza = totalDiasReserva * 17.5, valorLuzAgua = totalDiasReserva * 12.5, valorCustosAdmin = totalDiasReserva * 7.5;
+        double valorTotalNoites = totalDiasReserva * (precoQuarto * multiplicador);
+        double[] infoReserva = {valorGastoServicos, valorLimpeza, valorLuzAgua, valorCustosAdmin, valorTotalNoites};
+        return infoReserva;
     }
 
     /**
      * Metodo para retornar os anos das datas de inicio da lista da matrizReservasAntigas
+     *
      * @return array com a lista de anos sem repetições (2022, 2023, 2024)
      */
-    public static String[] checkSalesYears(){
+    public static String[] checkSalesYears() {
         String[] yearsArray = new String[0];
-        for (int i = 0; i < matrizReservasAntigas.length; i++){
+        for (int i = 0; i < matrizReservasAntigas.length; i++) {
             String year = matrizReservasAntigas[i][1].split("/")[2];
             boolean yearExiste = false;
-            for(int j = 0; j < yearsArray.length; j++){
-                if (year.equals(yearsArray[j])){
+            for (int j = 0; j < yearsArray.length; j++) {
+                if (year.equals(yearsArray[j])) {
                     yearExiste = true;
                 }
             }
-            if (!yearExiste){
-                String[] temp = new String[yearsArray.length +1];
-                if (yearsArray.length == 0){
+            if (!yearExiste) {
+                String[] temp = new String[yearsArray.length + 1];
+                if (yearsArray.length == 0) {
                     temp[0] = year;
-                }
-                else {
-                    for (int k = 0; k < yearsArray.length; k++){
+                } else {
+                    for (int k = 0; k < yearsArray.length; k++) {
                         temp[k] = yearsArray[k];
                     }
                     temp[yearsArray.length] = year;
@@ -896,22 +906,50 @@ public class exercicio_03 {
     public static double valorReceitaPorAno(String ano) {
         double valorTotal = 0;
         for (int i = 0; i < matrizReservasAntigas.length; i++) {
-            if (dateBetween("01/01/" + ano, "30/12/" + ano, matrizReservasAntigas[i][1])) {
-                String[] quarto = searchForDataArray(matrizQuartos, matrizReservasAntigas[i][4], 0);          // array com as informaçoes do quarto
-                double multiplicador = Double.parseDouble(searchForDataArray(matrizTemas, quarto[1], 0)[2]);    // multiplicador do tema
-                int precoQuarto = 0;
-                for (int k = 0; k < tipoQuartos.length; k++) {
-                    if (tipoQuartos[k].equalsIgnoreCase(quarto[2])) {
-                        precoQuarto = precosTipoQuarto[k];
-                    }
-                }
+            if (dateBetween("01/01/" + ano, "31/12/" + ano, matrizReservasAntigas[i][1])) {
                 int dias = countDateDays(matrizReservasAntigas[i][1], matrizReservasAntigas[i][2]);
-                valorTotal += (precoQuarto * multiplicador) + reservaServicosGastosValor(matrizReservasAntigas[i][0]);
+                valorTotal += reservaGastosEdespesas(matrizReservasAntigas[i][0])[4] + reservaGastosEdespesas(matrizReservasAntigas[i][0])[0];
             }
         }
         return valorTotal;
     }
 
+    /**
+     * Metodo que calcula as estatisticas do cliente conforme as noites passadas no hotel, os servicos contratados e o total gasto em noites
+     * @param idClient
+     * @return array com as estatisticas (0 - valor total em serviços ... 1 - valor total de euros em noites ... 2 - total de noites passadas no hotel )
+     */
+    public static double[] statisticsCliente(String idClient){
+        String[][] reservasCliente = searchForDataMatriz(matrizReservasAntigas, idClient, 3);
+        double servicos = 0;
+        double totalNoites = 0;
+        double totalEurosNoites = 0;
+        for (int k = 0; k < reservasCliente.length; k++){
+            double [] reserva = reservaGastosEdespesas(reservasCliente[k][0]);
+            servicos += reserva[0];
+            totalNoites += countDateDays(reservasCliente[k][1], reservasCliente[k][2]);
+            totalEurosNoites += reserva[4];
+        }
+        double[] statistics = {servicos, totalEurosNoites, totalNoites};
+        return statistics;
+    }
+
+    /**
+     * função que retorna as despesas de um especifico ano
+     * @param ano String com o ano a pesquisar
+     * @return array de doubles (0 - limpeza , 1 - agua e luz , 2 - custos administrativos)
+     */
+    public static double[] valorTotalDespesasAnual (String ano){
+        double[] despesasAnuais = new double[3];
+        for(int i = 0; i < matrizReservasAntigas.length; i++){
+            if (dateBetween("01/01/" + ano, "31/12/" + ano, matrizReservasAntigas[i][1])){
+                for (int k = 1; k < 4; k++){
+                    despesasAnuais[k-1] += reservaGastosEdespesas(matrizReservasAntigas[i][0])[k];
+                }
+            }
+        }
+        return despesasAnuais;
+    }
     public static String menuOpcoesDashBoard() {
         return """
 
@@ -933,7 +971,7 @@ public class exercicio_03 {
     public static void menuDashboard(Scanner input) {
         int opcao = 0;
         String[] yearsSales = checkSalesYears();
-        for(int i = 0; i< yearsSales.length; i++){
+        for (int i = 0; i < yearsSales.length; i++) {
             System.out.println(yearsSales[i]);
         }
         do {
@@ -946,22 +984,87 @@ public class exercicio_03 {
             }
             switch (opcao) {
                 case 1:
-                    for (int i = 0; i < yearsSales.length; i++){
-                        Double totalano = valorReceitaPorAno(yearsSales[i]);
-                        System.out.println("." + yearsSales[i] + " : " + totalano);
+                    for (int i = 0; i < yearsSales.length; i++) {
+                        double totalAno = valorReceitaPorAno(yearsSales[i]);
+                        System.out.println("." + yearsSales[i] + " : " + totalAno);
                     }
                     break;
                 case 2:
+                    for (int i = 0; i < yearsSales.length; i++){
+                        double[] valores = valorTotalDespesasAnual(yearsSales[i]);
+                        System.out.println("---- " + yearsSales[i] +" ----");
+                        System.out.println("$ Limpeza : " + valores[0]);
+                        System.out.println("$ Agua e Luz : " + valores[1]);
+                        System.out.println("$ Custos Administrativos : " + valores[1]);
+                        System.out.println("\n$ Total = " + (valores[0] + valores[1] + valores[2]));
+                    }
                     break;
                 case 3:
+                    for (int i = 0; i < yearsSales.length; i++){
+                        double totalDespesa = valorTotalDespesasAnual(yearsSales[i])[0] + valorTotalDespesasAnual(yearsSales[i])[1] + valorTotalDespesasAnual(yearsSales[i])[2];
+                        double lucro = valorReceitaPorAno(yearsSales[i]) - totalDespesa;
+                        System.out.println("\n ***********************++ \nLucro em " + yearsSales[i] + " : " + lucro);
+                    }
                     break;
                 case 4:
+                    double valorTotal = 0;
+                    String clienteId = "";
+                    for (int i = 0; i < matrizClientes.length; i++){
+                        double[] valoresCliente = statisticsCliente(matrizClientes[i][0]);
+                        if (valoresCliente[0] + valoresCliente[1] > valorTotal){
+                            valorTotal = valoresCliente[0] + valoresCliente[1];
+                            clienteId = matrizClientes[i][0];
+                        }
+                    }
+                    String[] infoCliente = searchForDataArray(matrizClientes, clienteId,0 );
+                    System.out.println("O cliente que mais gastador :  " + infoCliente[1] + "\n Gastou : " + valorTotal + " Euros");
                     break;
                 case 5:
+                    double valorTotalServicos = 0;
+                    String idClient = "";
+                    for (int i = 0; i < matrizClientes.length; i++){
+                        double[] valoresCliente = statisticsCliente(matrizClientes[i][0]);
+                        if (valoresCliente[0]  > valorTotalServicos){
+                            valorTotalServicos = valoresCliente[0];
+                            idClient = matrizClientes[i][0];
+                        }
+                    }
+                    String[] infoOfClient = searchForDataArray(matrizClientes, idClient,0 );
+                    System.out.println("O cliente que mais gastador em serviços :  " + infoOfClient[1] + "\n Gastou : " + valorTotalServicos + " Euros");
                     break;
                 case 6:
+                    double totalNoites = 0;
+                    String clienteId2 = "";
+                    for (int i = 0; i < matrizClientes.length; i++){
+                        String idCliente = matrizClientes[i][0];
+                        double[] valoresCliente = statisticsCliente(idCliente);
+                        if (valoresCliente[2]  > totalNoites){
+                            totalNoites = valoresCliente[2];
+                            clienteId2 = idCliente;
+                        }
+                    }
+                    String[] arrayClient = searchForDataArray(matrizClientes, clienteId2,0 );
+                    System.out.println("Cliente mais presente :  " + arrayClient[1] + "\n Passou " + totalNoites + " Noites");
                     break;
                 case 7:
+                    int contadorTemas = 0;
+                    String temaMelhor = "";
+                    for (int i = 0; i < matrizTemas.length; i++){
+                        String tema = matrizTemas[i][0];
+                        int contadorTemp = 0;
+                        for (int k = 0; k < matrizReservasAntigas.length; k++){
+                            String[] quarto = searchForDataArray(matrizQuartos,matrizReservasAntigas[k][4], 0);
+                            if (quarto[1].equals(tema)){
+                                contadorTemp++;
+                            }
+                        }
+                        if (contadorTemp > contadorTemas){
+                            contadorTemas = contadorTemp;
+                            temaMelhor = tema;
+                        }
+                    }
+                    String[] arrayTema = searchForDataArray(matrizTemas, temaMelhor, 0);
+                    System.out.println("O tema mais procurado é : " + arrayTema[1]);
                     break;
                 case 8:
                     break;

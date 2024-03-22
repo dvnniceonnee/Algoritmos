@@ -6,8 +6,8 @@ import static ficha_07.BibliotecaFiles.countDateDays;
 
 public class teste {
     public static void main(String[] args) {
-        String inicio = "30/12/2023";
-        String fim = "01/03/2024";
+        String inicio = "12/1/2023";
+        String fim = "31/12/2024";
 
         System.out.println(countDateDays(inicio, fim));
     }

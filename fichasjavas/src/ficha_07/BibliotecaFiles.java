@@ -428,38 +428,111 @@ public class BibliotecaFiles {
     }
 
     /**
+     * Metodo que retorna o numero de dias maximo consoante o mes do ano (conta com anos bisextos)
+     * @param mes inteiro do mes que queremos verificar
+     * @param ano inteiro do ano para verificar se é bisexto
+     * @return o numero de dias maximos que o mês pode ter em inteiro
+     */
+    public static int daysOnMonth (int mes, int ano){
+        if (mes == 2) { // se for fevereiro
+            if (ano % 4 == 0) // se o ano for bisexto (fev tem 29 dias)
+                    return 29;
+            else  // se o ano não for bisexto (fev só tem 28 dias)
+                return 28;
+        } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) { // se for o mes abril, junho, setembro ou novembro só tem 30 dias no maximo
+                return 30;
+        }
+        else {
+            return 31;
+        }
+    }
+
+    /**
+     * Metodo para verificar consoante o caléndário real se uma data existe
+     *
+     * @param dia inteiro com o numero do dia
+     * @param mes inteiro com o numero do mes
+     * @param ano inteiro com o numero do ano
+     * @return booleano ( true = data é valida ;; false = data nao existe no caléndario real )
+     */
+    public static boolean checkDateReal(int dia, int mes, int ano) {
+        if (mes < 1 || mes > 12) {
+            return false;
+        } else {
+            if (mes == 2) { // se for fevereiro
+                if (ano % 4 == 0) { // se o ano for bisexto (fev só tem 29 dias)
+                    if (dia > 29) {
+                        // nao existe no caléndário real
+                        return false;
+                    }
+                } else { // se o ano não for bisexto (fev só tem 28 dias)
+                    if (dia > 28) {
+                        // nao existe no caléndário real
+                        return false;
+                    }
+                }
+            } else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) { // se for o mes abril, junho, setembro ou novembro só pode ter 30 dias no maximo
+                if (dia > 30) {
+                    // nao existe no caléndário real
+                    return false;
+                }
+            } else {
+                if (dia > 31) { // restantes meses podem ter até 31 dias
+                    return false;
+                    // nao existe no caléndário real
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Metodo para retornar o numero de dias contados entre uma data e outra
+     *
      * @param start data no formato (dd/mm/yyyy)
-     * @param end data no formato (dd/mm/yyyy)
+     * @param end   data no formato (dd/mm/yyyy)
      * @return inteiro com o numero de dias entre os invervalos das datas
      */
     public static int countDateDays(String start, String end) {
-        String[] dataStart = start.split("/");
-        int dayStart = Integer.parseInt(dataStart[0]), monthStart = Integer.parseInt(dataStart[1]), yearStart = Integer.parseInt(dataStart[2]);
-
-        String[] dataEnd = end.split("/");
-        int dayEnd = Integer.parseInt(dataEnd[0]), monthEnd = Integer.parseInt(dataEnd[1]), yearEnd = Integer.parseInt(dataEnd[2]);
-
-        int diastotaisStart = 30 - dayStart;
-        int diastotaisEnd = 0 + dayEnd;
-        int mesTotais = 0;
-        if (yearEnd != yearStart){
-            mesTotais = (monthEnd - monthStart) + 11;
-        }
-        else {
-            mesTotais = (monthEnd - monthStart) - 1;
-        }
         int diasTotais = 0;
+        String[] dataStart = start.split("/");                  // String da data no formato (dd/mm/yyyy) divida pelo delimitador ("/)
+        int dayStart = Integer.parseInt(dataStart[0]), monthStart = Integer.parseInt(dataStart[1]), yearStart = Integer.parseInt(dataStart[2]);  // Passa para inteiro os dias, o mes e o ano
 
-        if (diastotaisEnd + diastotaisStart >= 30) {
-            int countingMonths = (diastotaisEnd + diastotaisStart) / 30;
-            mesTotais = mesTotais + 1;
-            diasTotais = ((diastotaisEnd + diastotaisStart) % 30) + mesTotais * 30 + 1;
-        } else {
-            mesTotais = mesTotais;
-            diasTotais = (diastotaisEnd + diastotaisStart) + mesTotais * 30 + 1;
+        String[] dataEnd = end.split("/");                      // String da data no formato (dd/mm/yyyy) divida pelo delimitador ("/)
+        int dayEnd = Integer.parseInt(dataEnd[0]), monthEnd = Integer.parseInt(dataEnd[1]), yearEnd = Integer.parseInt(dataEnd[2]); // Passa para inteiro os dias, o mes e o ano
+
+        int diastotaisStart = daysOnMonth(monthStart, yearStart) - dayStart;  // subtração aos dias maximos do mês do inicio do intervalo o dia da data para verificar quantos dias falta para terminar o mes
+        int diastotaisEnd = dayEnd;
+
+        if (yearStart == yearEnd && monthStart == monthEnd){
+            diastotaisEnd = daysOnMonth(dayEnd, monthEnd) - dayEnd;          // subtração aos dias maximos do mês do inicio do intervalo o dia da data para verificar quantos dias falta para terminar o mes
+            return diastotaisStart - diastotaisEnd + 1;                         // subtraimos a quantidade de dias que falta para terminar o mes em cada dia das datas e subtraimos para ver a diferença dos dias entre as datas
         }
-        return diasTotais ;
+        else if (yearStart == yearEnd){                                     // calculamos os dias totais dos meses entre o mês da data de inicio e o mês da data de fim
+                for (int i = monthStart + 1; i < monthEnd; i++){            // caso o mes de fim seja o mês a seguir ao mês de inicio vai retornar 0 dias
+                    diasTotais += daysOnMonth(i, yearStart);
+                }
+                return diasTotais + diastotaisStart + diastotaisEnd + 1;
+        }
+        else {                                                              // caso o ano não seja igual temos de calcular os dias de cada mês entre o mês a seguir ao mes inicial e o mês anterior ao mês final
+            for (int i = yearStart; i <= yearEnd; i ++){
+                if (i == yearStart){                // se o ano de inicio calculamos os dias apartir do mes a seguir do mes inicial até ao final do ano
+                    for (int k = monthStart + 1; k <= 12; k++ ){
+                        diasTotais += daysOnMonth(k, i);
+                    }
+                } else if (i == yearEnd) {          // se o ano de fim calculamos os dias apartir de janeiro até ao mês do fim do intervalo
+                    for (int k = 1; k < monthEnd; k++ ){
+                        diasTotais += daysOnMonth(k, i);
+                    }
+                }
+                else {                              // caso exista um ou mais anos pelo meio entre a data inicial e a final, calcualos os dias totais do ano
+                    for (int k = 1; k <= 12; k++){
+                        diasTotais += daysOnMonth(k, i);
+                    }
+                }
+            }
+            return diasTotais + diastotaisStart + diastotaisEnd;
+        }
     }
 }
 
