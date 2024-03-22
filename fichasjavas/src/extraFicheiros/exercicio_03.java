@@ -1067,8 +1067,55 @@ public class exercicio_03 {
                     System.out.println("O tema mais procurado é : " + arrayTema[1]);
                     break;
                 case 8:
+                    double reservasGastosComTema = 0;
+                    String temaId = "";
+                    for (int i = 0; i < matrizTemas.length; i++){
+                        String[][] quartosDoTema = searchForDataMatriz(matrizQuartos, matrizTemas[i][0], 1);
+                        String[][] reservasDotema = new String[0][0];
+                        for (int k = 0; k < quartosDoTema.length; k++){
+                             String[][] temp = searchForDataMatriz(matrizReservasAntigas, quartosDoTema[k][0], 4);
+                             double lucroComTema = 0;
+                             for (int j = 0; j < temp.length; j++){
+                                 double[] lucroTotalPorReserva = reservaGastosEdespesas(temp[j][0]);
+                                 lucroComTema += (lucroTotalPorReserva[4] + lucroTotalPorReserva[0]) - (lucroTotalPorReserva[1] + lucroTotalPorReserva[2] + lucroTotalPorReserva[3]) ;
+                             }
+                             if (lucroComTema > reservasGastosComTema){
+                                 reservasGastosComTema = lucroComTema;
+                                 temaId = matrizTemas[i][0];
+                             }
+                        }
+                    }
+                    String[] arrayTema1 = searchForDataArray(matrizTemas, temaId, 0);
+                    System.out.println("O tema mais lucrativo foi o " + arrayTema1[1]);
                     break;
                 case 9:
+                    double reservasGastosComTemaMenor = 0;
+                    String temaMenorId = "";
+                    for (int i = 0; i < matrizTemas.length; i++){
+                        String[][] quartosDoTema = searchForDataMatriz(matrizQuartos, matrizTemas[i][0], 1);
+                        String[][] reservasDotema = new String[0][0];
+                        for (int k = 0; k < quartosDoTema.length; k++){
+                            String[][] temp = searchForDataMatriz(matrizReservasAntigas, quartosDoTema[k][0], 4);
+                            double lucroComTema = 0;
+                            for (int j = 0; j < temp.length; j++){
+                                double[] lucroTotalPorReserva = reservaGastosEdespesas(temp[j][0]);
+                                lucroComTema += (lucroTotalPorReserva[4] + lucroTotalPorReserva[0]) - (lucroTotalPorReserva[1] + lucroTotalPorReserva[2] + lucroTotalPorReserva[3]) ;
+                            }
+                            if (reservasGastosComTemaMenor == 0){
+                                reservasGastosComTemaMenor = lucroComTema;
+                                temaId = matrizTemas[i][0];
+                            }
+                            else{
+                                if (reservasGastosComTemaMenor > lucroComTema)
+                                {
+                                    reservasGastosComTemaMenor = lucroComTema;
+                                    temaMenorId = matrizTemas[i][0];
+                                }
+                            }
+                        }
+                    }
+                    String[] arrayTema2 = searchForDataArray(matrizTemas, temaMenorId, 0);
+                    System.out.println("O tema mais lucrativo foi o " + arrayTema2[1]);
                     break;
                 case 10:
                     break;
