@@ -36,7 +36,7 @@ public class bibliotecaFunc {
     public static void printFile(String pathFile) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(new File(pathFile));
         while (fileScanner.hasNextLine()){
-            System.out.println(fileScanner.nextLine());
+            System.out.println("\t" + fileScanner.nextLine());
         }
         fileScanner.close();
     }
@@ -45,7 +45,7 @@ public class bibliotecaFunc {
      * retorna o numero de linhas e colunas de um ficheiro
      *
      * @param ficheiro
-     * @return um array com 2 posições [0] - quantidade de linhas [1] quantidade de colunas
+     * @return um array com 2 posições <br> [0] - quantidade de linhas <br> [1] - quantidade de colunas
      */
     public static int[] numeroLinhasEcolunas(File ficheiro, String delimitador) throws FileNotFoundException {
         int[] lineColumns = new int[2];
@@ -54,7 +54,7 @@ public class bibliotecaFunc {
         lineColumns[1] = scanFile.nextLine().split(delimitador).length;
         while (scanFile.hasNextLine()) {
             scanFile.nextLine();
-            lineColumns[0] = lineColumns[0] + 1;
+            lineColumns[0]++;
         }
         scanFile.close();
         return lineColumns;
@@ -214,7 +214,7 @@ public class bibliotecaFunc {
      * @param colunaDado coluna onde vai estar o dado que foi dado por parametro
      * @return uma matriz nova com a linha apagada
      */
-    public static String[][] deleteLine(String[][] matriz, String dado, int colunaDado) {
+    public static String[][] deleteLineOnMatriz(String[][] matriz, String dado, int colunaDado) {
         String[][] temp = new String[matriz.length - 1][matriz[0].length];
         int countingLines = 0;
         for (int i = 0; i < matriz.length; i++) {
@@ -224,6 +224,25 @@ public class bibliotecaFunc {
                 for (int k = 0; k < matriz[0].length; k++) {
                     temp[i - countingLines][k] = matriz[i][k];
                 }
+            }
+        }
+        return temp;
+    }
+
+    /**
+     * Função para remover um elemento de um array
+     * @param array onde vai ser removido o elemento
+     * @param dado dado do elemento que vai ser removido
+     * @return array com menos um elemento (elemento no qual é o que tinha o dado passado por parametro)
+     */
+    public static String[] deleteElementOnArray(String[] array, String dado){
+        String[] temp = new String[array.length - 1 ];
+        int countingLines = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(dado)) {    // caso encontre o elemento onde está o dado nao adiciona ao novo array
+                countingLines++;
+            } else {
+                temp[i - countingLines] = array[i];
             }
         }
         return temp;

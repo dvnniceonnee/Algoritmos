@@ -2,7 +2,6 @@ package trabalhoAvaliacao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,18 +18,18 @@ public class main {
      * <br> [10] graphic witcher3
      */
     public static String[] filesPaths() {
-        String file1 = "fichasjavas/src/trabalhoAvaliacao/files/GameStart_Admins.csv";
-        String file2 = "fichasjavas/src/trabalhoAvaliacao/files/GameStart_Clientes.csv";
-        String file3 = "fichasjavas/src/trabalhoAvaliacao/files/GameStart_Vendas.csv";
-        String file4 = "fichasjavas/src/trabalhoAvaliacao/files/GameStart_Copyright.txt";
-        String file5 = "fichasjavas/src/trabalhoAvaliacao/files/GameStart_Categorias.csv";
-        String file6 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/callOfDuty.txt";
-        String file7 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/fifa.txt";
-        String file8 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/hollowKnight.txt";
-        String file9 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/minecraft.txt";
-        String file10 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/mortalKombat.txt";
-        String file11 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/overcooked.txt";
-        String file12 = "fichasjavas/src/trabalhoAvaliacao/files/CatalogoGrafico/witcher3.txt";
+        String file1 = "fichasjavas/files/filesAvaliacao/GameStart_Admins.csv";
+        String file2 = "fichasjavas/files/filesAvaliacao/GameStart_Clientes.csv";
+        String file3 = "fichasjavas/files/filesAvaliacao/GameStart_Vendas.csv";
+        String file4 = "fichasjavas/files/filesAvaliacao/GameStart_Copyright.txt";
+        String file5 = "fichasjavas/files/filesAvaliacao/GameStart_Categorias.csv";
+        String file6 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/callOfDuty.txt";
+        String file7 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/fifa.txt";
+        String file8 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/hollowKnight.txt";
+        String file9 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/minecraft.txt";
+        String file10 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/mortalKombat.txt";
+        String file11 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/overcooked.txt";
+        String file12 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/witcher3.txt";
         String[] files = {file1, file2, file3, file4, file5, file6, file7, file8, file9, file10, file11, file12};
         return files;
     }
@@ -61,49 +60,25 @@ public class main {
         return false;
     }
 
-    // ------------------- Secção Administradores -------------------------
-    // ------------------- Secção Administradores -------------------------
-    // ------------------- Secção Administradores -------------------------
-    // ------------------- Secção Administradores -------------------------
+    /*
+    ------------------- Secção Administradores -------------------------
+    ------------------- Secção Administradores -------------------------
+    ------------------- Secção Administradores -------------------------
+    ------------------- Secção Administradores -------------------------
+    */
     public static String opcoesMenuAdmin() {
-        String menu = "\n1. Consulta de Ficheiros" +
-                "\n2. Total de vendas" +
-                "\n3. Total de Lucro" +
-                "\n4. Pesquisar um cliente" +
-                "\n5. Pesquisar o jogo mais caro" +
-                "\n6. Pesquisar os melhores clientes" +
-                "\n7. Pesquisar a melhor categoria" +
-                "\n8. Pesquisa de vendas" +
-                "\n9. Pesquisar o top(5) dos jogos com mais lucro" +
-                "\n10. Pesquisar o bottom(5) dos jogos com menos lucro" +
-                "\n 0. Sair";
+        String menu = "\n\t1. Consulta de Ficheiros" +
+                "\n\t2. Total de vendas" +
+                "\n\t3. Total de Lucro" +
+                "\n\t4. Pesquisar um cliente" +
+                "\n\t5. Pesquisar o jogo mais caro" +
+                "\n\t6. Pesquisar os melhores clientes" +
+                "\n\t7. Pesquisar a melhor categoria" +
+                "\n\t8. Pesquisa de vendas" +
+                "\n\t9. Pesquisar o top(5) dos jogos com mais lucro" +
+                "\n\t10. Pesquisar o bottom(5) dos jogos com menos lucro" +
+                "\n\t0. Sair\n";
         return menu;
-    }
-
-    public static void menuConsultaFicheiros(Scanner input) throws FileNotFoundException {
-        int opcao = 0;
-        do {
-            System.out.println("1. Imprimir ficheiro das vendas\n2. Imprimir ficheiro dos clientes\n3. Imprimir ficheiro das categorias\n4. Sair");
-            try {
-                opcao = input.nextInt();
-            } catch (InputMismatchException ex1) {
-                opcao = 0;
-                input.next();
-            }
-            switch (opcao) {
-                case 1:
-                    printFile(filesPaths()[2]);
-                    break;
-                case 2:
-                    printFile(filesPaths()[1]);
-                    break;
-                case 3:
-                    printFile(filesPaths()[4]);
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
-            }
-        } while (opcao != 4);
     }
 
     /**
@@ -144,7 +119,7 @@ public class main {
         for (int i = 0; i < matrizCategorias.length; i++) {
             double categoriaLucro = 0;
             for (int k = 0; k < matrizVendas.length; k++) {
-                if(!lucroVendas){                   // parte na iteração só necessita de correr uma primeira vez para calcular o lucro total e o total de faturamento nas vendas da loja
+                if (!lucroVendas) {                   // esta parte do iterador só necessita de correr uma primeira vez para calcular o lucro total e o total de faturamento nas vendas da loja
                     valorfaturado += Double.parseDouble(matrizVendas[k][5]);    // valor da venda na linha "k" que vai adicionar ao valor total faturado da loja
                     lucroTotal += statisticsVenda(matrizVendas[k][0])[1];       // lucro da venda na linha "k" que vai adicionar ao lucro total faturado da loja
                     if (valorfaturado > jogoMaisCaroValor) {                    // condicional para verificar qual é o jogo mais caro
@@ -152,7 +127,7 @@ public class main {
                         jogoMaisCaro = matrizVendas[k][4];
                     }
                 }
-                    // usamos este iterador para verificar qual a categoria que deu mais lucro
+                // usamos esta parte do iterador para verificar qual a categoria que deu mais lucro
                 if (matrizVendas[k][3].equals(matrizCategorias[i][0])) {            // caso a categoria na linha "i" seja igual à da venda adiciona ao lucro desta categoria
                     categoriaLucro += statisticsVenda(matrizVendas[k][0])[1];
                 }
@@ -170,17 +145,17 @@ public class main {
     /**
      * Função que retorna uma lista dos id's dos clientes por ordem descrescente em termos de gastos na loja assim como o gasto de cada um
      *
-     * @return matriz por ordem decrescente (coluna [0] = id do cliente <br> coluna [1] = valor gasto pelo id cliente dessa linha) <br>
+     * @return matriz por ordem decrescente <br> coluna [0] = id do cliente <br> coluna [1] = valor gasto pelo id cliente dessa linha <br>
      * 1º Linha da matriz contém o cliente que mais gastou e assim sucessivamente
      */
     public static String[][] listaClientesOrdemGasto() {
         String[][] clientesPorOrdemGasto = new String[0][];
         String[][] temp = matrizClientes;
         for (int i = 0; i < matrizClientes.length; i++) {  // basicamente vamos iterar todos os clientes porque queremos uma lista por ordem decrescente dos gastos de todos os clientes
-            double valorTotalGasto = 0;  //
+            double valorTotalGasto = 0;
             String idClienteMaisGastador = "";
-            for (int k = 0; k < temp.length; k++) {
-                String[][] matrizVendasDoCliente = searchForDataMatriz(matrizVendas, temp[k][0], 1);
+            for (int k = 0; k < temp.length; k++) {         // iterador da matriz clientes mas no final do ciclo antes do proximo ciclo "i" vai ser removido o cliente mais gastador
+                String[][] matrizVendasDoCliente = searchForDataMatriz(matrizVendas, temp[k][0], 1);    // matriz com todas as vendas do cliente "k"
                 double valorGastoCliente = 0;
                 for (int e = 0; e < matrizVendasDoCliente.length; e++) {
                     valorGastoCliente += statisticsVenda(matrizVendasDoCliente[e][0])[0];
@@ -190,15 +165,74 @@ public class main {
                     idClienteMaisGastador = temp[k][0];
                 }
             }
-            String[] clienteGastos = {idClienteMaisGastador, String.valueOf(valorTotalGasto)};
-            clientesPorOrdemGasto = addLineToMatriz(clienteGastos, clientesPorOrdemGasto);
-            temp = deleteLine(temp, idClienteMaisGastador, 0);
+            String[] clienteGastos = {idClienteMaisGastador, String.valueOf(valorTotalGasto)};      // linha com o cliente mais gastador que vai ser adicionado sempre que é encontrado o cliente
+            clientesPorOrdemGasto = addLineToMatriz(clienteGastos, clientesPorOrdemGasto);          // adiciona a linha clienteGastos á matriz clientesPorOrdemGasto
+            temp = deleteLineOnMatriz(temp, idClienteMaisGastador, 0);                      // apanha o cliente para nao aparecer novamente na matriz "temp"
         }
         return clientesPorOrdemGasto;
     }
 
+    /**
+     * Função para retornar uma lista por ordem descrescente do lucro que cada jogo fez
+     *
+     * @return Matriz de todos os jogos com 2 colunas <br>Coluna [0] - Nome do jogo <br> Coluna [1] = String com o lucro do Jogo
+     */
+    public static String[][] statisticsJogosLucroOrdemDrescente() {
+        String[] jogosDaLoja = columnDataWithoutRep(matrizVendas, 4);           // array com todos os jogos sem repetições que estão nas vendas
+        String[][] jogosPorOrdemDescrescente = new String[0][0];
+        String[] temp = jogosDaLoja;
+        for (int i = 0; i < jogosDaLoja.length; i++) {               // vamos iterar todos os jogos da loja pois temos de os colocar por ordem descrescente
+            double lucroDoJogo = 0;
+            String jogoMaisLucro = "";
+            for (int k = 0; k < temp.length; k++) {                  // vamos iterar um array temporario onde vão ser removidos os jogos consoante os adiciona mos ao array "jogosPorOrdemDescrescente" para conseguirmos ter sempre o jogo com mais lucro
+                double lucroTemp = 0;
+                for (int j = 0; j < matrizVendas.length; j++) {      // iterador de todas a vendas para encontrar as vendas todas de cada jogo
+                    if (temp[k].equals(matrizVendas[j][4])) {
+                        lucroTemp += statisticsVenda(matrizVendas[j][0])[1];            // adicionamos o lucro de cada venda de um especifico jogo para posteriormente ver qual é o jogo com mais lucro
+                    }
+                }
+                if (lucroTemp > lucroDoJogo) {
+                    lucroDoJogo = lucroTemp;
+                    jogoMaisLucro = temp[k];
+                }
+            }
+            String[] arrayJogo = {jogoMaisLucro, String.valueOf(lucroDoJogo)};          // linha com o nome do jogo e o lucro
+            jogosPorOrdemDescrescente = addLineToMatriz(arrayJogo, jogosPorOrdemDescrescente);      // adicionamos o jogo à matriz "jogosPorOrdemDescrescente"
+            temp = deleteElementOnArray(temp, jogoMaisLucro);
+        }
+        return jogosPorOrdemDescrescente;
+    }
+
+    public static void menuConsultaFicheiros(Scanner input) throws FileNotFoundException {
+        int opcao = 0;
+        do {
+            System.out.println("\n1. Imprimir ficheiro das vendas\n2. Imprimir ficheiro dos clientes\n3. Imprimir ficheiro das categorias\n4. Sair");
+            try {
+                opcao = input.nextInt();
+            } catch (InputMismatchException ex1) {
+                opcao = 0;
+                input.next();
+            }
+            switch (opcao) {
+                case 1:
+                    printFile(filesPaths()[2]);
+                    break;
+                case 2:
+                    printFile(filesPaths()[1]);
+                    break;
+                case 3:
+                    printFile(filesPaths()[4]);
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 4);
+    }
+
     public static void menuAdmin(Scanner input) throws FileNotFoundException {
         int opcaoAdmin = -1;
+        String[][] jogosEstatisticas = statisticsJogosLucroOrdemDrescente();
+        String[] vendasEstatisticas = statisticsAllVendas();
         do {
             System.out.println(opcoesMenuAdmin());
             System.out.print("Introduza o que deseja efetuar : ");
@@ -210,38 +244,37 @@ public class main {
             switch (opcaoAdmin) {
                 case 0:
                     break;
-                case 1:
+                case 1: // Consulta de ficheiros
                     menuConsultaFicheiros(input);
                     break;
-                case 2:
+                case 2: // Total de vendas
                     System.out.println("\n Foram feitas " + matrizVendas.length + " vendas!");
-                    System.out.println(" Com um valor total de : " + statisticsAllVendas()[0] + "\n");
+                    System.out.println(" Com um valor total de : " + vendasEstatisticas[0] + " €\n");
                     break;
-                case 3:
-                    System.out.println("\n Lucro total das vendas: " + statisticsAllVendas()[1]);
+                case 3: // Total de lucro
+                    System.out.println("\n Lucro total das vendas: " + vendasEstatisticas[1]);
                     break;
-                case 4:
+                case 4: // Pesquisa de clientes
                     int idUtilizador = 0;
                     do {
                         System.out.print("Introduza o id de cliente : ");
                         try {
                             idUtilizador = input.nextInt();
                             if (!searchIfExistsOnMatriz(matrizClientes, String.valueOf(idUtilizador), 0)) {
-                                System.out.println(espacos + "!!!!  Cliente inexistente  !!!!");
+                                System.out.println("\t!!!!  Cliente inexistente  !!!!");
                                 idUtilizador = 0;
                             }
                         } catch (InputMismatchException ex1) {
                             input.next();
-                            System.out.println(espacos + "!!!! ID Introduzido inválido !!!!");
+                            System.out.println("\t!!!! ID Introduzido inválido !!!!");
                         }
                     } while (idUtilizador == 0);
                     String[] infoClient = searchForDataArray(matrizClientes, String.valueOf(idUtilizador), 0);
-                    System.out.println(espacos + "\n ID : " + infoClient[0] + "\n Nome : " + infoClient[1] + "\n Numero de telemovel : " + infoClient[2] + "\n Email : " + infoClient[3]);
+                    System.out.println("\n\t ID : " + infoClient[0] + "\n Nome : " + infoClient[1] + "\n Numero de telemovel : " + infoClient[2] + "\n Email : " + infoClient[3]);
                     break;
                 case 5: // Jogo mais caro
-                    String jogoMaiscaro = statisticsAllVendas()[2];
-                    System.out.println(espacos + "\nO jogo mais caro é " + jogoMaiscaro + "\n" + espacos + "$$$$$ Clientes que o compraram $$$$");
-                    String[][] matrizVendasJogoMaisCaro = searchForDataMatriz(matrizVendas, jogoMaiscaro, 4);           // procura na matriz das vendas quais as vendas que contem o jogo mais caro apenas
+                    System.out.println("\n\tO jogo mais caro é " + vendasEstatisticas[2] + "\n" + "$$$$$ Clientes que o compraram $$$$");
+                    String[][] matrizVendasJogoMaisCaro = searchForDataMatriz(matrizVendas, vendasEstatisticas[2], 4);           // procura na matriz das vendas quais as vendas que contem o jogo mais caro apenas
                     for (int i = 0; i < matrizVendasJogoMaisCaro.length; i++) {
                         String[] clienteVenda = searchForDataArray(matrizClientes, matrizVendasJogoMaisCaro[i][1], 0);
                         System.out.println("\t" + "ID : " + clienteVenda[0] + "\t & Nome : " + clienteVenda[1]);
@@ -256,32 +289,41 @@ public class main {
                         System.out.println("\n\t" + (i + 1) + ".Cliente *** Nome : " + clienteInfo[1] + "\t Contacto : " + clienteInfo[2] + "\t Email : " + clienteInfo[3]);
                         System.out.println("\n\t ***** Jogos Compradados pelo " + clienteInfo[1] + " *****");
                         String[] jogosComprados = columnDataWithoutRep(vendasDoCliente, 4);
-                        for (int k = 0; k < jogosComprados.length; k++){
-                            System.out.println("\t" + k+1 + ". " + jogosComprados[k]);
+                        for (int k = 0; k < jogosComprados.length; k++) {
+                            System.out.println("\t" + k + 1 + ". " + jogosComprados[k]);
                         }
                     }
                     break;
-                case 7:
-                    System.out.println("\n\tA categoria mais lucrativa é : " + statisticsAllVendas()[4]);
-                    System.out.println("\tLucrou um total de " + statisticsAllVendas()[3] + "euros");
+                case 7: // categoria mais lucrativa
+                    System.out.println("\n\tA categoria mais lucrativa é : " + vendasEstatisticas[4]);
+                    System.out.println("\tLucrou um total de " + vendasEstatisticas[3] + "euros");
                     break;
-                case 8:
+                case 8: // Pesquisa de jogos e clientes que o compraram
                     System.out.println("\nIntroduza o nome do jogo que deseja pesquisar : ");
                     String nomeJogo = input.next() + input.nextLine();
-                    if(searchIfExistsOnMatriz(matrizVendas, nomeJogo,4))
-                    {
+                    if (searchIfExistsOnMatriz(matrizVendas, nomeJogo, 4)) {
                         String[][] vendasDoJogo = searchForDataMatriz(matrizVendas, nomeJogo, 4);
                         String[] clientesDoJogo = columnDataWithoutRep(vendasDoJogo, 1);
                         System.out.println("\n\t ***** Clientes que compraram o jogo " + nomeJogo + " *****\n");
-                        for (int i = 0; i < clientesDoJogo.length; i++){
-                            String[] infoDoClient = searchForDataArray(matrizClientes, clientesDoJogo[i],0 );
-                            System.out.println("\t" + (i + 1) + " # Nome : "+infoDoClient[1] + "\t Email : " + infoDoClient[3] + "\t Contacto : " + infoDoClient[2]);
+                        for (int i = 0; i < clientesDoJogo.length; i++) {
+                            String[] infoDoClient = searchForDataArray(matrizClientes, clientesDoJogo[i], 0);
+                            System.out.println("\t" + (i + 1) + " # Nome : " + infoDoClient[1] + "\t Email : " + infoDoClient[3] + "\t Contacto : " + infoDoClient[2]);
                         }
+                    } else {
+                        System.out.println("\t !!! Jogo inexistente !!!");
                     }
                     break;
-                case 9:
+                case 9: // Top 5 jogos
+                    System.out.println("\n\t\t ***** TOP 5 JOGOS *****");
+                    for (int i = 0; i < 5; i++) {
+                        System.out.println("\t" + (i + 1) + ". " + jogosEstatisticas[i][0] + "\t $$ Lucro : " + jogosEstatisticas[i][1] + " €");
+                    }
                     break;
-                case 10:
+                case 10: // bottom 5 jogos
+                    System.out.println("\n\t\t ***** BOTTOM 5 JOGOS *****");
+                    for (int i = jogosEstatisticas.length - 1; i >= jogosEstatisticas.length - 6; i--) {
+                        System.out.println("\t" + (jogosEstatisticas.length - i) + ". " + jogosEstatisticas[i][0] + "\t $$ Lucro : " + jogosEstatisticas[i][1] + " €");
+                    }
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -289,7 +331,111 @@ public class main {
         } while (opcaoAdmin != 0);
     }
 
-    public static String espacos = "     ";
+     /*
+    ------------------- Secção Cliente -------------------------
+    ------------------- Secção Cliente -------------------------
+    ------------------- Secção Cliente -------------------------
+    ------------------- Secção Cliente -------------------------
+    */
+
+    public static String opcoesMenuCLientes(){
+        return  "\n\t 1. Novo Registo" +
+                "\n\t 2. Procura de estacionamento" +
+                "\n\t 3. Pesquisa de jogos" +
+                "\n\t 4. Imprimir Catálogos Graficos" +
+                "\n\t 5. Pesquisa de Editoras" +
+                "\n\t 6. Pesquisa de Categoria" +
+                "\n\t 7. Pesquisa do Jogo mais recente" +
+                "\n\t 0. Sair";
+    }
+
+    /**
+     * metodo para verificar se um "email" tem algo antes de um "@" e algo depois do "@"
+     * @param email String com o email a verificar
+     * @return booleano (true  = email valido    ##  false = email invalido
+     */
+    public static boolean checkEmail(String email){
+        String[] email1 = email.split("@");
+        if (email1.length == 2)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Metodo que verifica se um numero de telemovel contém 9 numeros e nao contém letras
+     * @param contact String com o numero
+     * @return
+     */
+    public static boolean checkPhoneNumber(String contact){
+        if (contact.length() == 9)
+            try{
+                Integer.parseInt(contact);
+                return true;
+            }
+            catch (NumberFormatException ex1){
+                return false;
+            }
+        else
+            return false;
+    }
+
+    public static void newClient(Scanner input){
+        String nome = "", contacto = "", email = "";
+        System.out.print("\n\tIntroduza o seu Nome : ");
+        nome = input.next() + input.nextLine();
+        System.out.print("\n\tIntroduza o seu contacto : ");
+        contacto = input.nextLine();
+        System.out.print("\n\tIntroduza o seu eMail : ");
+        email = input.nextLine();
+        if (!checkPhoneNumber(contacto) || !checkEmail(email)){  // validação se o numero de telemovel e o email são validos
+            System.out.println("\n\t!!!! Dados Introduzidos Inválidos !!!!");
+        }
+        else {
+            if (searchIfExistsOnMatriz(matrizClientes, email, 3)){
+                System.out.println("\n\tEmail já existente!");
+            }
+            else if (searchIfExistsOnMatriz(matrizClientes, contacto, 2)){
+                System.out.println("\n\tContacto de telemovel já existente!");
+            }
+            else {
+                String novoClienteId = String.valueOf(Integer.parseInt(matrizClientes[matrizClientes.length - 1][0]) + 1);
+                String[] novoCliente = {novoClienteId, nome, contacto, email};
+                matrizClientes = addLineToMatriz(novoCliente, matrizClientes);
+                System.out.println("\n\t++++ Cliente Inserido com Sucesso ++++");
+            }
+        }
+    }
+    public static void menuClientes (Scanner input){
+        int opcaoCliente = -1;
+        do{
+            System.out.println(opcoesMenuCLientes());
+            try{
+                opcaoCliente = input.nextInt();
+            }catch (InputMismatchException ex1){
+                opcaoCliente = -1;
+                input.next();
+            }
+            switch (opcaoCliente){
+                case 1 : // Novo registo de cliente
+
+                    break;
+                case 2: // Lugares vagos no estacionamento
+                    break;
+                case 3: // Pesquisa de jogos
+                    break;
+                case 4: // Imprimir catologos graficos
+                    break;
+                case 5: // pesquisa de Editoras
+                    break;
+                case 6: // Pesquisa de categorias
+                    break;
+                case 7: // Pesquisa do jogo mais recente
+                    break;
+            }
+        }while (opcaoCliente != 0);
+    }
+
     public static String[][] matrizLogins;
     public static String[][] matrizVendas;
     public static String[][] matrizCategorias;
@@ -339,6 +485,7 @@ public class main {
                     }
                     break;
                 case 2:
+                    menuClientes(input);
                     break;
             }
         }
