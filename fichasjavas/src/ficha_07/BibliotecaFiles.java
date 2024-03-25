@@ -534,5 +534,36 @@ public class BibliotecaFiles {
             return diasTotais + diastotaisStart + diastotaisEnd;
         }
     }
+
+    /**
+     * metodo para verificar se um "email" tem algo antes de um "@" e algo depois do "@"
+     * @param email String com o email a verificar
+     * @return booleano (true  = email valido    ##  false = email invalido
+     */
+    public static boolean checkEmail(String email){
+        String[] email1 = email.split("@");
+        if (email1.length == 2)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Metodo que verifica se um numero de telemovel contém 9 numeros e nao contém letras
+     * @param contact String com o numero
+     * @return
+     */
+    public static boolean checkPhoneNumber(String contact){
+        if (contact.length() == 9)
+            try{
+                Integer.parseInt(contact);
+                return true;
+            }
+            catch (NumberFormatException ex1){
+                return false;
+            }
+        else
+            return false;
+    }
 }
 

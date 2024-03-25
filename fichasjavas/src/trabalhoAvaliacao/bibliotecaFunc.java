@@ -207,6 +207,26 @@ public class bibliotecaFunc {
     }
 
     /**
+     * Função para adicionar um elemento novo a uma array de ints
+     * @param originalArray array onde vai ser adicionado um novo elemento
+     * @param elementToAdd String com o elemento a ser adicionado
+     * @return array com mais uma linha em que vai conter o novo elemento
+     */
+    public static int[] addElementToArrayInt(int[] originalArray, int elementToAdd) {
+        int[] temp = new int[originalArray.length + 1];
+        if (originalArray.length == 0 ){
+            temp[0] = elementToAdd;
+        }
+        else {
+            for (int i = 0; i < originalArray.length; i++){
+                temp[i] = originalArray[i];
+            }
+            temp[originalArray.length] = elementToAdd;
+        }
+        return temp;
+    }
+
+    /**
      * Função que permite remover uma linha de uma matriz (<u>necessita de verificar antes se a linha existe - <strong color="blue">searchIfExistsOnMatriz</strong></u>)
      *
      * @param matriz     de dados de onde vai ser removida a linha
