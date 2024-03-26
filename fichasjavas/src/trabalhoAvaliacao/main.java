@@ -239,6 +239,7 @@ public class main {
                 opcaoAdmin = input.nextInt();
             } catch (InputMismatchException ex1) {
                 opcaoAdmin = -1;
+                input.next();
             }
             switch (opcaoAdmin) {
                 case 0:
@@ -337,8 +338,8 @@ public class main {
     ------------------- Secção Cliente -------------------------
     */
 
-    public static String opcoesMenuCLientes(){
-        return  "\n\t1. Novo Registo" +
+    public static String opcoesMenuCLientes() {
+        return "\n\t1. Novo Registo" +
                 "\n\t2. Procura de estacionamento" +
                 "\n\t3. Pesquisa de jogos" +
                 "\n\t4. Imprimir Catálogos Graficos" +
@@ -348,31 +349,31 @@ public class main {
                 "\n\t0. Sair";
     }
 
-    public static String[] opcoesCatalogo(){
-        String[] opcoes = {"Call of Duty" , "Fifa", "Hollow Knight" , "Mortal Kombat" , "Overcooked" , "Witcher3: Wild Hunt" , "Minecraft"};
+    public static String[] opcoesCatalogo() {
+        String[] opcoes = {"Call of Duty", "Fifa", "Hollow Knight", "Mortal Kombat", "Overcooked", "Witcher3: Wild Hunt", "Minecraft"};
         return opcoes;
     }
 
     /**
      * Metodo para pedir o nome, o email, e o contacto
+     *
      * @param input
      * @return array com 3 posiçoes <br> posição [0] = nome <br> posiçao [1] = contacto <br> posição [2] = email
      */
-    public static String[] newClient(Scanner input){
+    public static String[] newClient(Scanner input) {
         System.out.print("\n\tIntroduza o seu Nome : ");
         String nome = input.next() + input.nextLine();
 
         long contacto = 0;
-        do{
+        do {
             System.out.print("\n\tIntroduza o seu contacto : ");
-            try{
+            try {
                 contacto = input.nextLong();
-            }
-            catch (InputMismatchException ex1){
+            } catch (InputMismatchException ex1) {
                 System.out.println("\n\t!! Numero inválido !!");
                 input.next();
             }
-        }while (contacto == 0);
+        } while (contacto == 0);
         System.out.print("\n\tIntroduza o seu eMail : ");
         String email = input.next();
 
@@ -382,14 +383,15 @@ public class main {
 
     /**
      * Função que retorna os lugares vagos em forma de array em que cada posição do array é um lugar vago
+     *
      * @return array
      */
-    public static int[] lugaresVagos(){
+    public static int[] lugaresVagos() {
         int[] numerosVagos = new int[0];
         int somaTriangulares = 0;
-        for(int i = 1; somaTriangulares < 121; i++){
+        for (int i = 1; somaTriangulares < 121; i++) {
             somaTriangulares += i;
-            if(somaTriangulares % 5 == 0){
+            if (somaTriangulares % 5 == 0) {
                 numerosVagos = addElementToArrayInt(numerosVagos, somaTriangulares);
 
             }
@@ -399,20 +401,20 @@ public class main {
 
     public static void printCatalogo(Scanner input) throws FileNotFoundException {
         int opcao = -1;
-        do{
-            for(int i = 0; i < opcoesCatalogo().length; i++){
-                System.out.print("\n\t" + (i+1)+". " + opcoesCatalogo()[i]);
+        do {
+            for (int i = 0; i < opcoesCatalogo().length; i++) {
+                System.out.print("\n\t" + (i + 1) + ". " + opcoesCatalogo()[i]);
             }
             System.out.println("\n\t0. Sair");
             System.out.print("\tIntroduza qual catalogo deseja imprimir : ");
-            try{
+            try {
                 opcao = input.nextInt();
-            }catch (InputMismatchException ex1){
+            } catch (InputMismatchException ex1) {
                 opcao = -1;
                 input.next();
             }
-            switch (opcao){
-                case 1 :
+            switch (opcao) {
+                case 1:
                     printFile(filesPaths()[5]);
                     break;
                 case 2:
@@ -438,31 +440,160 @@ public class main {
                 default:
                     System.out.println("\n\t !!! Opção Inválida !!!");
             }
-        }while (opcao != 0);
+        } while (opcao != 0);
     }
-    public static void menuClientes (Scanner input) throws FileNotFoundException {
+
+    /**
+     * Metodo para imprimir todos os jogos de cada categoria de uma dada editora (não contém letras sensiveis)
+     *
+     * @param input Scanner do input do utilizador
+     */
+    public static void printEditora(Scanner input) {
+        int opcao = -1;
+        do {
+            String[] editorasDisp = columnDataWithoutRep(matrizVendas, 2);              // lista das editoras disponiveis para posteriormente escolher uma
+            String editora = "";
+            for (int i = 0; i < editorasDisp.length; i++) {
+                System.out.println("\t" + (i + 1) + ". " + editorasDisp[i]);
+            }
+            System.out.println("\t 0. Sair");
+            System.out.print("\t Introduza a editora (1 - " + editorasDisp.length + ") (0 para Sair) : ");
+            try {
+                try {
+                    opcao = input.nextInt();
+                } catch (InputMismatchException ex1) {
+                    opcao = -1;
+                    input.next();
+                }
+                if (opcao != 0)
+                    editora = editorasDisp[opcao - 1];
+            } catch (ArrayIndexOutOfBoundsException ex1) {
+                System.out.println("\n\t !!!! Opção inválida! \n");
+                opcao = -1;
+            }
+            if (opcao != -1 && opcao != 0) {
+                String[][] vendasEditora = searchForDataMatriz(matrizVendas, editora, 2);  // Pesquisa de todas as vendas de uma editora
+                String[] categoriasEditora = columnDataWithoutRep(vendasEditora, 3);                 // Pesquisa de todas as categorias de uma editora sem repetições
+                editora = editora.toUpperCase();
+                System.out.println("\n\t~~~~ " + editora + " ~~~~");
+                for (int i = 0; i < categoriasEditora.length; i++) {
+                    System.out.println("\n\t*** " + categoriasEditora[i] + " ***");
+                    String[][] jogosEditora = searchForDataMatriz(vendasEditora, categoriasEditora[i], 3);      // Pesquisa de todos os jogos das vendas em que são da editora que estamos a pesquisar
+                    String[] jogosCategoria = columnDataWithoutRep(jogosEditora, 4);                // todos os jogos da categoria da editora [i]
+                    for (int k = 0; k < jogosCategoria.length; k++) {
+                        System.out.println("\t- " + jogosCategoria[k]);
+                    }
+                }
+            }
+        } while (opcao != 0);
+    }
+
+    /**
+     * Método para imprimir a categoria com os as jogos das editoras da categoria data
+     *
+     * @param input Scanner
+     */
+    public static void printCategoria(Scanner input) {
+        int opcao = -1;
+        do {
+            String[] categoriasDispo = columnDataWithoutRep(matrizVendas, 3);
+            String categoria = "";
+            for (int i = 0; i < categoriasDispo.length; i++) {
+                System.out.println("\t" + (i + 1) + ". " + categoriasDispo[i]);
+            }
+            System.out.println("\t 0. Sair");
+            System.out.print("\t Introduza a categoria (1 - " + categoriasDispo.length + ") (0 para Sair) : ");
+            try {
+                try {
+                    opcao = input.nextInt();
+                } catch (InputMismatchException ex1) {
+                    opcao = -1;
+                    input.next();
+                }
+                if (opcao != 0)
+                    categoria = categoriasDispo[opcao - 1];
+            } catch (ArrayIndexOutOfBoundsException ex1) {
+                System.out.println("\n\t !!!! Opção inválida! \n");
+                opcao = -1;
+            }
+
+            if (opcao != -1 && opcao != 0) {
+                String[][] listaVendasCategoria = searchForDataMatriz(matrizVendas, categoria, 3);          // lista com as vendas da categoria passada por parametro
+                String[] listaEditoras = columnDataWithoutRep(listaVendasCategoria, 2);                              // lista de editoras sem repetições que contém a categoria dada
+                categoria = categoria.toUpperCase();
+                System.out.println("\n\t~~~~ " + categoria + " ~~~~");
+                for (int i = 0; i < listaEditoras.length; i++) {
+                    System.out.println("\n\t*** " + listaEditoras[i] + " ***");
+                    String[][] jogosCategoriaEditora = searchForDataMatriz(listaVendasCategoria, listaEditoras[i], 2);       // pesquisa de todos os jogos com aquela categoria de uma editora [i]
+                    String[] jogosEditora = columnDataWithoutRep(jogosCategoriaEditora, 4);                                            // array com os jogos da editora sem repetições
+                    for (int k = 0; k < jogosEditora.length; k++) {
+                        System.out.println("\t- " + jogosEditora[k]);
+                    }
+                }
+            }
+        } while (opcao != 0);
+    }
+
+    public static void menuClientes(Scanner input) throws FileNotFoundException {
         int opcaoCliente = -1;
-        do{
+        do {
             System.out.println(opcoesMenuCLientes());
             System.out.print("\n\t Escolha o que pretende efetuar : ");
-            try{
+            try {
                 opcaoCliente = input.nextInt();
-            }catch (InputMismatchException ex1){
+            } catch (InputMismatchException ex1) {
                 opcaoCliente = -1;
                 input.next();
             }
-            switch (opcaoCliente){
-                case 1 : // Novo registo de cliente
+            switch (opcaoCliente) {
+                case 1: // Novo registo de cliente
                     String[] novoCliente = newClient(input);
                     System.out.println("\tCliente inserido com sucesso : " + novoCliente[0] + "| " + novoCliente[1] + " | " + novoCliente[2]);
                     break;
                 case 2: // Lugares vagos no estacionamento
                     int[] lugaresVagos = lugaresVagos();
                     int contadorLugares = 0;
+                    System.out.println("\n\t\t ***** LUGARES VAGOS *****\n");
+                    for (int i = 1; i <= 4; i++) {
+                        System.out.print("\t");
+                        for (int k = 0; k < lugaresVagos.length; k++) {
+                            if (i == 1) {
+                                System.out.print("|");
+                                for (int j = 0; j < 5; j++) {
+                                    System.out.print("_");
+                                }
+                            } else if (i == 2 || i == 4) {
+                                System.out.print("|");
+                                for (int j = 0; j < 5; j++) {
+                                    System.out.print(" ");
+                                }
+                            } else if (i == 3) {
+                                String lugar = String.valueOf(lugaresVagos[k]);
+                                System.out.print("|");
+                                if (lugar.length() < 3) {
+                                    for (int j = 1; j <= 5; j++) {
+                                        if (j == 1 || j == 5)
+                                            System.out.print(" ");
+                                        else {
+                                            for (int h = lugar.length(); h < 3; h++) {
+                                                System.out.print("0");
+                                            }
+                                            System.out.print(lugar);
+                                            j = 4;
+                                        }
+                                    }
+                                } else {
+                                    System.out.print(" " + lugar + " ");
+                                }
+                            }
+
+                        }
+                        System.out.print("|\n");
+                    }
                     break;
                 case 3: // Pesquisa de jogos
-                    String[] jogos = columnDataWithoutRep(matrizVendas,4);
-                    for(int i = 0; i< jogos.length; i++){
+                    String[] jogos = columnDataWithoutRep(matrizVendas, 4);
+                    for (int i = 0; i < jogos.length; i++) {
                         System.out.println("\t" + jogos[i]);
                     }
                     break;
@@ -470,13 +601,18 @@ public class main {
                     printCatalogo(input);
                     break;
                 case 5: // pesquisa de Editoras
+                    printEditora(input);
                     break;
                 case 6: // Pesquisa de categorias
+                    printCategoria(input);
                     break;
                 case 7: // Pesquisa do jogo mais recente
+                    String[] jogosPorOrdemEntrada = columnDataWithoutRep(matrizVendas, 4);
+                    System.out.println("\n\t **** Entrada mais recente ****");
+                    System.out.println("\t - " + jogosPorOrdemEntrada[jogosPorOrdemEntrada.length - 1]);
                     break;
             }
-        }while (opcaoCliente != 0);
+        } while (opcaoCliente != 0);
     }
 
     public static String[][] matrizLogins;
@@ -508,7 +644,6 @@ public class main {
                     opcaoAdminOuCliente = input.nextInt();
                 } catch (InputMismatchException ex1) {
                     input.next();
-                    System.out.println("\n!!!!!!!! Opção inválida !!!!!!!!");
                 }
                 if (opcaoAdminOuCliente != 1 && opcaoAdminOuCliente != 2) {
                     opcaoAdminOuCliente = 0;
