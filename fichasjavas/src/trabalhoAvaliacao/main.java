@@ -1,7 +1,6 @@
 package trabalhoAvaliacao;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -59,6 +58,36 @@ public class main {
         return false;
     }
 
+    public static void printString(String stringTotal){
+        Scanner stringScanner = new Scanner(stringTotal);
+        String[] conjuntoLinhas = new String[0];
+        int tamanhoMaior = 0;
+        while (stringScanner.hasNextLine()){
+            String proximaLinha = stringScanner.nextLine();
+            conjuntoLinhas = addElementToArray(conjuntoLinhas, proximaLinha);
+            if(proximaLinha.length() > tamanhoMaior)
+                tamanhoMaior = proximaLinha.length();
+        }
+        System.out.println("\t\n");
+        for(int i = 0; i <= tamanhoMaior; i++){
+            if(i == 0)
+                System.out.print("\t=");
+            else
+                System.out.print("=");
+        }
+        System.out.print("\n\t|\n");
+        for(int i = 0; i < conjuntoLinhas.length; i++){
+            System.out.print("\t\t" + (i) + ". " +  conjuntoLinhas[i] + "\n");
+        }
+        System.out.println("\t|");
+        for(int i = 0; i <= tamanhoMaior; i++){
+            if(i == 0)
+                System.out.print("\t=");
+            else
+                System.out.print("=");
+        }
+    }
+
     /*
     ------------------- Secção Administradores -------------------------
     ------------------- Secção Administradores -------------------------
@@ -66,17 +95,18 @@ public class main {
     ------------------- Secção Administradores -------------------------
     */
     public static String opcoesMenuAdmin() {
-        String menu = "\n\t1. Consulta de Ficheiros" +
-                "\n\t2. Total de vendas" +
-                "\n\t3. Total de Lucro" +
-                "\n\t4. Pesquisar um cliente" +
-                "\n\t5. Pesquisar o jogo mais caro" +
-                "\n\t6. Pesquisar os melhores clientes" +
-                "\n\t7. Pesquisar a melhor categoria" +
-                "\n\t8. Pesquisa de vendas" +
-                "\n\t9. Pesquisar o top(5) dos jogos com mais lucro" +
-                "\n\t10. Pesquisar o bottom(5) dos jogos com menos lucro" +
-                "\n\t0. Sair\n";
+        String menu = "Sair\n" +
+                "Consulta de Ficheiros\n" +
+                "Total de vendas\n" +
+                "Total de Lucro\n" +
+                "Pesquisar um cliente\n" +
+                "Pesquisar o jogo mais caro\n" +
+                "Pesquisar os melhores clientes\n" +
+                "Pesquisar a melhor categoria\n" +
+                "Pesquisa de vendas\n" +
+                "Pesquisar o top(5) dos jogos com mais lucro\n" +
+                "Pesquisar o bottom(5) dos jogos com menos lucro\n";
+
         return menu;
     }
 
@@ -148,7 +178,7 @@ public class main {
      * 1º Linha da matriz contém o cliente que mais gastou e assim sucessivamente
      */
     public static String[][] listaClientesOrdemGasto() {
-        String[][] clientesPorOrdemGasto = new String[0][];
+        String[][] clientesPorOrdemGasto = new String[0][0];
         String[][] temp = matrizClientes;
         for (int i = 0; i < matrizClientes.length; i++) {  // basicamente vamos iterar todos os clientes porque queremos uma lista por ordem decrescente dos gastos de todos os clientes
             double valorTotalGasto = 0;
@@ -164,9 +194,11 @@ public class main {
                     idClienteMaisGastador = temp[k][0];
                 }
             }
-            String[] clienteGastos = {idClienteMaisGastador, String.valueOf(valorTotalGasto)};      // linha com o cliente mais gastador que vai ser adicionado sempre que é encontrado o cliente
-            clientesPorOrdemGasto = addLineToMatriz(clienteGastos, clientesPorOrdemGasto);          // adiciona a linha clienteGastos á matriz clientesPorOrdemGasto
-            temp = deleteLineOnMatriz(temp, idClienteMaisGastador, 0);                      // apanha o cliente para nao aparecer novamente na matriz "temp"
+            if (valorTotalGasto > 0){ // so entram os clientes que fizeram gastos!
+                String[] clienteGastos = {idClienteMaisGastador, String.valueOf(valorTotalGasto)};      // linha com o cliente mais gastador que vai ser adicionado sempre que é encontrado o cliente
+                clientesPorOrdemGasto = addLineToMatriz(clienteGastos, clientesPorOrdemGasto);          // adiciona a linha clienteGastos á matriz clientesPorOrdemGasto
+                temp = deleteLineOnMatriz(temp, idClienteMaisGastador, 0);                      // apanha o cliente para nao aparecer novamente na matriz "temp"
+            }
         }
         return clientesPorOrdemGasto;
     }
@@ -214,13 +246,25 @@ public class main {
             }
             switch (opcao) {
                 case 1:
-                    printFile(filesPaths()[2]);
+                    try{
+                        printFile(filesPaths()[2]);
+                    }catch (FileNotFoundException ex1){
+                        System.out.println("Ficheiro não encontrado!");
+                    }
                     break;
                 case 2:
+                    try{
                     printFile(filesPaths()[1]);
+                    }catch (FileNotFoundException ex1){
+                    System.out.println("Ficheiro não encontrado!");
+                    }
                     break;
                 case 3:
+                    try{
                     printFile(filesPaths()[4]);
+                    } catch (FileNotFoundException ex1){
+                        System.out.println("Ficheiro não encontrado!");
+                    }
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -233,8 +277,8 @@ public class main {
         String[][] jogosEstatisticas = statisticsJogosLucroOrdemDrescente();
         String[] vendasEstatisticas = statisticsAllVendas();
         do {
-            System.out.println(opcoesMenuAdmin());
-            System.out.print("Introduza o que deseja efetuar : ");
+            printString(opcoesMenuAdmin());
+            System.out.print("\n\n\tIntroduza o que deseja efetuar : ");
             try {
                 opcaoAdmin = input.nextInt();
             } catch (InputMismatchException ex1) {
@@ -248,11 +292,11 @@ public class main {
                     menuConsultaFicheiros(input);
                     break;
                 case 2: // Total de vendas
-                    System.out.println("\n Foram feitas " + matrizVendas.length + " vendas!");
-                    System.out.println(" Com um valor total de : " + vendasEstatisticas[0] + " €\n");
+                    System.out.println("\n\tForam feitas " + matrizVendas.length + " vendas!");
+                    System.out.println("\tCom um valor total de : " + vendasEstatisticas[0] + " €");
                     break;
                 case 3: // Total de lucro
-                    System.out.println("\n Lucro total das vendas: " + vendasEstatisticas[1]);
+                    System.out.println("\n\tLucro total das vendas: " + vendasEstatisticas[1] + " €");
                     break;
                 case 4: // Pesquisa de clientes
                     int idUtilizador = 0;
@@ -282,17 +326,22 @@ public class main {
                     break;
                 case 6: // Clientes/Cliente mais gastador
                     String[][] clientesMaisGastadores = listaClientesOrdemGasto();
-                    String[][] maisGastadores = searchForDataMatriz(clientesMaisGastadores, clientesMaisGastadores[0][1], 1);  // retorna o primeiro cliente que gastou mais e o resto que tenha gasto igual ao primeiro
-                    for (int i = 0; i < maisGastadores.length; i++) {
-                        String[][] vendasDoCliente = searchForDataMatriz(matrizVendas, maisGastadores[i][0], 1);
-                        String[] clienteInfo = searchForDataArray(matrizClientes, maisGastadores[i][0], 0);
-                        System.out.println("\n\t" + (i + 1) + ".Cliente *** Nome : " + clienteInfo[1] + "\t Contacto : " + clienteInfo[2] + "\t Email : " + clienteInfo[3]);
-                        System.out.println("\n\t ***** Jogos Compradados pelo " + clienteInfo[1] + " *****");
-                        String[] jogosComprados = columnDataWithoutRep(vendasDoCliente, 4);
-                        for (int k = 0; k < jogosComprados.length; k++) {
-                            System.out.println("\t" + k + 1 + ". " + jogosComprados[k]);
+                    try{
+                        String[][] maisGastadores = searchForDataMatriz(clientesMaisGastadores, clientesMaisGastadores[0][1], 1);  // retorna o primeiro cliente que gastou mais e o resto que tenha gasto igual ao primeiro
+                        for (int i = 0; i < maisGastadores.length; i++) {
+                            String[][] vendasDoCliente = searchForDataMatriz(matrizVendas, maisGastadores[i][0], 1);
+                            String[] clienteInfo = searchForDataArray(matrizClientes, maisGastadores[i][0], 0);
+                            System.out.println("\n\t" + (i + 1) + ".Cliente *** Nome : " + clienteInfo[1] + "\t Contacto : " + clienteInfo[2] + "\t Email : " + clienteInfo[3]);
+                            System.out.println("\n\t ***** Jogos Compradados pelo " + clienteInfo[1] + " *****");
+                            String[] jogosComprados = columnDataWithoutRep(vendasDoCliente, 4);
+                            for (int k = 0; k < jogosComprados.length; k++) {
+                                System.out.println("\t" + k + 1 + ". " + jogosComprados[k]);
+                            }
                         }
+                    }catch (ArrayIndexOutOfBoundsException ex1){
+                        System.out.println("\n\t\t!!! Não existe melhor/melhores clientes !!!");
                     }
+
                     break;
                 case 7: // categoria mais lucrativa
                     System.out.println("\n\tA categoria mais lucrativa é : " + vendasEstatisticas[4]);
@@ -315,15 +364,25 @@ public class main {
                     break;
                 case 9: // Top 5 jogos
                     System.out.println("\n\t\t ***** TOP 5 JOGOS *****");
-                    for (int i = 0; i < 5; i++) {
-                        System.out.println("\t" + (i + 1) + ". " + jogosEstatisticas[i][0] + "\t $$ Lucro : " + jogosEstatisticas[i][1] + " €");
+                    try{
+                        for (int i = 0; i < 5; i++) {
+                            System.out.println("\t" + (i + 1) + ". " + jogosEstatisticas[i][0] + "\t $$ Lucro : " + jogosEstatisticas[i][1] + " €");
+                        }
+                    }catch (ArrayIndexOutOfBoundsException ex1){
+                        System.out.println("\t\t !!! Não existe vendas !!!");
                     }
+
                     break;
                 case 10: // bottom 5 jogos
                     System.out.println("\n\t\t ***** BOTTOM 5 JOGOS *****");
-                    for (int i = jogosEstatisticas.length - 1; i >= jogosEstatisticas.length - 6; i--) {
-                        System.out.println("\t" + (jogosEstatisticas.length - i) + ". " + jogosEstatisticas[i][0] + "\t $$ Lucro : " + jogosEstatisticas[i][1] + " €");
+                    try{
+                        for (int i = jogosEstatisticas.length - 1; i >= jogosEstatisticas.length - 6; i--) {
+                            System.out.println("\t" + (jogosEstatisticas.length - i) + ". " + jogosEstatisticas[i][0] + "\t $$ Lucro : " + jogosEstatisticas[i][1] + " €");
+                        }
+                    }catch (ArrayIndexOutOfBoundsException ex1){
+                        System.out.println("\t\t !!! Não existe vendas !!!");
                     }
+
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -339,14 +398,14 @@ public class main {
     */
 
     public static String opcoesMenuCLientes() {
-        return "\n\t1. Novo Registo" +
-                "\n\t2. Procura de estacionamento" +
-                "\n\t3. Pesquisa de jogos" +
-                "\n\t4. Imprimir Catálogos Graficos" +
-                "\n\t5. Pesquisa de Editoras" +
-                "\n\t6. Pesquisa de Categoria" +
-                "\n\t7. Pesquisa do Jogo mais recente" +
-                "\n\t0. Sair";
+        return  "Sair\n" +
+                "Novo Registo\n" +
+                "Procura de estacionamento\n" +
+                "Pesquisa de jogos\n" +
+                "Imprimir Catálogos Graficos\n" +
+                "Pesquisa de Editoras\n" +
+                "Pesquisa de Categoria\n" +
+                "Pesquisa do Jogo mais recente";
     }
 
     public static String[] opcoesCatalogo() {
@@ -399,6 +458,39 @@ public class main {
         return numerosVagos;
     }
 
+    /**
+     * Função para imprimir os lugares vagos com padrão gráfica
+     */
+    public static void printLugaresVagos() {
+        int[] lugares = lugaresVagos();
+        System.out.println("\n\t\t ***** LUGARES VAGOS *****\n");
+        for (int i = 1; i <= 4; i++) {          // graficamente vai ter 4 linhas
+            System.out.print("\t");
+            for (int k = 0; k < lugares.length; k++) {
+                System.out.print("|");
+                for (int j = 1; j <= 5; j++) {
+                    if (i == 1)
+                        System.out.print("_");
+                    else if (i == 2 || i == 4) {
+                        System.out.print(" ");
+                    } else {
+                        String lugar = String.valueOf(lugares[k]);
+                        if (j == 1 || j == 5) {
+                            System.out.print(" ");
+                        } else {
+                            for (int h = lugar.length(); h < 3; h++) {
+                                System.out.print("0");
+                            }
+                            System.out.print(lugar);
+                            j = 4;
+                        }
+                    }
+                }
+            }
+            System.out.print("|\n");
+        }
+    }
+
     public static void printCatalogo(Scanner input) throws FileNotFoundException {
         int opcao = -1;
         do {
@@ -413,32 +505,36 @@ public class main {
                 opcao = -1;
                 input.next();
             }
+            String pathFile = "";
             switch (opcao) {
                 case 1:
-                    printFile(filesPaths()[5]);
+                    pathFile = filesPaths()[5];
                     break;
                 case 2:
-                    printFile(filesPaths()[6]);
+                    pathFile = filesPaths()[6];
                     break;
                 case 3:
-                    printFile(filesPaths()[7]);
+                    pathFile = filesPaths()[7];
                     break;
                 case 4:
-                    printFile(filesPaths()[9]);
+                    pathFile = filesPaths()[9];
                     break;
                 case 5:
-                    printFile(filesPaths()[10]);
+                    pathFile = filesPaths()[10];
                     break;
                 case 6:
-                    printFile(filesPaths()[11]);
+                    pathFile = filesPaths()[11];
                     break;
                 case 7:
-                    printFile(filesPaths()[8]);
+                    pathFile = filesPaths()[8];
                     break;
                 case 0:
                     break;
                 default:
                     System.out.println("\n\t !!! Opção Inválida !!!");
+            }
+            if(opcao != 0 && opcao != -1){
+                 printFile(pathFile);
             }
         } while (opcao != 0);
     }
@@ -452,12 +548,20 @@ public class main {
         int opcao = -1;
         do {
             String[] editorasDisp = columnDataWithoutRep(matrizVendas, 2);              // lista das editoras disponiveis para posteriormente escolher uma
+
             String editora = "";
-            for (int i = 0; i < editorasDisp.length; i++) {
-                System.out.println("\t" + (i + 1) + ". " + editorasDisp[i]);
+            if (editorasDisp.length > 0){
+                for (int i = 0; i < editorasDisp.length; i++) {
+                    System.out.println("\t" + (i + 1) + ". " + editorasDisp[i]);
+                }
+                System.out.println("\t 0. Sair");
+                System.out.print("\t Introduza a editora (1 - " + editorasDisp.length + ") (0 para Sair) : ");
             }
-            System.out.println("\t 0. Sair");
-            System.out.print("\t Introduza a editora (1 - " + editorasDisp.length + ") (0 para Sair) : ");
+            else {
+                System.out.println("\n\t\t !!! Nao existe editoras !!! \n");
+                System.out.println("\t 0. Sair");
+            }
+
             try {
                 try {
                     opcao = input.nextInt();
@@ -468,7 +572,7 @@ public class main {
                 if (opcao != 0)
                     editora = editorasDisp[opcao - 1];
             } catch (ArrayIndexOutOfBoundsException ex1) {
-                System.out.println("\n\t !!!! Opção inválida! \n");
+                System.out.println("\t\t !!!! Opção inválida! \n");
                 opcao = -1;
             }
             if (opcao != -1 && opcao != 0) {
@@ -498,11 +602,17 @@ public class main {
         do {
             String[] categoriasDispo = columnDataWithoutRep(matrizVendas, 3);
             String categoria = "";
-            for (int i = 0; i < categoriasDispo.length; i++) {
-                System.out.println("\t" + (i + 1) + ". " + categoriasDispo[i]);
+            if (categoriasDispo.length > 0){
+                for (int i = 0; i < categoriasDispo.length; i++) {
+                    System.out.println("\t" + (i + 1) + ". " + categoriasDispo[i]);
+                }
+                System.out.println("\t 0. Sair");
+                System.out.print("\t Introduza a categoria (1 - " + categoriasDispo.length + ") (0 para Sair) : ");
             }
-            System.out.println("\t 0. Sair");
-            System.out.print("\t Introduza a categoria (1 - " + categoriasDispo.length + ") (0 para Sair) : ");
+            else {
+                System.out.println("\n\t\t !!! Nao existe categorias !!! \n");
+                System.out.println("\t 0. Sair");
+            }
             try {
                 try {
                     opcao = input.nextInt();
@@ -537,7 +647,7 @@ public class main {
     public static void menuClientes(Scanner input) throws FileNotFoundException {
         int opcaoCliente = -1;
         do {
-            System.out.println(opcoesMenuCLientes());
+            printString(opcoesMenuCLientes());
             System.out.print("\n\t Escolha o que pretende efetuar : ");
             try {
                 opcaoCliente = input.nextInt();
@@ -551,51 +661,17 @@ public class main {
                     System.out.println("\tCliente inserido com sucesso : " + novoCliente[0] + "| " + novoCliente[1] + " | " + novoCliente[2]);
                     break;
                 case 2: // Lugares vagos no estacionamento
-                    int[] lugaresVagos = lugaresVagos();
-                    int contadorLugares = 0;
-                    System.out.println("\n\t\t ***** LUGARES VAGOS *****\n");
-                    for (int i = 1; i <= 4; i++) {
-                        System.out.print("\t");
-                        for (int k = 0; k < lugaresVagos.length; k++) {
-                            if (i == 1) {
-                                System.out.print("|");
-                                for (int j = 0; j < 5; j++) {
-                                    System.out.print("_");
-                                }
-                            } else if (i == 2 || i == 4) {
-                                System.out.print("|");
-                                for (int j = 0; j < 5; j++) {
-                                    System.out.print(" ");
-                                }
-                            } else if (i == 3) {
-                                String lugar = String.valueOf(lugaresVagos[k]);
-                                System.out.print("|");
-                                if (lugar.length() < 3) {
-                                    for (int j = 1; j <= 5; j++) {
-                                        if (j == 1 || j == 5)
-                                            System.out.print(" ");
-                                        else {
-                                            for (int h = lugar.length(); h < 3; h++) {
-                                                System.out.print("0");
-                                            }
-                                            System.out.print(lugar);
-                                            j = 4;
-                                        }
-                                    }
-                                } else {
-                                    System.out.print(" " + lugar + " ");
-                                }
-                            }
-
-                        }
-                        System.out.print("|\n");
-                    }
+                    printLugaresVagos();
                     break;
                 case 3: // Pesquisa de jogos
                     String[] jogos = columnDataWithoutRep(matrizVendas, 4);
-                    for (int i = 0; i < jogos.length; i++) {
-                        System.out.println("\t" + jogos[i]);
+                    if (jogos.length > 0){
+                        for (int i = 0; i < jogos.length; i++) {
+                            System.out.println("\t" + jogos[i]);
+                        }
                     }
+                    else
+                        System.out.println("\n\t !!!! Não existe jogos !!!!");
                     break;
                 case 4: // Imprimir catologos graficos
                     printCatalogo(input);
@@ -608,11 +684,86 @@ public class main {
                     break;
                 case 7: // Pesquisa do jogo mais recente
                     String[] jogosPorOrdemEntrada = columnDataWithoutRep(matrizVendas, 4);
-                    System.out.println("\n\t **** Entrada mais recente ****");
-                    System.out.println("\t - " + jogosPorOrdemEntrada[jogosPorOrdemEntrada.length - 1]);
+                    if (jogosPorOrdemEntrada.length > 0 ){
+                        System.out.println("\n\t **** Entrada mais recente ****");
+                        System.out.println("\t - " + jogosPorOrdemEntrada[jogosPorOrdemEntrada.length - 1]);
+                    }
+                    else
+                        System.out.println("\t\t !!! Não existe jogos !!!");
+
                     break;
             }
         } while (opcaoCliente != 0);
+    }
+
+    public static void printCopyRight() throws IOException {
+        File ficheiroCopyRight = new File("fichasjavas/files/filesAvaliacao/GameStart_Copyright.txt");
+        int[] linhasColunas = numeroLinhasEcolunas(ficheiroCopyRight, "");
+        Scanner scannerCopyRight = new Scanner(ficheiroCopyRight);
+        String[] linhas = new String[linhasColunas[0]];
+        for(int i = 0; i < linhasColunas[0]; i++){
+            linhas[i] = scannerCopyRight.nextLine();
+        }
+        scannerCopyRight.close();
+        String titulo = "Desenvolvido por : ";
+        String nome = "Miguel Madureira";
+        String curso = "Software Developer";
+        PrintWriter writerNovoFile = new PrintWriter(ficheiroCopyRight);
+        for(int i = 0; i < linhas.length; i++){
+            System.out.println(i);
+            if (i == ((linhasColunas[0]/2) - 4)){
+                int tamanhoTitulo = titulo.length();
+                for(int k = 0; k < linhas[i].length(); k++){
+                    if (k == ((linhas[i].length()/2) - (tamanhoTitulo/2))){
+                        writerNovoFile.print(titulo);
+                        k += tamanhoTitulo - 1;
+                    }
+                    else {
+                        writerNovoFile.print(linhas[i].charAt(k));
+                    }
+                }
+                writerNovoFile.print("\n");
+            }
+            else if (i ==  (linhasColunas[0]/2) - 3){
+                int tamanhoNome = titulo.length();
+                for(int k = 0; k < linhas[i].length(); k++){
+                    if (k == ((linhas[i].length()/2) - (tamanhoNome/2))){
+                        writerNovoFile.print(nome);
+                        k += tamanhoNome - 1;
+                    }
+                    else {
+                        writerNovoFile.print(linhas[i].charAt(k));
+                    }
+                }
+                writerNovoFile.print("\n");
+            }
+            else if (i ==  linhasColunas[0]/2){
+                int tamanhoLinha = linhas[i].length();
+                int tamanhoCurso = curso.length();
+                String charsLinhaAntes = linhas[i].split(" ")[0];
+                String charsLinhaDepois = linhas[i].split(" ")[1];
+                for(int k = 1; k <= tamanhoLinha; k++){
+                    if(k == 1){
+                        writerNovoFile.print(charsLinhaAntes);
+                    }
+                    else if (k == tamanhoLinha){
+                        writerNovoFile.print(charsLinhaDepois);
+                    }
+                    if (k == (tamanhoLinha/2) - (tamanhoCurso/2)){
+                        writerNovoFile.print(curso);
+                        k += tamanhoCurso;
+                    }
+                    else {
+                        writerNovoFile.print(" ");
+                    }
+                }
+                writerNovoFile.print("\n");
+            }
+            else {
+                writerNovoFile.println(linhas[i]);
+            }
+        }
+        writerNovoFile.close();
     }
 
     public static String[][] matrizLogins;
@@ -621,7 +772,7 @@ public class main {
     public static String[][] matrizClientes;
 
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
         boolean filesAreValid = false;
         try {
@@ -645,7 +796,7 @@ public class main {
                 } catch (InputMismatchException ex1) {
                     input.next();
                 }
-                if (opcaoAdminOuCliente != 1 && opcaoAdminOuCliente != 2) {
+                if (opcaoAdminOuCliente != 1 && opcaoAdminOuCliente != 2 && opcaoAdminOuCliente != 3) {
                     opcaoAdminOuCliente = 0;
                     System.out.println("\n!!!!!!!! Opção inválida !!!!!!!!");
                 }
@@ -667,5 +818,6 @@ public class main {
                     break;
             }
         }
+        printCopyRight();
     }
 }

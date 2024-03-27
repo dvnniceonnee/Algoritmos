@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
-
 public class bibliotecaFunc {
 
     /**
@@ -22,21 +21,27 @@ public class bibliotecaFunc {
         try {
             int[] numberLinCol = numeroLinhasEcolunas(ficheiro, charDelimitador);
             matriz = turnFileIntoMatriz(ficheiro, numberLinCol[0], numberLinCol[1], cabecalhoRetirar, charDelimitador);
-        } catch (FileNotFoundException ex1) {
-            System.out.println("Ficheiro " + ficheiro.getName() + " nao foi lido!");
+        } catch (Exception ex1) {
+            System.out.println("\t\t!! Ficheiro " + ficheiro.getName() + " sem conteudo ou inexistente !!");
         }
         return matriz;
     }
 
     /**
      * Metodo que permite imprimir o conteúdo de um ficheiro na consola
+     *
      * @param pathFile caminho do ficheiro
      * @throws FileNotFoundException
      */
     public static void printFile(String pathFile) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(new File(pathFile));
-        while (fileScanner.hasNextLine()){
-            System.out.println("\t" + fileScanner.nextLine());
+        if(fileScanner.hasNextLine()){
+            while (fileScanner.hasNextLine()) {
+                System.out.println("\t" + fileScanner.nextLine());
+            }
+        }
+        else {
+            System.out.println("\t\t!!!! "+ pathFile + " sem conteúdo !!!!");
         }
         fileScanner.close();
     }
@@ -86,7 +91,7 @@ public class bibliotecaFunc {
             }
             scanFile.close();
         } catch (Exception ex1) {
-            System.out.println("Erro matriz Musicas" + ex1.getMessage() + ex1.getCause());
+            System.out.println("Erro ficheiro" + ex1.getMessage() + ex1.getCause());
         }
 
         return matrizFile;
@@ -167,7 +172,7 @@ public class bibliotecaFunc {
     /**
      * Função que retorna uma matriz com a linha de dados adicionada
      *
-     * @param arrayToAdd  dados a adicionar á matriz em forma de array (numero de colunas tem de ser o mesmo do que o numero de colunas da matriz)
+     * @param arrayToAdd     dados a adicionar á matriz em forma de array (numero de colunas tem de ser o mesmo do que o numero de colunas da matriz)
      * @param originalMatriz matriz onde vao ser adicionados os dados (matriz pode conter 0 linhas)
      * @return uma matriz com os dados novos inseridos
      */
@@ -188,17 +193,17 @@ public class bibliotecaFunc {
 
     /**
      * Função para adicionar um elemento novo a uma array
+     *
      * @param originalArray array onde vai ser adicionado um novo elemento
-     * @param elementToAdd String com o elemento a ser adicionado
+     * @param elementToAdd  String com o elemento a ser adicionado
      * @return array com mais uma linha em que vai conter o novo elemento
      */
     public static String[] addElementToArray(String[] originalArray, String elementToAdd) {
         String[] temp = new String[originalArray.length + 1];
-        if (originalArray.length == 0 ){
+        if (originalArray.length == 0) {
             temp[0] = elementToAdd;
-        }
-        else {
-            for (int i = 0; i < originalArray.length; i++){
+        } else {
+            for (int i = 0; i < originalArray.length; i++) {
                 temp[i] = originalArray[i];
             }
             temp[originalArray.length] = elementToAdd;
@@ -208,17 +213,17 @@ public class bibliotecaFunc {
 
     /**
      * Função para adicionar um elemento novo a uma array de ints
+     *
      * @param originalArray array onde vai ser adicionado um novo elemento
-     * @param elementToAdd String com o elemento a ser adicionado
+     * @param elementToAdd  String com o elemento a ser adicionado
      * @return array com mais uma linha em que vai conter o novo elemento
      */
     public static int[] addElementToArrayInt(int[] originalArray, int elementToAdd) {
         int[] temp = new int[originalArray.length + 1];
-        if (originalArray.length == 0 ){
+        if (originalArray.length == 0) {
             temp[0] = elementToAdd;
-        }
-        else {
-            for (int i = 0; i < originalArray.length; i++){
+        } else {
+            for (int i = 0; i < originalArray.length; i++) {
                 temp[i] = originalArray[i];
             }
             temp[originalArray.length] = elementToAdd;
@@ -251,12 +256,13 @@ public class bibliotecaFunc {
 
     /**
      * Função para remover um elemento de um array
+     *
      * @param array onde vai ser removido o elemento
-     * @param dado dado do elemento que vai ser removido
+     * @param dado  dado do elemento que vai ser removido
      * @return array com menos um elemento (elemento no qual é o que tinha o dado passado por parametro)
      */
-    public static String[] deleteElementOnArray(String[] array, String dado){
-        String[] temp = new String[array.length - 1 ];
+    public static String[] deleteElementOnArray(String[] array, String dado) {
+        String[] temp = new String[array.length - 1];
         int countingLines = 0;
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(dado)) {    // caso encontre o elemento onde está o dado nao adiciona ao novo array
