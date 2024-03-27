@@ -10,8 +10,7 @@ import static trabalhoAvaliacao.bibliotecaFunc.*;
 
 public class teste {
     public static void main(String[] args) throws FileNotFoundException {
-        String inicio = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/callOfDuty.txt";
-        printFileRotated(inicio);
+        String inicio = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/overcooked.txt";
 
     }
 }

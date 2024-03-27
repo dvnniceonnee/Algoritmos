@@ -565,5 +565,53 @@ public class BibliotecaFiles {
         else
             return false;
     }
+
+    public static void printFileRotated(String pathFile) throws FileNotFoundException {
+        Scanner fileScanner = new Scanner(new File(pathFile));
+        int numeroLinhas = numeroLinhasColunas(new File(pathFile), "")[0];
+        String[] conjuntoLinhas = new String[numeroLinhas];
+        int tamanhoMaiorLinha = 0;
+        String[][] matrizFile = new String[0][0];
+        for(int i = 0; i < conjuntoLinhas.length; i++){
+            conjuntoLinhas[i] = fileScanner.nextLine();
+            if(conjuntoLinhas[i].length() > tamanhoMaiorLinha){
+                tamanhoMaiorLinha = conjuntoLinhas[i].length();
+            }
+        }
+        for (int i = 0; i < conjuntoLinhas.length; i++){
+            String linha = conjuntoLinhas[i];
+            String[] temp = new String[0];
+            for(int k = 0; k < tamanhoMaiorLinha; k++){
+                if (k < linha.length()){
+                    String char1 = String.valueOf(conjuntoLinhas[i].charAt(k));
+                    //if(!char1.equals("\n"))
+                        // temp = addElementToArray(temp ,char1);
+                }
+               // else
+                    // temp = addElementToArray(temp, ".");
+            }
+            matrizFile = addLineToMatriz(temp, matrizFile);
+        }
+        String[][] arrayNova = new String[matrizFile[0].length][matrizFile.length];
+        for(int i = 0; i < matrizFile.length; i++){
+            for (int k = 0 ; k < matrizFile[0].length; k++){
+                arrayNova[k][arrayNova[0].length - i - 1] = matrizFile[i][k];
+            }
+        }
+        for (int i = 0; i < matrizFile.length; i++){
+            for (int k = 0; k < matrizFile[0].length; k++){
+                System.out.print(matrizFile[i][k]);
+            }
+            System.out.println();
+        }
+        System.out.println("\n\n\n");
+        for (int i = 0; i < arrayNova.length; i++){
+            for (int k = 0; k < arrayNova[0].length; k++){
+                System.out.print(arrayNova[i][k]);
+            }
+            System.out.println();
+        }
+        fileScanner.close();
+    }
 }
 

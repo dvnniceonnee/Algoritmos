@@ -46,45 +46,6 @@ public class bibliotecaFunc {
         fileScanner.close();
     }
 
-    public static void printFileRotated(String pathFile) throws FileNotFoundException {
-        Scanner fileScanner = new Scanner(new File(pathFile));
-        int numeroLinhas = numeroLinhasEcolunas(new File(pathFile), "")[0];
-        String[] conjuntoLinhas = new String[numeroLinhas];
-        int tamanhoMaiorLinha = 0;
-        String[][] matrizFile = new String[0][0];
-        for(int i = 0; i < conjuntoLinhas.length; i++){
-            conjuntoLinhas[i] = fileScanner.nextLine();
-            if(conjuntoLinhas[i].length() > tamanhoMaiorLinha){
-                tamanhoMaiorLinha = conjuntoLinhas[i].length();
-            }
-        }
-        for (int i = 0; i < conjuntoLinhas.length; i++){
-            String linha = conjuntoLinhas[i];
-            String[] temp = new String[0];
-            for(int k = 0; k < tamanhoMaiorLinha; k++){
-                if (k < linha.length()){
-                    temp = addElementToArray(temp ,String.valueOf(conjuntoLinhas[i].charAt(k)));
-                }
-                else
-                    temp = addElementToArray(temp, ".");
-            }
-            matrizFile = addLineToMatriz(temp, matrizFile);
-        }
-        String[][] temp2 = new String[matrizFile[0].length][matrizFile.length];
-        for(int i = 0; i < matrizFile[0].length; i++){
-            for (int k = 0; k < matrizFile.length; k++){
-                System.out.print(matrizFile[(matrizFile.length - 1) - k][i]);
-            }
-            System.out.println();
-        }
-        for(int i = 0; i < temp2.length; i++){
-            for (int k = 0; k < temp2[0].length; k++){
-                System.out.print(temp2[i][k]);
-            }
-            System.out.println();
-        }
-        fileScanner.close();
-    }
 
     /**
      * retorna o numero de linhas e colunas de um ficheiro

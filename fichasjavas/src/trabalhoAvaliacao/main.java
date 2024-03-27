@@ -302,7 +302,7 @@ public class main {
                 case 4: // Pesquisa de clientes
                     int idUtilizador = 0;
                     do {
-                        System.out.print("Introduza o id de cliente : ");
+                        System.out.print("\n\tIntroduza o id de cliente : ");
                         try {
                             idUtilizador = input.nextInt();
                             if (!searchIfExistsOnMatriz(matrizClientes, String.valueOf(idUtilizador), 0)) {
@@ -315,7 +315,7 @@ public class main {
                         }
                     } while (idUtilizador == 0);
                     String[] infoClient = searchForDataArray(matrizClientes, String.valueOf(idUtilizador), 0);
-                    System.out.println("\n\t ID : " + infoClient[0] + "\n Nome : " + infoClient[1] + "\n Numero de telemovel : " + infoClient[2] + "\n Email : " + infoClient[3]);
+                    System.out.println("\n\t ID : " + infoClient[0] + "\n\t Nome : " + infoClient[1] + "\n\t Numero de telemovel : " + infoClient[2] + "\n\t Email : " + infoClient[3]);
                     break;
                 case 5: // Jogo mais caro
                     System.out.println("\n\tO jogo mais caro é " + vendasEstatisticas[2] + "\n" + "$$$$$ Clientes que o compraram $$$$");
@@ -333,10 +333,11 @@ public class main {
                             String[][] vendasDoCliente = searchForDataMatriz(matrizVendas, maisGastadores[i][0], 1);
                             String[] clienteInfo = searchForDataArray(matrizClientes, maisGastadores[i][0], 0);
                             System.out.println("\n\t" + (i + 1) + ".Cliente *** Nome : " + clienteInfo[1] + "\t Contacto : " + clienteInfo[2] + "\t Email : " + clienteInfo[3]);
+                            System.out.println("\t Valor gasto  [" + maisGastadores[i][1] + " €]");
                             System.out.println("\n\t ***** Jogos Compradados pelo " + clienteInfo[1] + " *****");
                             String[] jogosComprados = columnDataWithoutRep(vendasDoCliente, 4);
                             for (int k = 0; k < jogosComprados.length; k++) {
-                                System.out.println("\t" + k + 1 + ". " + jogosComprados[k]);
+                                System.out.println("\t\t" + (k + 1) + ". " + jogosComprados[k]);
                             }
                         }
                     }catch (ArrayIndexOutOfBoundsException ex1){
@@ -351,9 +352,9 @@ public class main {
                 case 8: // Pesquisa de jogos e clientes que o compraram
                     System.out.println("\nIntroduza o nome do jogo que deseja pesquisar : ");
                     String nomeJogo = input.next() + input.nextLine();
-                    if (searchIfExistsOnMatriz(matrizVendas, nomeJogo, 4)) {
-                        String[][] vendasDoJogo = searchForDataMatriz(matrizVendas, nomeJogo, 4);
-                        String[] clientesDoJogo = columnDataWithoutRep(vendasDoJogo, 1);
+                    if (searchIfExistsOnMatriz(matrizVendas, nomeJogo, 4)) {    // se o jogo existir na loja entramos no bloco
+                        String[][] vendasDoJogo = searchForDataMatriz(matrizVendas, nomeJogo, 4);       // pesquisa na matriz das vendas por todas as vendas daquele jogo
+                        String[] clientesDoJogo = columnDataWithoutRep(vendasDoJogo, 1);                           // pesquisa de todos os clientes que compraram o jogo sem repetições
                         System.out.println("\n\t ***** Clientes que compraram o jogo " + nomeJogo + " *****\n");
                         for (int i = 0; i < clientesDoJogo.length; i++) {
                             String[] infoDoClient = searchForDataArray(matrizClientes, clientesDoJogo[i], 0);
@@ -383,7 +384,6 @@ public class main {
                     }catch (ArrayIndexOutOfBoundsException ex1){
                         System.out.println("\t\t !!! Não existe vendas !!!");
                     }
-
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -460,7 +460,7 @@ public class main {
     }
 
     /**
-     * Função para imprimir os lugares vagos com padrão gráfica
+     * Função para imprimir os lugares vagos com padrão gráfico
      */
     public static void printLugaresVagos() {
         int[] lugares = lugaresVagos();
