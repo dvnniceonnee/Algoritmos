@@ -13,7 +13,7 @@ public class main {
      * Lista dos caminhos dos ficheiros necessários para o programa
      *
      * @return Array [0] logins file <br> [1] clients file <br> [2] sales file <br> [3] copyright file <br> [4] categories file <br> [5] graphic callOfduty  <br>
-     * [6] graphic fifa <br> [7] graphic hollowKnight <br> [8] graphic minecraft <br> [9] graphic mortalKombat <br> [10] graphic overcooked <br> [11] graphic witcher3
+     * [6] graphic fifa <br> [7] graphic hollowKnight <br> [8] graphic minecraft <br> [9] graphic mortalKombat <br> [10] graphic overcooked <br> [11] graphic witcher3 <br> [12] copyright file
      */
     public static String[] filesPaths() {
         String file1 = "fichasjavas/files/filesAvaliacao/GameStart_Admins.csv";
@@ -28,7 +28,8 @@ public class main {
         String file10 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/mortalKombat.txt";
         String file11 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/overcooked.txt";
         String file12 = "fichasjavas/files/filesAvaliacao/CatalogoGrafico/witcher3.txt";
-        String[] files = {file1, file2, file3, file4, file5, file6, file7, file8, file9, file10, file11, file12};
+        String file13 = "fichasjavas/files/filesAvaliacao/GameStart_Copyright.txt";
+        String[] files = {file1, file2, file3, file4, file5, file6, file7, file8, file9, file10, file11, file12, file13};
         return files;
     }
 
@@ -696,74 +697,65 @@ public class main {
         } while (opcaoCliente != 0);
     }
 
-    public static void printCopyRight() throws IOException {
-        File ficheiroCopyRight = new File("fichasjavas/files/filesAvaliacao/GameStart_Copyright.txt");
+    /**
+     * Função para imprimir uma moldura com conteudo no meio da moldura
+     * @throws IOException
+     */
+    public static void printCopyRight() throws FileNotFoundException {
+        File ficheiroCopyRight = new File(filesPaths()[12]);
         int[] linhasColunas = numeroLinhasEcolunas(ficheiroCopyRight, "");
         Scanner scannerCopyRight = new Scanner(ficheiroCopyRight);
         String[] linhas = new String[linhasColunas[0]];
         for(int i = 0; i < linhasColunas[0]; i++){
             linhas[i] = scannerCopyRight.nextLine();
         }
-        scannerCopyRight.close();
-        String titulo = "Desenvolvido por : ";
+        String titulo = "Desenvolvido por :";
         String nome = "Miguel Madureira";
         String curso = "Software Developer";
-        PrintWriter writerNovoFile = new PrintWriter(ficheiroCopyRight);
-        for(int i = 0; i < linhas.length; i++){
-            System.out.println(i);
-            if (i == ((linhasColunas[0]/2) - 4)){
+        for(int i = 0; i < linhas.length; i++){         // iterador para as linhas do ficheiro de texto com a moldura
+            if (i == ((linhasColunas[0]/2) - 2)){           // se i for a 2 linhas anteriores à linha do meio vamos imprimir o titulo
                 int tamanhoTitulo = titulo.length();
-                for(int k = 0; k < linhas[i].length(); k++){
-                    if (k == ((linhas[i].length()/2) - (tamanhoTitulo/2))){
-                        writerNovoFile.print(titulo);
+                for(int k = 0; k < linhas[i].length(); k++){                    // iterador para todos os caracteres da linha "i"
+                    if (k == ((linhas[i].length()/2) - (tamanhoTitulo/2))){     // quando chegar ao local centro vamos colocar a string "titulo"
+                        System.out.print(titulo);
                         k += tamanhoTitulo - 1;
                     }
                     else {
-                        writerNovoFile.print(linhas[i].charAt(k));
+                        System.out.print(linhas[i].charAt(k));
                     }
                 }
-                writerNovoFile.print("\n");
+                System.out.print("\n");
             }
-            else if (i ==  (linhasColunas[0]/2) - 3){
-                int tamanhoNome = titulo.length();
+            else if (i ==  (linhasColunas[0]/2) - 1){               // condicionais com o mesmo codigo no bloco do que na linha (714)
+                int tamanhoNome = nome.length();
                 for(int k = 0; k < linhas[i].length(); k++){
                     if (k == ((linhas[i].length()/2) - (tamanhoNome/2))){
-                        writerNovoFile.print(nome);
+                        System.out.print(nome);
                         k += tamanhoNome - 1;
                     }
                     else {
-                        writerNovoFile.print(linhas[i].charAt(k));
+                        System.out.print(linhas[i].charAt(k));
                     }
                 }
-                writerNovoFile.print("\n");
+                System.out.print("\n");
             }
-            else if (i ==  linhasColunas[0]/2){
-                int tamanhoLinha = linhas[i].length();
+            else if (i ==  linhasColunas[0]/2 + 1){
                 int tamanhoCurso = curso.length();
-                String charsLinhaAntes = linhas[i].split(" ")[0];
-                String charsLinhaDepois = linhas[i].split(" ")[1];
-                for(int k = 1; k <= tamanhoLinha; k++){
-                    if(k == 1){
-                        writerNovoFile.print(charsLinhaAntes);
-                    }
-                    else if (k == tamanhoLinha){
-                        writerNovoFile.print(charsLinhaDepois);
-                    }
-                    if (k == (tamanhoLinha/2) - (tamanhoCurso/2)){
-                        writerNovoFile.print(curso);
-                        k += tamanhoCurso;
+                for(int k = 0; k < linhas[i].length(); k++){
+                    if (k == ((linhas[i].length()/2) - (tamanhoCurso/2))){
+                        System.out.print(curso);
+                        k += tamanhoCurso - 1;
                     }
                     else {
-                        writerNovoFile.print(" ");
+                        System.out.print(linhas[i].charAt(k));
                     }
                 }
-                writerNovoFile.print("\n");
+                System.out.print("\n");
             }
             else {
-                writerNovoFile.println(linhas[i]);
+                System.out.println(linhas[i]);
             }
         }
-        writerNovoFile.close();
     }
 
     public static String[][] matrizLogins;
@@ -818,6 +810,11 @@ public class main {
                     break;
             }
         }
-        printCopyRight();
+        try{
+            printCopyRight();
+        }catch (FileNotFoundException ex1){
+            System.out.println("\n\tDesenvoldido por :\n\tMiguel Madureira\n\n\tSoftware Developer");
+        }
+
     }
 }
