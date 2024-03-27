@@ -75,6 +75,7 @@ public class bibliotecaFunc {
             for (int k = 0; k < matrizFile.length; k++){
                 System.out.print(matrizFile[(matrizFile.length - 1) - k][i]);
             }
+            System.out.println();
         }
         for(int i = 0; i < temp2.length; i++){
             for (int k = 0; k < temp2[0].length; k++){
